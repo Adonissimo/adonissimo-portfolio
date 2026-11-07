@@ -1,0 +1,1863 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-05T03:36:44.526453+00:00",
+  "title": "Design System: Adonissimo — A builder exploring Hyrule",
+  "extensions": {
+    "colorMeta": {
+      "night-bg": {
+        "role": "neutral",
+        "displayName": "Night Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0208 168.42)",
+          "oklch(26% 0.0208 168.42)",
+          "oklch(38% 0.0208 168.42)",
+          "oklch(49% 0.0208 168.42)",
+          "oklch(61% 0.0208 168.42)",
+          "oklch(72% 0.0208 168.42)",
+          "oklch(84% 0.0208 168.42)",
+          "oklch(95% 0.0208 168.42)"
+        ]
+      },
+      "night-surface": {
+        "role": "neutral",
+        "displayName": "Night Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0275 163.31)",
+          "oklch(26% 0.0275 163.31)",
+          "oklch(38% 0.0275 163.31)",
+          "oklch(49% 0.0275 163.31)",
+          "oklch(61% 0.0275 163.31)",
+          "oklch(72% 0.0275 163.31)",
+          "oklch(84% 0.0275 163.31)",
+          "oklch(95% 0.0275 163.31)"
+        ]
+      },
+      "night-surface-raised": {
+        "role": "neutral",
+        "displayName": "Night Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0355 159.56)",
+          "oklch(26% 0.0355 159.56)",
+          "oklch(38% 0.0355 159.56)",
+          "oklch(49% 0.0355 159.56)",
+          "oklch(61% 0.0355 159.56)",
+          "oklch(72% 0.0355 159.56)",
+          "oklch(84% 0.0355 159.56)",
+          "oklch(95% 0.0355 159.56)"
+        ]
+      },
+      "night-text": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0235 90.76)",
+          "oklch(26% 0.0235 90.76)",
+          "oklch(38% 0.0235 90.76)",
+          "oklch(49% 0.0235 90.76)",
+          "oklch(61% 0.0235 90.76)",
+          "oklch(72% 0.0235 90.76)",
+          "oklch(84% 0.0235 90.76)",
+          "oklch(95% 0.0235 90.76)"
+        ]
+      },
+      "night-muted": {
+        "role": "neutral",
+        "displayName": "Night Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0307 137.40)",
+          "oklch(26% 0.0307 137.40)",
+          "oklch(38% 0.0307 137.40)",
+          "oklch(49% 0.0307 137.40)",
+          "oklch(61% 0.0307 137.40)",
+          "oklch(72% 0.0307 137.40)",
+          "oklch(84% 0.0307 137.40)",
+          "oklch(95% 0.0307 137.40)"
+        ]
+      },
+      "night-gold": {
+        "role": "primary",
+        "displayName": "Night Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0854 87.69)",
+          "oklch(26% 0.0854 87.69)",
+          "oklch(38% 0.0854 87.69)",
+          "oklch(49% 0.0854 87.69)",
+          "oklch(61% 0.0854 87.69)",
+          "oklch(72% 0.0854 87.69)",
+          "oklch(84% 0.0854 87.69)",
+          "oklch(95% 0.0854 87.69)"
+        ]
+      },
+      "night-cyan": {
+        "role": "secondary",
+        "displayName": "Night Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0733 174.68)",
+          "oklch(26% 0.0733 174.68)",
+          "oklch(38% 0.0733 174.68)",
+          "oklch(49% 0.0733 174.68)",
+          "oklch(61% 0.0733 174.68)",
+          "oklch(72% 0.0733 174.68)",
+          "oklch(84% 0.0733 174.68)",
+          "oklch(95% 0.0733 174.68)"
+        ]
+      },
+      "night-rule": {
+        "role": "neutral",
+        "displayName": "Night Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0610 125.74 / 0.200)",
+          "oklch(26% 0.0610 125.74 / 0.200)",
+          "oklch(38% 0.0610 125.74 / 0.200)",
+          "oklch(49% 0.0610 125.74 / 0.200)",
+          "oklch(61% 0.0610 125.74 / 0.200)",
+          "oklch(72% 0.0610 125.74 / 0.200)",
+          "oklch(84% 0.0610 125.74 / 0.200)",
+          "oklch(95% 0.0610 125.74 / 0.200)"
+        ]
+      },
+      "night-button": {
+        "role": "primary",
+        "displayName": "Night Action",
+        "tonalRamp": [
+          "oklch(15% 0.0854 87.69)",
+          "oklch(26% 0.0854 87.69)",
+          "oklch(38% 0.0854 87.69)",
+          "oklch(49% 0.0854 87.69)",
+          "oklch(61% 0.0854 87.69)",
+          "oklch(72% 0.0854 87.69)",
+          "oklch(84% 0.0854 87.69)",
+          "oklch(95% 0.0854 87.69)"
+        ]
+      },
+      "night-button-ink": {
+        "role": "primary",
+        "displayName": "Night Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0280 154.68)",
+          "oklch(26% 0.0280 154.68)",
+          "oklch(38% 0.0280 154.68)",
+          "oklch(49% 0.0280 154.68)",
+          "oklch(61% 0.0280 154.68)",
+          "oklch(72% 0.0280 154.68)",
+          "oklch(84% 0.0280 154.68)",
+          "oklch(95% 0.0280 154.68)"
+        ]
+      },
+      "night-heart": {
+        "role": "secondary",
+        "displayName": "Night Heart / Error",
+        "tonalRamp": [
+          "oklch(15% 0.0924 30.96)",
+          "oklch(26% 0.0924 30.96)",
+          "oklch(38% 0.0924 30.96)",
+          "oklch(49% 0.0924 30.96)",
+          "oklch(61% 0.0924 30.96)",
+          "oklch(72% 0.0924 30.96)",
+          "oklch(84% 0.0924 30.96)",
+          "oklch(95% 0.0924 30.96)"
+        ]
+      },
+      "day-bg": {
+        "role": "neutral",
+        "displayName": "Day Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0213 100.99)",
+          "oklch(26% 0.0213 100.99)",
+          "oklch(38% 0.0213 100.99)",
+          "oklch(49% 0.0213 100.99)",
+          "oklch(61% 0.0213 100.99)",
+          "oklch(72% 0.0213 100.99)",
+          "oklch(84% 0.0213 100.99)",
+          "oklch(95% 0.0213 100.99)"
+        ]
+      },
+      "day-surface": {
+        "role": "neutral",
+        "displayName": "Day Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0255 114.18)",
+          "oklch(26% 0.0255 114.18)",
+          "oklch(38% 0.0255 114.18)",
+          "oklch(49% 0.0255 114.18)",
+          "oklch(61% 0.0255 114.18)",
+          "oklch(72% 0.0255 114.18)",
+          "oklch(84% 0.0255 114.18)",
+          "oklch(95% 0.0255 114.18)"
+        ]
+      },
+      "day-surface-raised": {
+        "role": "neutral",
+        "displayName": "Day Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0328 118.48)",
+          "oklch(26% 0.0328 118.48)",
+          "oklch(38% 0.0328 118.48)",
+          "oklch(49% 0.0328 118.48)",
+          "oklch(61% 0.0328 118.48)",
+          "oklch(72% 0.0328 118.48)",
+          "oklch(84% 0.0328 118.48)",
+          "oklch(95% 0.0328 118.48)"
+        ]
+      },
+      "day-text": {
+        "role": "neutral",
+        "displayName": "Day Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0451 155.33)",
+          "oklch(26% 0.0451 155.33)",
+          "oklch(38% 0.0451 155.33)",
+          "oklch(49% 0.0451 155.33)",
+          "oklch(61% 0.0451 155.33)",
+          "oklch(72% 0.0451 155.33)",
+          "oklch(84% 0.0451 155.33)",
+          "oklch(95% 0.0451 155.33)"
+        ]
+      },
+      "day-muted": {
+        "role": "neutral",
+        "displayName": "Day Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0488 140.74)",
+          "oklch(26% 0.0488 140.74)",
+          "oklch(38% 0.0488 140.74)",
+          "oklch(49% 0.0488 140.74)",
+          "oklch(61% 0.0488 140.74)",
+          "oklch(72% 0.0488 140.74)",
+          "oklch(84% 0.0488 140.74)",
+          "oklch(95% 0.0488 140.74)"
+        ]
+      },
+      "day-gold": {
+        "role": "primary",
+        "displayName": "Day Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0796 81.00)",
+          "oklch(26% 0.0796 81.00)",
+          "oklch(38% 0.0796 81.00)",
+          "oklch(49% 0.0796 81.00)",
+          "oklch(61% 0.0796 81.00)",
+          "oklch(72% 0.0796 81.00)",
+          "oklch(84% 0.0796 81.00)",
+          "oklch(95% 0.0796 81.00)"
+        ]
+      },
+      "day-cyan": {
+        "role": "secondary",
+        "displayName": "Day Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0765 173.28)",
+          "oklch(26% 0.0765 173.28)",
+          "oklch(38% 0.0765 173.28)",
+          "oklch(49% 0.0765 173.28)",
+          "oklch(61% 0.0765 173.28)",
+          "oklch(72% 0.0765 173.28)",
+          "oklch(84% 0.0765 173.28)",
+          "oklch(95% 0.0765 173.28)"
+        ]
+      },
+      "day-rule": {
+        "role": "neutral",
+        "displayName": "Day Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0734 137.09 / 0.208)",
+          "oklch(26% 0.0734 137.09 / 0.208)",
+          "oklch(38% 0.0734 137.09 / 0.208)",
+          "oklch(49% 0.0734 137.09 / 0.208)",
+          "oklch(61% 0.0734 137.09 / 0.208)",
+          "oklch(72% 0.0734 137.09 / 0.208)",
+          "oklch(84% 0.0734 137.09 / 0.208)",
+          "oklch(95% 0.0734 137.09 / 0.208)"
+        ]
+      },
+      "day-button": {
+        "role": "primary",
+        "displayName": "Day Action",
+        "tonalRamp": [
+          "oklch(15% 0.0621 152.92)",
+          "oklch(26% 0.0621 152.92)",
+          "oklch(38% 0.0621 152.92)",
+          "oklch(49% 0.0621 152.92)",
+          "oklch(61% 0.0621 152.92)",
+          "oklch(72% 0.0621 152.92)",
+          "oklch(84% 0.0621 152.92)",
+          "oklch(95% 0.0621 152.92)"
+        ]
+      },
+      "day-button-ink": {
+        "role": "primary",
+        "displayName": "Day Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0245 91.61)",
+          "oklch(26% 0.0245 91.61)",
+          "oklch(38% 0.0245 91.61)",
+          "oklch(49% 0.0245 91.61)",
+          "oklch(61% 0.0245 91.61)",
+          "oklch(72% 0.0245 91.61)",
+          "oklch(84% 0.0245 91.61)",
+          "oklch(95% 0.0245 91.61)"
+        ]
+      },
+      "day-heart": {
+        "role": "secondary",
+        "displayName": "Day Heart / Error",
+        "tonalRamp": [
+          "oklch(15% 0.1259 30.28)",
+          "oklch(26% 0.1259 30.28)",
+          "oklch(38% 0.1259 30.28)",
+          "oklch(49% 0.1259 30.28)",
+          "oklch(61% 0.1259 30.28)",
+          "oklch(72% 0.1259 30.28)",
+          "oklch(84% 0.1259 30.28)",
+          "oklch(95% 0.1259 30.28)"
+        ]
+      },
+      "sky-night-bg": {
+        "role": "neutral",
+        "displayName": "Sky Night Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0300 199.04)",
+          "oklch(26% 0.0300 199.04)",
+          "oklch(38% 0.0300 199.04)",
+          "oklch(49% 0.0300 199.04)",
+          "oklch(61% 0.0300 199.04)",
+          "oklch(72% 0.0300 199.04)",
+          "oklch(84% 0.0300 199.04)",
+          "oklch(95% 0.0300 199.04)"
+        ]
+      },
+      "sky-night-surface": {
+        "role": "neutral",
+        "displayName": "Sky Night Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0349 198.43)",
+          "oklch(26% 0.0349 198.43)",
+          "oklch(38% 0.0349 198.43)",
+          "oklch(49% 0.0349 198.43)",
+          "oklch(61% 0.0349 198.43)",
+          "oklch(72% 0.0349 198.43)",
+          "oklch(84% 0.0349 198.43)",
+          "oklch(95% 0.0349 198.43)"
+        ]
+      },
+      "sky-night-surface-raised": {
+        "role": "neutral",
+        "displayName": "Sky Night Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0400 190.57)",
+          "oklch(26% 0.0400 190.57)",
+          "oklch(38% 0.0400 190.57)",
+          "oklch(49% 0.0400 190.57)",
+          "oklch(61% 0.0400 190.57)",
+          "oklch(72% 0.0400 190.57)",
+          "oklch(84% 0.0400 190.57)",
+          "oklch(95% 0.0400 190.57)"
+        ]
+      },
+      "sky-night-text": {
+        "role": "neutral",
+        "displayName": "Sky Night Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0178 92.69)",
+          "oklch(26% 0.0178 92.69)",
+          "oklch(38% 0.0178 92.69)",
+          "oklch(49% 0.0178 92.69)",
+          "oklch(61% 0.0178 92.69)",
+          "oklch(72% 0.0178 92.69)",
+          "oklch(84% 0.0178 92.69)",
+          "oklch(95% 0.0178 92.69)"
+        ]
+      },
+      "sky-night-muted": {
+        "role": "neutral",
+        "displayName": "Sky Night Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0199 167.82)",
+          "oklch(26% 0.0199 167.82)",
+          "oklch(38% 0.0199 167.82)",
+          "oklch(49% 0.0199 167.82)",
+          "oklch(61% 0.0199 167.82)",
+          "oklch(72% 0.0199 167.82)",
+          "oklch(84% 0.0199 167.82)",
+          "oklch(95% 0.0199 167.82)"
+        ]
+      },
+      "sky-night-gold": {
+        "role": "primary",
+        "displayName": "Sky Night Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0814 87.58)",
+          "oklch(26% 0.0814 87.58)",
+          "oklch(38% 0.0814 87.58)",
+          "oklch(49% 0.0814 87.58)",
+          "oklch(61% 0.0814 87.58)",
+          "oklch(72% 0.0814 87.58)",
+          "oklch(84% 0.0814 87.58)",
+          "oklch(95% 0.0814 87.58)"
+        ]
+      },
+      "sky-night-cyan": {
+        "role": "secondary",
+        "displayName": "Sky Night Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0617 171.12)",
+          "oklch(26% 0.0617 171.12)",
+          "oklch(38% 0.0617 171.12)",
+          "oklch(49% 0.0617 171.12)",
+          "oklch(61% 0.0617 171.12)",
+          "oklch(72% 0.0617 171.12)",
+          "oklch(84% 0.0617 171.12)",
+          "oklch(95% 0.0617 171.12)"
+        ]
+      },
+      "sky-night-rule": {
+        "role": "neutral",
+        "displayName": "Sky Night Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0411 172.42 / 0.251)",
+          "oklch(26% 0.0411 172.42 / 0.251)",
+          "oklch(38% 0.0411 172.42 / 0.251)",
+          "oklch(49% 0.0411 172.42 / 0.251)",
+          "oklch(61% 0.0411 172.42 / 0.251)",
+          "oklch(72% 0.0411 172.42 / 0.251)",
+          "oklch(84% 0.0411 172.42 / 0.251)",
+          "oklch(95% 0.0411 172.42 / 0.251)"
+        ]
+      },
+      "sky-night-button": {
+        "role": "primary",
+        "displayName": "Sky Night Action",
+        "tonalRamp": [
+          "oklch(15% 0.0814 87.58)",
+          "oklch(26% 0.0814 87.58)",
+          "oklch(38% 0.0814 87.58)",
+          "oklch(49% 0.0814 87.58)",
+          "oklch(61% 0.0814 87.58)",
+          "oklch(72% 0.0814 87.58)",
+          "oklch(84% 0.0814 87.58)",
+          "oklch(95% 0.0814 87.58)"
+        ]
+      },
+      "sky-night-button-ink": {
+        "role": "primary",
+        "displayName": "Sky Night Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0300 199.04)",
+          "oklch(26% 0.0300 199.04)",
+          "oklch(38% 0.0300 199.04)",
+          "oklch(49% 0.0300 199.04)",
+          "oklch(61% 0.0300 199.04)",
+          "oklch(72% 0.0300 199.04)",
+          "oklch(84% 0.0300 199.04)",
+          "oklch(95% 0.0300 199.04)"
+        ]
+      },
+      "sky-day-bg": {
+        "role": "neutral",
+        "displayName": "Sky Day Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0136 92.98)",
+          "oklch(26% 0.0136 92.98)",
+          "oklch(38% 0.0136 92.98)",
+          "oklch(49% 0.0136 92.98)",
+          "oklch(61% 0.0136 92.98)",
+          "oklch(72% 0.0136 92.98)",
+          "oklch(84% 0.0136 92.98)",
+          "oklch(95% 0.0136 92.98)"
+        ]
+      },
+      "sky-day-surface": {
+        "role": "neutral",
+        "displayName": "Sky Day Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0160 110.57)",
+          "oklch(26% 0.0160 110.57)",
+          "oklch(38% 0.0160 110.57)",
+          "oklch(49% 0.0160 110.57)",
+          "oklch(61% 0.0160 110.57)",
+          "oklch(72% 0.0160 110.57)",
+          "oklch(84% 0.0160 110.57)",
+          "oklch(95% 0.0160 110.57)"
+        ]
+      },
+      "sky-day-surface-raised": {
+        "role": "neutral",
+        "displayName": "Sky Day Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0221 120.99)",
+          "oklch(26% 0.0221 120.99)",
+          "oklch(38% 0.0221 120.99)",
+          "oklch(49% 0.0221 120.99)",
+          "oklch(61% 0.0221 120.99)",
+          "oklch(72% 0.0221 120.99)",
+          "oklch(84% 0.0221 120.99)",
+          "oklch(95% 0.0221 120.99)"
+        ]
+      },
+      "sky-day-text": {
+        "role": "neutral",
+        "displayName": "Sky Day Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0343 168.40)",
+          "oklch(26% 0.0343 168.40)",
+          "oklch(38% 0.0343 168.40)",
+          "oklch(49% 0.0343 168.40)",
+          "oklch(61% 0.0343 168.40)",
+          "oklch(72% 0.0343 168.40)",
+          "oklch(84% 0.0343 168.40)",
+          "oklch(95% 0.0343 168.40)"
+        ]
+      },
+      "sky-day-muted": {
+        "role": "neutral",
+        "displayName": "Sky Day Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0290 159.70)",
+          "oklch(26% 0.0290 159.70)",
+          "oklch(38% 0.0290 159.70)",
+          "oklch(49% 0.0290 159.70)",
+          "oklch(61% 0.0290 159.70)",
+          "oklch(72% 0.0290 159.70)",
+          "oklch(84% 0.0290 159.70)",
+          "oklch(95% 0.0290 159.70)"
+        ]
+      },
+      "sky-day-gold": {
+        "role": "primary",
+        "displayName": "Sky Day Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0770 79.73)",
+          "oklch(26% 0.0770 79.73)",
+          "oklch(38% 0.0770 79.73)",
+          "oklch(49% 0.0770 79.73)",
+          "oklch(61% 0.0770 79.73)",
+          "oklch(72% 0.0770 79.73)",
+          "oklch(84% 0.0770 79.73)",
+          "oklch(95% 0.0770 79.73)"
+        ]
+      },
+      "sky-day-cyan": {
+        "role": "secondary",
+        "displayName": "Sky Day Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0768 173.20)",
+          "oklch(26% 0.0768 173.20)",
+          "oklch(38% 0.0768 173.20)",
+          "oklch(49% 0.0768 173.20)",
+          "oklch(61% 0.0768 173.20)",
+          "oklch(72% 0.0768 173.20)",
+          "oklch(84% 0.0768 173.20)",
+          "oklch(95% 0.0768 173.20)"
+        ]
+      },
+      "sky-day-rule": {
+        "role": "neutral",
+        "displayName": "Sky Day Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0528 149.26 / 0.220)",
+          "oklch(26% 0.0528 149.26 / 0.220)",
+          "oklch(38% 0.0528 149.26 / 0.220)",
+          "oklch(49% 0.0528 149.26 / 0.220)",
+          "oklch(61% 0.0528 149.26 / 0.220)",
+          "oklch(72% 0.0528 149.26 / 0.220)",
+          "oklch(84% 0.0528 149.26 / 0.220)",
+          "oklch(95% 0.0528 149.26 / 0.220)"
+        ]
+      },
+      "sky-day-button": {
+        "role": "primary",
+        "displayName": "Sky Day Action",
+        "tonalRamp": [
+          "oklch(15% 0.0546 162.34)",
+          "oklch(26% 0.0546 162.34)",
+          "oklch(38% 0.0546 162.34)",
+          "oklch(49% 0.0546 162.34)",
+          "oklch(61% 0.0546 162.34)",
+          "oklch(72% 0.0546 162.34)",
+          "oklch(84% 0.0546 162.34)",
+          "oklch(95% 0.0546 162.34)"
+        ]
+      },
+      "sky-day-button-ink": {
+        "role": "primary",
+        "displayName": "Sky Day Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0245 91.61)",
+          "oklch(26% 0.0245 91.61)",
+          "oklch(38% 0.0245 91.61)",
+          "oklch(49% 0.0245 91.61)",
+          "oklch(61% 0.0245 91.61)",
+          "oklch(72% 0.0245 91.61)",
+          "oklch(84% 0.0245 91.61)",
+          "oklch(95% 0.0245 91.61)"
+        ]
+      },
+      "zonai-night-bg": {
+        "role": "neutral",
+        "displayName": "Zonai Night Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0215 180.20)",
+          "oklch(26% 0.0215 180.20)",
+          "oklch(38% 0.0215 180.20)",
+          "oklch(49% 0.0215 180.20)",
+          "oklch(61% 0.0215 180.20)",
+          "oklch(72% 0.0215 180.20)",
+          "oklch(84% 0.0215 180.20)",
+          "oklch(95% 0.0215 180.20)"
+        ]
+      },
+      "zonai-night-surface": {
+        "role": "neutral",
+        "displayName": "Zonai Night Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0321 172.33)",
+          "oklch(26% 0.0321 172.33)",
+          "oklch(38% 0.0321 172.33)",
+          "oklch(49% 0.0321 172.33)",
+          "oklch(61% 0.0321 172.33)",
+          "oklch(72% 0.0321 172.33)",
+          "oklch(84% 0.0321 172.33)",
+          "oklch(95% 0.0321 172.33)"
+        ]
+      },
+      "zonai-night-surface-raised": {
+        "role": "neutral",
+        "displayName": "Zonai Night Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0413 168.28)",
+          "oklch(26% 0.0413 168.28)",
+          "oklch(38% 0.0413 168.28)",
+          "oklch(49% 0.0413 168.28)",
+          "oklch(61% 0.0413 168.28)",
+          "oklch(72% 0.0413 168.28)",
+          "oklch(84% 0.0413 168.28)",
+          "oklch(95% 0.0413 168.28)"
+        ]
+      },
+      "zonai-night-text": {
+        "role": "neutral",
+        "displayName": "Zonai Night Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0178 92.69)",
+          "oklch(26% 0.0178 92.69)",
+          "oklch(38% 0.0178 92.69)",
+          "oklch(49% 0.0178 92.69)",
+          "oklch(61% 0.0178 92.69)",
+          "oklch(72% 0.0178 92.69)",
+          "oklch(84% 0.0178 92.69)",
+          "oklch(95% 0.0178 92.69)"
+        ]
+      },
+      "zonai-night-muted": {
+        "role": "neutral",
+        "displayName": "Zonai Night Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0276 152.27)",
+          "oklch(26% 0.0276 152.27)",
+          "oklch(38% 0.0276 152.27)",
+          "oklch(49% 0.0276 152.27)",
+          "oklch(61% 0.0276 152.27)",
+          "oklch(72% 0.0276 152.27)",
+          "oklch(84% 0.0276 152.27)",
+          "oklch(95% 0.0276 152.27)"
+        ]
+      },
+      "zonai-night-gold": {
+        "role": "primary",
+        "displayName": "Zonai Night Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0773 83.44)",
+          "oklch(26% 0.0773 83.44)",
+          "oklch(38% 0.0773 83.44)",
+          "oklch(49% 0.0773 83.44)",
+          "oklch(61% 0.0773 83.44)",
+          "oklch(72% 0.0773 83.44)",
+          "oklch(84% 0.0773 83.44)",
+          "oklch(95% 0.0773 83.44)"
+        ]
+      },
+      "zonai-night-cyan": {
+        "role": "secondary",
+        "displayName": "Zonai Night Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0880 160.57)",
+          "oklch(26% 0.0880 160.57)",
+          "oklch(38% 0.0880 160.57)",
+          "oklch(49% 0.0880 160.57)",
+          "oklch(61% 0.0880 160.57)",
+          "oklch(72% 0.0880 160.57)",
+          "oklch(84% 0.0880 160.57)",
+          "oklch(95% 0.0880 160.57)"
+        ]
+      },
+      "zonai-night-rule": {
+        "role": "neutral",
+        "displayName": "Zonai Night Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0597 144.20 / 0.251)",
+          "oklch(26% 0.0597 144.20 / 0.251)",
+          "oklch(38% 0.0597 144.20 / 0.251)",
+          "oklch(49% 0.0597 144.20 / 0.251)",
+          "oklch(61% 0.0597 144.20 / 0.251)",
+          "oklch(72% 0.0597 144.20 / 0.251)",
+          "oklch(84% 0.0597 144.20 / 0.251)",
+          "oklch(95% 0.0597 144.20 / 0.251)"
+        ]
+      },
+      "zonai-night-button": {
+        "role": "primary",
+        "displayName": "Zonai Night Action",
+        "tonalRamp": [
+          "oklch(15% 0.0773 83.44)",
+          "oklch(26% 0.0773 83.44)",
+          "oklch(38% 0.0773 83.44)",
+          "oklch(49% 0.0773 83.44)",
+          "oklch(61% 0.0773 83.44)",
+          "oklch(72% 0.0773 83.44)",
+          "oklch(84% 0.0773 83.44)",
+          "oklch(95% 0.0773 83.44)"
+        ]
+      },
+      "zonai-night-button-ink": {
+        "role": "primary",
+        "displayName": "Zonai Night Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0215 180.20)",
+          "oklch(26% 0.0215 180.20)",
+          "oklch(38% 0.0215 180.20)",
+          "oklch(49% 0.0215 180.20)",
+          "oklch(61% 0.0215 180.20)",
+          "oklch(72% 0.0215 180.20)",
+          "oklch(84% 0.0215 180.20)",
+          "oklch(95% 0.0215 180.20)"
+        ]
+      },
+      "zonai-day-bg": {
+        "role": "neutral",
+        "displayName": "Zonai Day Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0136 120.28)",
+          "oklch(26% 0.0136 120.28)",
+          "oklch(38% 0.0136 120.28)",
+          "oklch(49% 0.0136 120.28)",
+          "oklch(61% 0.0136 120.28)",
+          "oklch(72% 0.0136 120.28)",
+          "oklch(84% 0.0136 120.28)",
+          "oklch(95% 0.0136 120.28)"
+        ]
+      },
+      "zonai-day-surface": {
+        "role": "neutral",
+        "displayName": "Zonai Day Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0218 130.02)",
+          "oklch(26% 0.0218 130.02)",
+          "oklch(38% 0.0218 130.02)",
+          "oklch(49% 0.0218 130.02)",
+          "oklch(61% 0.0218 130.02)",
+          "oklch(72% 0.0218 130.02)",
+          "oklch(84% 0.0218 130.02)",
+          "oklch(95% 0.0218 130.02)"
+        ]
+      },
+      "zonai-day-surface-raised": {
+        "role": "neutral",
+        "displayName": "Zonai Day Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0286 133.75)",
+          "oklch(26% 0.0286 133.75)",
+          "oklch(38% 0.0286 133.75)",
+          "oklch(49% 0.0286 133.75)",
+          "oklch(61% 0.0286 133.75)",
+          "oklch(72% 0.0286 133.75)",
+          "oklch(84% 0.0286 133.75)",
+          "oklch(95% 0.0286 133.75)"
+        ]
+      },
+      "zonai-day-text": {
+        "role": "neutral",
+        "displayName": "Zonai Day Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0451 155.33)",
+          "oklch(26% 0.0451 155.33)",
+          "oklch(38% 0.0451 155.33)",
+          "oklch(49% 0.0451 155.33)",
+          "oklch(61% 0.0451 155.33)",
+          "oklch(72% 0.0451 155.33)",
+          "oklch(84% 0.0451 155.33)",
+          "oklch(95% 0.0451 155.33)"
+        ]
+      },
+      "zonai-day-muted": {
+        "role": "neutral",
+        "displayName": "Zonai Day Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0488 140.74)",
+          "oklch(26% 0.0488 140.74)",
+          "oklch(38% 0.0488 140.74)",
+          "oklch(49% 0.0488 140.74)",
+          "oklch(61% 0.0488 140.74)",
+          "oklch(72% 0.0488 140.74)",
+          "oklch(84% 0.0488 140.74)",
+          "oklch(95% 0.0488 140.74)"
+        ]
+      },
+      "zonai-day-gold": {
+        "role": "primary",
+        "displayName": "Zonai Day Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0770 79.73)",
+          "oklch(26% 0.0770 79.73)",
+          "oklch(38% 0.0770 79.73)",
+          "oklch(49% 0.0770 79.73)",
+          "oklch(61% 0.0770 79.73)",
+          "oklch(72% 0.0770 79.73)",
+          "oklch(84% 0.0770 79.73)",
+          "oklch(95% 0.0770 79.73)"
+        ]
+      },
+      "zonai-day-cyan": {
+        "role": "secondary",
+        "displayName": "Zonai Day Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0783 162.14)",
+          "oklch(26% 0.0783 162.14)",
+          "oklch(38% 0.0783 162.14)",
+          "oklch(49% 0.0783 162.14)",
+          "oklch(61% 0.0783 162.14)",
+          "oklch(72% 0.0783 162.14)",
+          "oklch(84% 0.0783 162.14)",
+          "oklch(95% 0.0783 162.14)"
+        ]
+      },
+      "zonai-day-rule": {
+        "role": "neutral",
+        "displayName": "Zonai Day Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0528 149.26 / 0.220)",
+          "oklch(26% 0.0528 149.26 / 0.220)",
+          "oklch(38% 0.0528 149.26 / 0.220)",
+          "oklch(49% 0.0528 149.26 / 0.220)",
+          "oklch(61% 0.0528 149.26 / 0.220)",
+          "oklch(72% 0.0528 149.26 / 0.220)",
+          "oklch(84% 0.0528 149.26 / 0.220)",
+          "oklch(95% 0.0528 149.26 / 0.220)"
+        ]
+      },
+      "zonai-day-button": {
+        "role": "primary",
+        "displayName": "Zonai Day Action",
+        "tonalRamp": [
+          "oklch(15% 0.0546 162.34)",
+          "oklch(26% 0.0546 162.34)",
+          "oklch(38% 0.0546 162.34)",
+          "oklch(49% 0.0546 162.34)",
+          "oklch(61% 0.0546 162.34)",
+          "oklch(72% 0.0546 162.34)",
+          "oklch(84% 0.0546 162.34)",
+          "oklch(95% 0.0546 162.34)"
+        ]
+      },
+      "zonai-day-button-ink": {
+        "role": "primary",
+        "displayName": "Zonai Day Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0245 91.61)",
+          "oklch(26% 0.0245 91.61)",
+          "oklch(38% 0.0245 91.61)",
+          "oklch(49% 0.0245 91.61)",
+          "oklch(61% 0.0245 91.61)",
+          "oklch(72% 0.0245 91.61)",
+          "oklch(84% 0.0245 91.61)",
+          "oklch(95% 0.0245 91.61)"
+        ]
+      },
+      "fields-night-bg": {
+        "role": "neutral",
+        "displayName": "Fields Night Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0270 153.06)",
+          "oklch(26% 0.0270 153.06)",
+          "oklch(38% 0.0270 153.06)",
+          "oklch(49% 0.0270 153.06)",
+          "oklch(61% 0.0270 153.06)",
+          "oklch(72% 0.0270 153.06)",
+          "oklch(84% 0.0270 153.06)",
+          "oklch(95% 0.0270 153.06)"
+        ]
+      },
+      "fields-night-surface": {
+        "role": "neutral",
+        "displayName": "Fields Night Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0367 150.30)",
+          "oklch(26% 0.0367 150.30)",
+          "oklch(38% 0.0367 150.30)",
+          "oklch(49% 0.0367 150.30)",
+          "oklch(61% 0.0367 150.30)",
+          "oklch(72% 0.0367 150.30)",
+          "oklch(84% 0.0367 150.30)",
+          "oklch(95% 0.0367 150.30)"
+        ]
+      },
+      "fields-night-surface-raised": {
+        "role": "neutral",
+        "displayName": "Fields Night Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0432 151.55)",
+          "oklch(26% 0.0432 151.55)",
+          "oklch(38% 0.0432 151.55)",
+          "oklch(49% 0.0432 151.55)",
+          "oklch(61% 0.0432 151.55)",
+          "oklch(72% 0.0432 151.55)",
+          "oklch(84% 0.0432 151.55)",
+          "oklch(95% 0.0432 151.55)"
+        ]
+      },
+      "fields-night-text": {
+        "role": "neutral",
+        "displayName": "Fields Night Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0238 88.24)",
+          "oklch(26% 0.0238 88.24)",
+          "oklch(38% 0.0238 88.24)",
+          "oklch(49% 0.0238 88.24)",
+          "oklch(61% 0.0238 88.24)",
+          "oklch(72% 0.0238 88.24)",
+          "oklch(84% 0.0238 88.24)",
+          "oklch(95% 0.0238 88.24)"
+        ]
+      },
+      "fields-night-muted": {
+        "role": "neutral",
+        "displayName": "Fields Night Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0311 129.80)",
+          "oklch(26% 0.0311 129.80)",
+          "oklch(38% 0.0311 129.80)",
+          "oklch(49% 0.0311 129.80)",
+          "oklch(61% 0.0311 129.80)",
+          "oklch(72% 0.0311 129.80)",
+          "oklch(84% 0.0311 129.80)",
+          "oklch(95% 0.0311 129.80)"
+        ]
+      },
+      "fields-night-gold": {
+        "role": "primary",
+        "displayName": "Fields Night Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0854 86.99)",
+          "oklch(26% 0.0854 86.99)",
+          "oklch(38% 0.0854 86.99)",
+          "oklch(49% 0.0854 86.99)",
+          "oklch(61% 0.0854 86.99)",
+          "oklch(72% 0.0854 86.99)",
+          "oklch(84% 0.0854 86.99)",
+          "oklch(95% 0.0854 86.99)"
+        ]
+      },
+      "fields-night-cyan": {
+        "role": "secondary",
+        "displayName": "Fields Night Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0644 144.96)",
+          "oklch(26% 0.0644 144.96)",
+          "oklch(38% 0.0644 144.96)",
+          "oklch(49% 0.0644 144.96)",
+          "oklch(61% 0.0644 144.96)",
+          "oklch(72% 0.0644 144.96)",
+          "oklch(84% 0.0644 144.96)",
+          "oklch(95% 0.0644 144.96)"
+        ]
+      },
+      "fields-night-rule": {
+        "role": "neutral",
+        "displayName": "Fields Night Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0669 127.81 / 0.251)",
+          "oklch(26% 0.0669 127.81 / 0.251)",
+          "oklch(38% 0.0669 127.81 / 0.251)",
+          "oklch(49% 0.0669 127.81 / 0.251)",
+          "oklch(61% 0.0669 127.81 / 0.251)",
+          "oklch(72% 0.0669 127.81 / 0.251)",
+          "oklch(84% 0.0669 127.81 / 0.251)",
+          "oklch(95% 0.0669 127.81 / 0.251)"
+        ]
+      },
+      "fields-night-button": {
+        "role": "primary",
+        "displayName": "Fields Night Action",
+        "tonalRamp": [
+          "oklch(15% 0.0854 86.99)",
+          "oklch(26% 0.0854 86.99)",
+          "oklch(38% 0.0854 86.99)",
+          "oklch(49% 0.0854 86.99)",
+          "oklch(61% 0.0854 86.99)",
+          "oklch(72% 0.0854 86.99)",
+          "oklch(84% 0.0854 86.99)",
+          "oklch(95% 0.0854 86.99)"
+        ]
+      },
+      "fields-night-button-ink": {
+        "role": "primary",
+        "displayName": "Fields Night Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0270 153.06)",
+          "oklch(26% 0.0270 153.06)",
+          "oklch(38% 0.0270 153.06)",
+          "oklch(49% 0.0270 153.06)",
+          "oklch(61% 0.0270 153.06)",
+          "oklch(72% 0.0270 153.06)",
+          "oklch(84% 0.0270 153.06)",
+          "oklch(95% 0.0270 153.06)"
+        ]
+      },
+      "fields-day-bg": {
+        "role": "neutral",
+        "displayName": "Fields Day Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0216 95.29)",
+          "oklch(26% 0.0216 95.29)",
+          "oklch(38% 0.0216 95.29)",
+          "oklch(49% 0.0216 95.29)",
+          "oklch(61% 0.0216 95.29)",
+          "oklch(72% 0.0216 95.29)",
+          "oklch(84% 0.0216 95.29)",
+          "oklch(95% 0.0216 95.29)"
+        ]
+      },
+      "fields-day-surface": {
+        "role": "neutral",
+        "displayName": "Fields Day Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0279 106.93)",
+          "oklch(26% 0.0279 106.93)",
+          "oklch(38% 0.0279 106.93)",
+          "oklch(49% 0.0279 106.93)",
+          "oklch(61% 0.0279 106.93)",
+          "oklch(72% 0.0279 106.93)",
+          "oklch(84% 0.0279 106.93)",
+          "oklch(95% 0.0279 106.93)"
+        ]
+      },
+      "fields-day-surface-raised": {
+        "role": "neutral",
+        "displayName": "Fields Day Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0335 112.62)",
+          "oklch(26% 0.0335 112.62)",
+          "oklch(38% 0.0335 112.62)",
+          "oklch(49% 0.0335 112.62)",
+          "oklch(61% 0.0335 112.62)",
+          "oklch(72% 0.0335 112.62)",
+          "oklch(84% 0.0335 112.62)",
+          "oklch(95% 0.0335 112.62)"
+        ]
+      },
+      "fields-day-text": {
+        "role": "neutral",
+        "displayName": "Fields Day Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0433 138.69)",
+          "oklch(26% 0.0433 138.69)",
+          "oklch(38% 0.0433 138.69)",
+          "oklch(49% 0.0433 138.69)",
+          "oklch(61% 0.0433 138.69)",
+          "oklch(72% 0.0433 138.69)",
+          "oklch(84% 0.0433 138.69)",
+          "oklch(95% 0.0433 138.69)"
+        ]
+      },
+      "fields-day-muted": {
+        "role": "neutral",
+        "displayName": "Fields Day Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0441 130.97)",
+          "oklch(26% 0.0441 130.97)",
+          "oklch(38% 0.0441 130.97)",
+          "oklch(49% 0.0441 130.97)",
+          "oklch(61% 0.0441 130.97)",
+          "oklch(72% 0.0441 130.97)",
+          "oklch(84% 0.0441 130.97)",
+          "oklch(95% 0.0441 130.97)"
+        ]
+      },
+      "fields-day-gold": {
+        "role": "primary",
+        "displayName": "Fields Day Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0770 79.73)",
+          "oklch(26% 0.0770 79.73)",
+          "oklch(38% 0.0770 79.73)",
+          "oklch(49% 0.0770 79.73)",
+          "oklch(61% 0.0770 79.73)",
+          "oklch(72% 0.0770 79.73)",
+          "oklch(84% 0.0770 79.73)",
+          "oklch(95% 0.0770 79.73)"
+        ]
+      },
+      "fields-day-cyan": {
+        "role": "secondary",
+        "displayName": "Fields Day Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0699 165.44)",
+          "oklch(26% 0.0699 165.44)",
+          "oklch(38% 0.0699 165.44)",
+          "oklch(49% 0.0699 165.44)",
+          "oklch(61% 0.0699 165.44)",
+          "oklch(72% 0.0699 165.44)",
+          "oklch(84% 0.0699 165.44)",
+          "oklch(95% 0.0699 165.44)"
+        ]
+      },
+      "fields-day-rule": {
+        "role": "neutral",
+        "displayName": "Fields Day Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0693 130.53 / 0.220)",
+          "oklch(26% 0.0693 130.53 / 0.220)",
+          "oklch(38% 0.0693 130.53 / 0.220)",
+          "oklch(49% 0.0693 130.53 / 0.220)",
+          "oklch(61% 0.0693 130.53 / 0.220)",
+          "oklch(72% 0.0693 130.53 / 0.220)",
+          "oklch(84% 0.0693 130.53 / 0.220)",
+          "oklch(95% 0.0693 130.53 / 0.220)"
+        ]
+      },
+      "fields-day-button": {
+        "role": "primary",
+        "displayName": "Fields Day Action",
+        "tonalRamp": [
+          "oklch(15% 0.0546 162.34)",
+          "oklch(26% 0.0546 162.34)",
+          "oklch(38% 0.0546 162.34)",
+          "oklch(49% 0.0546 162.34)",
+          "oklch(61% 0.0546 162.34)",
+          "oklch(72% 0.0546 162.34)",
+          "oklch(84% 0.0546 162.34)",
+          "oklch(95% 0.0546 162.34)"
+        ]
+      },
+      "fields-day-button-ink": {
+        "role": "primary",
+        "displayName": "Fields Day Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0245 91.61)",
+          "oklch(26% 0.0245 91.61)",
+          "oklch(38% 0.0245 91.61)",
+          "oklch(49% 0.0245 91.61)",
+          "oklch(61% 0.0245 91.61)",
+          "oklch(72% 0.0245 91.61)",
+          "oklch(84% 0.0245 91.61)",
+          "oklch(95% 0.0245 91.61)"
+        ]
+      },
+      "depths-night-bg": {
+        "role": "neutral",
+        "displayName": "Depths Night Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0186 235.08)",
+          "oklch(26% 0.0186 235.08)",
+          "oklch(38% 0.0186 235.08)",
+          "oklch(49% 0.0186 235.08)",
+          "oklch(61% 0.0186 235.08)",
+          "oklch(72% 0.0186 235.08)",
+          "oklch(84% 0.0186 235.08)",
+          "oklch(95% 0.0186 235.08)"
+        ]
+      },
+      "depths-night-surface": {
+        "role": "neutral",
+        "displayName": "Depths Night Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0230 230.30)",
+          "oklch(26% 0.0230 230.30)",
+          "oklch(38% 0.0230 230.30)",
+          "oklch(49% 0.0230 230.30)",
+          "oklch(61% 0.0230 230.30)",
+          "oklch(72% 0.0230 230.30)",
+          "oklch(84% 0.0230 230.30)",
+          "oklch(95% 0.0230 230.30)"
+        ]
+      },
+      "depths-night-surface-raised": {
+        "role": "neutral",
+        "displayName": "Depths Night Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0301 231.78)",
+          "oklch(26% 0.0301 231.78)",
+          "oklch(38% 0.0301 231.78)",
+          "oklch(49% 0.0301 231.78)",
+          "oklch(61% 0.0301 231.78)",
+          "oklch(72% 0.0301 231.78)",
+          "oklch(84% 0.0301 231.78)",
+          "oklch(95% 0.0301 231.78)"
+        ]
+      },
+      "depths-night-text": {
+        "role": "neutral",
+        "displayName": "Depths Night Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0092 150.69)",
+          "oklch(26% 0.0092 150.69)",
+          "oklch(38% 0.0092 150.69)",
+          "oklch(49% 0.0092 150.69)",
+          "oklch(61% 0.0092 150.69)",
+          "oklch(72% 0.0092 150.69)",
+          "oklch(84% 0.0092 150.69)",
+          "oklch(95% 0.0092 150.69)"
+        ]
+      },
+      "depths-night-muted": {
+        "role": "neutral",
+        "displayName": "Depths Night Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0167 172.55)",
+          "oklch(26% 0.0167 172.55)",
+          "oklch(38% 0.0167 172.55)",
+          "oklch(49% 0.0167 172.55)",
+          "oklch(61% 0.0167 172.55)",
+          "oklch(72% 0.0167 172.55)",
+          "oklch(84% 0.0167 172.55)",
+          "oklch(95% 0.0167 172.55)"
+        ]
+      },
+      "depths-night-gold": {
+        "role": "primary",
+        "displayName": "Depths Night Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0774 88.21)",
+          "oklch(26% 0.0774 88.21)",
+          "oklch(38% 0.0774 88.21)",
+          "oklch(49% 0.0774 88.21)",
+          "oklch(61% 0.0774 88.21)",
+          "oklch(72% 0.0774 88.21)",
+          "oklch(84% 0.0774 88.21)",
+          "oklch(95% 0.0774 88.21)"
+        ]
+      },
+      "depths-night-cyan": {
+        "role": "secondary",
+        "displayName": "Depths Night Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0681 174.64)",
+          "oklch(26% 0.0681 174.64)",
+          "oklch(38% 0.0681 174.64)",
+          "oklch(49% 0.0681 174.64)",
+          "oklch(61% 0.0681 174.64)",
+          "oklch(72% 0.0681 174.64)",
+          "oklch(84% 0.0681 174.64)",
+          "oklch(95% 0.0681 174.64)"
+        ]
+      },
+      "depths-night-rule": {
+        "role": "neutral",
+        "displayName": "Depths Night Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0327 181.50 / 0.251)",
+          "oklch(26% 0.0327 181.50 / 0.251)",
+          "oklch(38% 0.0327 181.50 / 0.251)",
+          "oklch(49% 0.0327 181.50 / 0.251)",
+          "oklch(61% 0.0327 181.50 / 0.251)",
+          "oklch(72% 0.0327 181.50 / 0.251)",
+          "oklch(84% 0.0327 181.50 / 0.251)",
+          "oklch(95% 0.0327 181.50 / 0.251)"
+        ]
+      },
+      "depths-night-button": {
+        "role": "primary",
+        "displayName": "Depths Night Action",
+        "tonalRamp": [
+          "oklch(15% 0.0774 88.21)",
+          "oklch(26% 0.0774 88.21)",
+          "oklch(38% 0.0774 88.21)",
+          "oklch(49% 0.0774 88.21)",
+          "oklch(61% 0.0774 88.21)",
+          "oklch(72% 0.0774 88.21)",
+          "oklch(84% 0.0774 88.21)",
+          "oklch(95% 0.0774 88.21)"
+        ]
+      },
+      "depths-night-button-ink": {
+        "role": "primary",
+        "displayName": "Depths Night Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0186 235.08)",
+          "oklch(26% 0.0186 235.08)",
+          "oklch(38% 0.0186 235.08)",
+          "oklch(49% 0.0186 235.08)",
+          "oklch(61% 0.0186 235.08)",
+          "oklch(72% 0.0186 235.08)",
+          "oklch(84% 0.0186 235.08)",
+          "oklch(95% 0.0186 235.08)"
+        ]
+      },
+      "depths-day-bg": {
+        "role": "neutral",
+        "displayName": "Depths Day Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0075 164.93)",
+          "oklch(26% 0.0075 164.93)",
+          "oklch(38% 0.0075 164.93)",
+          "oklch(49% 0.0075 164.93)",
+          "oklch(61% 0.0075 164.93)",
+          "oklch(72% 0.0075 164.93)",
+          "oklch(84% 0.0075 164.93)",
+          "oklch(95% 0.0075 164.93)"
+        ]
+      },
+      "depths-day-surface": {
+        "role": "neutral",
+        "displayName": "Depths Day Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0142 155.57)",
+          "oklch(26% 0.0142 155.57)",
+          "oklch(38% 0.0142 155.57)",
+          "oklch(49% 0.0142 155.57)",
+          "oklch(61% 0.0142 155.57)",
+          "oklch(72% 0.0142 155.57)",
+          "oklch(84% 0.0142 155.57)",
+          "oklch(95% 0.0142 155.57)"
+        ]
+      },
+      "depths-day-surface-raised": {
+        "role": "neutral",
+        "displayName": "Depths Day Raised Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0185 161.07)",
+          "oklch(26% 0.0185 161.07)",
+          "oklch(38% 0.0185 161.07)",
+          "oklch(49% 0.0185 161.07)",
+          "oklch(61% 0.0185 161.07)",
+          "oklch(72% 0.0185 161.07)",
+          "oklch(84% 0.0185 161.07)",
+          "oklch(95% 0.0185 161.07)"
+        ]
+      },
+      "depths-day-text": {
+        "role": "neutral",
+        "displayName": "Depths Day Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0346 175.09)",
+          "oklch(26% 0.0346 175.09)",
+          "oklch(38% 0.0346 175.09)",
+          "oklch(49% 0.0346 175.09)",
+          "oklch(61% 0.0346 175.09)",
+          "oklch(72% 0.0346 175.09)",
+          "oklch(84% 0.0346 175.09)",
+          "oklch(95% 0.0346 175.09)"
+        ]
+      },
+      "depths-day-muted": {
+        "role": "neutral",
+        "displayName": "Depths Day Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0313 169.03)",
+          "oklch(26% 0.0313 169.03)",
+          "oklch(38% 0.0313 169.03)",
+          "oklch(49% 0.0313 169.03)",
+          "oklch(61% 0.0313 169.03)",
+          "oklch(72% 0.0313 169.03)",
+          "oklch(84% 0.0313 169.03)",
+          "oklch(95% 0.0313 169.03)"
+        ]
+      },
+      "depths-day-gold": {
+        "role": "primary",
+        "displayName": "Depths Day Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0770 79.73)",
+          "oklch(26% 0.0770 79.73)",
+          "oklch(38% 0.0770 79.73)",
+          "oklch(49% 0.0770 79.73)",
+          "oklch(61% 0.0770 79.73)",
+          "oklch(72% 0.0770 79.73)",
+          "oklch(84% 0.0770 79.73)",
+          "oklch(95% 0.0770 79.73)"
+        ]
+      },
+      "depths-day-cyan": {
+        "role": "secondary",
+        "displayName": "Depths Day Jade / Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0732 170.65)",
+          "oklch(26% 0.0732 170.65)",
+          "oklch(38% 0.0732 170.65)",
+          "oklch(49% 0.0732 170.65)",
+          "oklch(61% 0.0732 170.65)",
+          "oklch(72% 0.0732 170.65)",
+          "oklch(84% 0.0732 170.65)",
+          "oklch(95% 0.0732 170.65)"
+        ]
+      },
+      "depths-day-rule": {
+        "role": "neutral",
+        "displayName": "Depths Day Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0392 170.08 / 0.220)",
+          "oklch(26% 0.0392 170.08 / 0.220)",
+          "oklch(38% 0.0392 170.08 / 0.220)",
+          "oklch(49% 0.0392 170.08 / 0.220)",
+          "oklch(61% 0.0392 170.08 / 0.220)",
+          "oklch(72% 0.0392 170.08 / 0.220)",
+          "oklch(84% 0.0392 170.08 / 0.220)",
+          "oklch(95% 0.0392 170.08 / 0.220)"
+        ]
+      },
+      "depths-day-button": {
+        "role": "primary",
+        "displayName": "Depths Day Action",
+        "tonalRamp": [
+          "oklch(15% 0.0546 162.34)",
+          "oklch(26% 0.0546 162.34)",
+          "oklch(38% 0.0546 162.34)",
+          "oklch(49% 0.0546 162.34)",
+          "oklch(61% 0.0546 162.34)",
+          "oklch(72% 0.0546 162.34)",
+          "oklch(84% 0.0546 162.34)",
+          "oklch(95% 0.0546 162.34)"
+        ]
+      },
+      "depths-day-button-ink": {
+        "role": "primary",
+        "displayName": "Depths Day Action Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0245 91.61)",
+          "oklch(26% 0.0245 91.61)",
+          "oklch(38% 0.0245 91.61)",
+          "oklch(49% 0.0245 91.61)",
+          "oklch(61% 0.0245 91.61)",
+          "oklch(72% 0.0245 91.61)",
+          "oklch(84% 0.0245 91.61)",
+          "oklch(95% 0.0245 91.61)"
+        ]
+      },
+      "night-control-line": {
+        "role": "neutral",
+        "displayName": "Night Control Boundary",
+        "tonalRamp": [
+          "oklch(15% 0.0433 160.84)",
+          "oklch(26% 0.0433 160.84)",
+          "oklch(38% 0.0433 160.84)",
+          "oklch(49% 0.0433 160.84)",
+          "oklch(61% 0.0433 160.84)",
+          "oklch(72% 0.0433 160.84)",
+          "oklch(84% 0.0433 160.84)",
+          "oklch(95% 0.0433 160.84)"
+        ]
+      },
+      "day-control-line": {
+        "role": "neutral",
+        "displayName": "Day Control Boundary",
+        "tonalRamp": [
+          "oklch(15% 0.0319 146.72)",
+          "oklch(26% 0.0319 146.72)",
+          "oklch(38% 0.0319 146.72)",
+          "oklch(49% 0.0319 146.72)",
+          "oklch(61% 0.0319 146.72)",
+          "oklch(72% 0.0319 146.72)",
+          "oklch(84% 0.0319 146.72)",
+          "oklch(95% 0.0319 146.72)"
+        ]
+      },
+      "story-night-paper": {
+        "role": "neutral",
+        "displayName": "Forest Turning Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0357 153.56)",
+          "oklch(26% 0.0357 153.56)",
+          "oklch(38% 0.0357 153.56)",
+          "oklch(49% 0.0357 153.56)",
+          "oklch(61% 0.0357 153.56)",
+          "oklch(72% 0.0357 153.56)",
+          "oklch(84% 0.0357 153.56)",
+          "oklch(95% 0.0357 153.56)"
+        ]
+      },
+      "story-night-paper-light": {
+        "role": "neutral",
+        "displayName": "Lit Forest Turning Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0424 136.31)",
+          "oklch(26% 0.0424 136.31)",
+          "oklch(38% 0.0424 136.31)",
+          "oklch(49% 0.0424 136.31)",
+          "oklch(61% 0.0424 136.31)",
+          "oklch(72% 0.0424 136.31)",
+          "oklch(84% 0.0424 136.31)",
+          "oklch(95% 0.0424 136.31)"
+        ]
+      },
+      "story-night-ink": {
+        "role": "neutral",
+        "displayName": "Forest Turning Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0800 88.04)",
+          "oklch(26% 0.0800 88.04)",
+          "oklch(38% 0.0800 88.04)",
+          "oklch(49% 0.0800 88.04)",
+          "oklch(61% 0.0800 88.04)",
+          "oklch(72% 0.0800 88.04)",
+          "oklch(84% 0.0800 88.04)",
+          "oklch(95% 0.0800 88.04)"
+        ]
+      },
+      "story-day-paper": {
+        "role": "neutral",
+        "displayName": "Parchment Turning Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0470 90.89)",
+          "oklch(26% 0.0470 90.89)",
+          "oklch(38% 0.0470 90.89)",
+          "oklch(49% 0.0470 90.89)",
+          "oklch(61% 0.0470 90.89)",
+          "oklch(72% 0.0470 90.89)",
+          "oklch(84% 0.0470 90.89)",
+          "oklch(95% 0.0470 90.89)"
+        ]
+      },
+      "story-day-paper-light": {
+        "role": "neutral",
+        "displayName": "Lit Parchment Turning Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0336 88.06)",
+          "oklch(26% 0.0336 88.06)",
+          "oklch(38% 0.0336 88.06)",
+          "oklch(49% 0.0336 88.06)",
+          "oklch(61% 0.0336 88.06)",
+          "oklch(72% 0.0336 88.06)",
+          "oklch(84% 0.0336 88.06)",
+          "oklch(95% 0.0336 88.06)"
+        ]
+      },
+      "story-day-ink": {
+        "role": "neutral",
+        "displayName": "Parchment Turning Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0657 84.53)",
+          "oklch(26% 0.0657 84.53)",
+          "oklch(38% 0.0657 84.53)",
+          "oklch(49% 0.0657 84.53)",
+          "oklch(61% 0.0657 84.53)",
+          "oklch(72% 0.0657 84.53)",
+          "oklch(84% 0.0657 84.53)",
+          "oklch(95% 0.0657 84.53)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Base first-level editorial heading."
+      },
+      "hero": {
+        "displayName": "Hero",
+        "purpose": "Final Home headline from realms.css."
+      },
+      "hero-mobile": {
+        "displayName": "Hero Mobile",
+        "purpose": "Compatibility alias for the same continuous fluid Home headline scale."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Shared second-level editorial heading."
+      },
+      "chapter-title": {
+        "displayName": "Chapter Title",
+        "purpose": "Public chapter and reading-view title."
+      },
+      "project-title": {
+        "displayName": "Project Title",
+        "purpose": "Single-entry journal title before compact preview overrides."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Locally supplied Latin Modern Sans at 1rem with 1.65 unitless leading."
+      },
+      "button-label": {
+        "displayName": "Button Label",
+        "purpose": "Semibold primary action text."
+      },
+      "navigation-label": {
+        "displayName": "Navigation Label",
+        "purpose": "Compact navigation and project-filter text."
+      },
+      "field": {
+        "displayName": "Field",
+        "purpose": "Form input, select and textarea text."
+      },
+      "admin-title": {
+        "displayName": "Admin Title",
+        "purpose": "Supplied bold sans operational title."
+      },
+      "quiet-label": {
+        "displayName": "Quiet Label",
+        "purpose": "Regular-weight quiet action text."
+      }
+    },
+    "shadows": [
+      {
+        "name": "primary-hover",
+        "value": "0 3px 12px #0003",
+        "purpose": "Primary action hover only."
+      },
+      {
+        "name": "shrine-hover",
+        "value": "0 5px 18px #0004",
+        "purpose": "Existing shrine-marker vocabulary; the current Home uses a raster scene."
+      },
+      {
+        "name": "turning-leaf",
+        "value": "18px 14px 48px #0005",
+        "purpose": "Structural cast depth on the decorative two-sided book leaf."
+      }
+    ],
+    "motion": [
+      {
+        "name": "cinema-ease",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Shared bounded entrances and control feedback."
+      },
+      {
+        "name": "story-turn-ease",
+        "value": "cubic-bezier(.4,.05,.2,1)",
+        "purpose": "Two-sided page turn in the Web Animations implementation."
+      },
+      {
+        "name": "theme-color",
+        "value": "250ms",
+        "purpose": "Body background and text palette changes."
+      },
+      {
+        "name": "control-feedback",
+        "value": "180–350ms",
+        "purpose": "Color, underline, filter and control feedback when motion is enabled."
+      },
+      {
+        "name": "primary-control",
+        "value": "240ms",
+        "purpose": "Button transform, shadow and background feedback."
+      },
+      {
+        "name": "button-sweep",
+        "value": "650ms",
+        "purpose": "Bounded gold sweep on primary hover/focus."
+      },
+      {
+        "name": "welcome-exit",
+        "value": "620ms",
+        "purpose": "Explicit Enter opens the cover; reduced motion enters immediately."
+      },
+      {
+        "name": "route-start",
+        "value": "180ms",
+        "purpose": "Navigation begins before the decorative turn completes."
+      },
+      {
+        "name": "storybook-turn",
+        "value": "680ms",
+        "purpose": "Forward/backward turning leaf."
+      },
+      {
+        "name": "page-arrival",
+        "value": "650ms",
+        "purpose": "Incoming route hinge arrival."
+      },
+      {
+        "name": "state-change",
+        "value": "180ms exit / 430ms entry",
+        "purpose": "Generic native state transition vocabulary."
+      },
+      {
+        "name": "journal-turn",
+        "value": "400ms exit / 440ms entry",
+        "purpose": "Local journal snapshots with direct/CSS fallback."
+      },
+      {
+        "name": "theme-reveal",
+        "value": "620ms",
+        "purpose": "Progressive native circular theme transition."
+      },
+      {
+        "name": "project-art",
+        "value": "700ms",
+        "purpose": "Bounded project-art zoom on hover/focus-within."
+      },
+      {
+        "name": "audio-fade-in",
+        "value": "900ms",
+        "purpose": "User-triggered music fade; visibility never overrides playback intent."
+      },
+      {
+        "name": "interaction-cue-interval",
+        "value": "180ms minimum",
+        "purpose": "Automatic intentional-interaction effects only."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "[data-motion='off'] or prefers-reduced-motion: reduce",
+        "purpose": "Disable animations/transitions and smooth scrolling; preserve static welcome, entry controls and immediate navigation."
+      },
+      {
+        "name": "seal-inscription",
+        "value": "1100ms, once on welcome arrival",
+        "purpose": "Draw the Home carved seal only with full motion; hidden tabs and cleanup cancel decorative Web Animations."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop-max",
+        "value": "1000px"
+      },
+      {
+        "name": "desk-stack-max",
+        "value": "900px"
+      },
+      {
+        "name": "compact-navigation-max",
+        "value": "760px"
+      },
+      {
+        "name": "auth-contact-stack-max",
+        "value": "650px"
+      },
+      {
+        "name": "mobile-composition-max",
+        "value": "560px"
+      },
+      {
+        "name": "short-welcome-max-height",
+        "value": "620px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Shared primary link; palette inherits from the active realm/theme. The preview uses full-motion interaction feedback.",
+      "html": "<a class=\"ds-button\" href=\"#projects\">Explore projects <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M4 12h15m-6-6 6 6-6 6\"/></svg></a>",
+      "css": ".ds-button{display:inline-flex;justify-content:center;align-items:center;position:relative;overflow:hidden;isolation:isolate;gap:14px;min-height:46px;padding:11px 18px;color:var(--button-ink,#11292a);background:var(--button,#dec58a);font-family:var(--sans,Arial,sans-serif);font-size:14px;font-weight:700;line-height:1.65;border-radius:5px;text-decoration:none;transition:box-shadow 240ms,transform 240ms cubic-bezier(.16,1,.3,1),background-color 240ms}.ds-button svg{width:17px;height:17px;flex-shrink:0;transition:transform 300ms cubic-bezier(.16,1,.3,1)}.ds-button:hover{box-shadow:0 3px 12px #0003;transform:translateY(-2px)}.ds-button:focus-visible{outline:2px solid var(--cyan,#a4dac7);outline-offset:4px}.ds-button:is(:hover,:focus-visible) svg{transform:translateX(4px)}.ds-button:active{transform:translateY(0) scale(.98)}@media(prefers-reduced-motion:reduce){.ds-button,.ds-button svg{transition:none}.ds-button:hover,.ds-button:active,.ds-button:is(:hover,:focus-visible) svg{transform:none}}"
+    },
+    {
+      "name": "Quiet action",
+      "kind": "button",
+      "refersTo": "quiet-link",
+      "description": "Regular-weight secondary link with the shared gold underline and direction feedback.",
+      "html": "<a class=\"ds-quiet\" href=\"/about\">Meet Lorenz <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 18 18 6M6 6h12v12\"/></svg></a>",
+      "css": ".ds-quiet{display:inline-flex;align-items:center;gap:9px;min-height:44px;font-family:var(--sans,Arial,sans-serif);font-size:14px;font-weight:400;line-height:1.65;color:var(--text,#f0ecdf);text-decoration:none;background-image:linear-gradient(var(--gold,#dec58a),var(--gold,#dec58a));background-repeat:no-repeat;background-size:0 1px;background-position:0 calc(100% - 4px);transition:background-size 350ms cubic-bezier(.16,1,.3,1),color 180ms}.ds-quiet svg{width:15px;height:15px;transition:transform 300ms cubic-bezier(.16,1,.3,1)}.ds-quiet:hover{color:var(--gold,#dec58a)}.ds-quiet:is(:hover,:focus-visible){background-size:100% 1px}.ds-quiet:is(:hover,:focus-visible) svg{transform:translate(3px,-3px)}.ds-quiet:focus-visible{outline:2px solid var(--cyan,#a4dac7);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-quiet,.ds-quiet svg{transition:none}.ds-quiet:is(:hover,:focus-visible) svg{transform:none}}"
+    },
+    {
+      "name": "Project filters",
+      "kind": "chip",
+      "refersTo": "filter",
+      "description": "Implemented selected/unselected appearance; the static preview does not execute filtering.",
+      "html": "<div class=\"ds-filters\" role=\"group\" aria-label=\"Filter projects\"><button type=\"button\" aria-pressed=\"true\">All quests<span>3</span></button><button type=\"button\" aria-pressed=\"false\">Built projects<span>1</span></button><button type=\"button\" aria-pressed=\"false\">On the horizon<span>2</span></button></div>",
+      "css": ".ds-filters{display:flex;flex-wrap:wrap;gap:4px}.ds-filters button{display:flex;align-items:center;gap:9px;min-height:44px;padding:9px 13px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--muted,#bbcbc4);font-family:var(--sans,Arial,sans-serif);font-size:13px;font-weight:400;line-height:1.65;cursor:pointer;transition:color 180ms,background-color 200ms,transform 180ms cubic-bezier(.16,1,.3,1)}.ds-filters button[aria-pressed=\"true\"]{color:var(--text,#f0ecdf);border-color:var(--rule,#a4c7bb40);background:var(--surface-raised,#214341)}.ds-filters button:hover{color:var(--gold,#dec58a)}.ds-filters button:focus-visible{outline:2px solid var(--cyan,#a4dac7);outline-offset:4px}.ds-filters button:active{transform:scale(.96)}.ds-filters span{font-size:11px;font-variant-numeric:tabular-nums}@media(max-width:560px){.ds-filters{gap:2px}.ds-filters button{font-size:12px;gap:6px;padding-inline:9px}}@media(prefers-reduced-motion:reduce){.ds-filters button{transition:none}.ds-filters button:active{transform:none}}"
+    },
+    {
+      "name": "Main navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Current route and ordinary header links; the preview omits the app-controlled mobile menu state.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a href=\"/projects\" aria-current=\"page\">Projects</a><a href=\"/blog\">Field notes</a><a href=\"/about\">About</a><a href=\"/login\">Journal desk</a></nav>",
+      "css": ".ds-nav{display:flex;gap:24px}.ds-nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--muted,#bbcbc4);font-family:var(--sans,Arial,sans-serif);font-size:13px;line-height:1.65;text-decoration:none;border-bottom:1px solid transparent;background-image:linear-gradient(var(--gold,#dec58a),var(--gold,#dec58a));background-repeat:no-repeat;background-size:0 1px;background-position:0 calc(100% - 4px);transition:background-size 350ms cubic-bezier(.16,1,.3,1),color 180ms}.ds-nav a:hover,.ds-nav a[aria-current=\"page\"]{color:var(--text,#f0ecdf);border-bottom-color:var(--gold,#dec58a)}.ds-nav a:is(:hover,:focus-visible){background-size:100% 1px}.ds-nav a:focus-visible{outline:2px solid var(--cyan,#a4dac7);outline-offset:4px}@media(max-width:1000px){.ds-nav{gap:18px}}@media(max-width:760px){.ds-nav{width:100%;justify-content:space-between;gap:10px;padding-block:4px 12px}}@media(prefers-reduced-motion:reduce){.ds-nav a{transition:none}}"
+    },
+    {
+      "name": "Labeled field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Visible field label, explicit shared boundary and invalid-state treatment; preview contains no form submission logic.",
+      "html": "<label class=\"ds-field\">Email<input type=\"email\" autocomplete=\"email\" placeholder=\"you@example.com\"/></label>",
+      "css": ".ds-field{display:grid;gap:6px;color:var(--text,#f0ecdf);font-family:var(--sans,Arial,sans-serif);font-size:13px;line-height:1.65}.ds-field input{width:100%;background:var(--surface,#172e27);color:var(--text,#f0ecdf);border:1px solid var(--control-line,#708f7e);border-radius:5px;min-height:44px;padding:9px 12px;font-family:var(--sans,Arial,sans-serif);font-size:16px;line-height:1.65;caret-color:var(--gold,#dcc08a)}.ds-field input:focus-visible{outline:2px solid var(--cyan,#a4dac7);outline-offset:4px}.ds-field input[aria-invalid=\"true\"]{border-color:var(--heart,#eba092)}.ds-field input::placeholder{color:var(--muted,#b4c6b8);opacity:1}"
+    },
+    {
+      "name": "Case-study tags",
+      "kind": "chip",
+      "refersTo": "case-tag",
+      "description": "Noninteractive technology labels from the case-study metadata.",
+      "html": "<div class=\"ds-tags\"><span>Next.js</span><span>TypeScript</span><span>Supabase</span></div>",
+      "css": ".ds-tags{display:flex;flex-wrap:wrap;gap:8px;color:var(--text,#f0ecdf);font-family:var(--sans,Arial,sans-serif);line-height:1.65}.ds-tags span{font-size:12px;padding:5px 10px;background:var(--surface-raised,#213f34);border-radius:3px}"
+    },
+    {
+      "name": "Quest content",
+      "kind": "card",
+      "refersTo": "quest-content",
+      "description": "Representative art-free content region from an actual project card; the sample title describes this portfolio and adds no outcome claims.",
+      "html": "<article class=\"ds-quest\"><div class=\"ds-quest-content\"><div class=\"ds-quest-tags\">Next.js / TypeScript</div><h3><a href=\"/projects/hyrule-portfolio\">Adonissimo portfolio</a></h3><p>A personal portfolio and full-stack journal.</p><a class=\"ds-quest-link\" href=\"/projects/hyrule-portfolio\">Read the quest log <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 18 18 6M6 6h12v12\"/></svg></a></div></article>",
+      "css": ".ds-quest{border:1px solid var(--rule,#a4c7bb40);border-radius:8px;overflow:hidden;min-width:0;transition:border-color 300ms}.ds-quest:is(:hover,:focus-within){border-color:var(--gold,#dec58a)}.ds-quest-content{display:flex;flex-direction:column;justify-content:center;padding:28px 32px;background:var(--surface,#183536);font-family:var(--sans,Arial,sans-serif);line-height:1.65}.ds-quest-tags{font-size:12px;color:var(--gold,#dec58a)}.ds-quest h3{font-family:var(--serif,Georgia,serif);font-weight:400;font-size:29px;line-height:1.25;letter-spacing:-.025em;margin:10px 0;color:var(--text,#f0ecdf)}.ds-quest h3 a{color:inherit;text-decoration:none}.ds-quest h3 a:hover{color:var(--gold,#dec58a)}.ds-quest p{font-size:14px;line-height:1.65;max-width:42ch;color:var(--muted,#bbcbc4);margin:0}.ds-quest-link{display:inline-flex;align-items:center;align-self:flex-start;gap:16px;min-height:44px;margin-top:14px;font-size:13px;color:var(--gold,#dec58a);text-decoration:none}.ds-quest-link svg{width:16px;height:20px}.ds-quest-link:hover{text-decoration:underline}.ds-quest a:focus-visible{outline:2px solid var(--cyan,#a4dac7);outline-offset:4px}@media(max-width:1000px){.ds-quest-content{padding:24px}}@media(max-width:560px){.ds-quest-content{padding:22px}.ds-quest h3{font-size:26px}.ds-quest-link{margin-top:12px}}@media(prefers-reduced-motion:reduce){.ds-quest{transition:none}}"
+    },
+    {
+      "name": "Circular theme control",
+      "kind": "button",
+      "refersTo": "icon-control",
+      "description": "Shared outlined circular control, illustrated with the actual sun icon geometry. The preview does not change theme.",
+      "html": "<button class=\"ds-icon-control\" type=\"button\" aria-label=\"Switch to day theme\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5\"/></svg></button>",
+      "css": ".ds-icon-control{display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;background:transparent;border:1px solid var(--rule,#a4c7bb40);border-radius:50%;color:var(--text,#f0ecdf);cursor:pointer}.ds-icon-control svg{width:20px;height:20px;transition:transform 300ms cubic-bezier(.16,1,.3,1)}.ds-icon-control:hover{background:var(--surface-raised,#214341)}.ds-icon-control:hover svg{transform:rotate(30deg)}.ds-icon-control:focus-visible{outline:2px solid var(--cyan,#a4dac7);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-icon-control svg{transition:none}.ds-icon-control:hover svg{transform:none}}"
+    },
+    {
+      "name": "Zonai realm glyph",
+      "kind": "custom",
+      "refersTo": "realm-glyph",
+      "description": "Exact original decorative workshop geometry from RealmGlyph; not a transcription of in-game writing.",
+      "html": "<svg class=\"ds-realm\" viewBox=\"0 0 120 120\" fill=\"none\" aria-hidden=\"true\" focusable=\"false\"><circle cx=\"60\" cy=\"60\" r=\"45\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M35 28a39 39 0 0 1 54 51M85 92a39 39 0 0 1-54-51\" stroke=\"currentColor\" stroke-width=\"5\"/><path d=\"m60 34 23 13v26L60 86 37 73V47Z\" fill=\"currentColor\" opacity=\".15\"/><path d=\"m60 42 16 9v18l-16 9-16-9V51Z\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M60 10v10m0 80v10M10 60h10m80 0h10M54 57h12v12H54Z\" stroke=\"currentColor\" stroke-width=\"2\"/></svg>",
+      "css": ".ds-realm{display:block;width:46px;height:46px;color:var(--cyan,#91d7b2);flex-shrink:0}@media(max-width:760px){.ds-realm{width:64px;height:64px}}@media(max-width:560px){.ds-realm{width:46px;height:46px}}"
+    },
+    {
+      "name": "Illustrated realm heading",
+      "kind": "custom",
+      "refersTo": "realm-scene",
+      "description": "Readable text beside a complete transparent realm scene and bounded relic. No opaque scenery card; narrow screens place art after text.",
+      "html": "<div class=\"ds-realm-heading\"><div><h2>The adventure log.</h2><p>Projects, experiments, and paths still unexplored.</p></div><div class=\"ds-realm-picture\"><img class=\"ds-scene\" src=\"/images/zonai-workshop-cutout.png\" alt=\"\" width=\"1536\" height=\"1024\" loading=\"lazy\"><img class=\"ds-cutout\" src=\"/images/ornaments/zonai-relic.png\" alt=\"\" width=\"1254\" height=\"1254\" loading=\"lazy\" aria-hidden=\"true\"></div></div>",
+      "css": ".ds-realm-heading{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(240px,.65fr);gap:40px;align-items:center;color:var(--text)}.ds-realm-heading h2{font:400 36px/1.2 var(--serif);margin:0}.ds-realm-heading p{color:var(--muted);font:15px/1.65 var(--sans);margin:12px 0 0}.ds-realm-picture{position:relative;min-width:0}.ds-scene{display:block;width:100%;height:174px;object-fit:contain;background:transparent}.ds-cutout{position:absolute;width:150px;height:150px;object-fit:contain;right:-12px;bottom:-8px;pointer-events:none}@media(max-width:560px){.ds-realm-heading{grid-template-columns:1fr;gap:18px}.ds-realm-heading h2{font-size:32px}.ds-scene{height:128px}.ds-cutout{width:96px;height:96px;right:0;bottom:-4px}}"
+    },
+    {
+      "name": "Transparent realm relic",
+      "kind": "custom",
+      "refersTo": "realm-ornament",
+      "description": "Original decorative fan-art cutout; genuine alpha, no control or content role. Shared by bounded scene-edge placements.",
+      "html": "<span class=\"ds-relic\" aria-hidden=\"true\"><img src=\"/images/ornaments/silent-princess.png\" width=\"1254\" height=\"1254\" alt=\"\" loading=\"lazy\" draggable=\"false\"></span>",
+      "css": ".ds-relic{display:block;width:180px;aspect-ratio:1;pointer-events:none;user-select:none}.ds-relic img{display:block;width:100%;height:100%;object-fit:contain}"
+    },
+    {
+      "name": "Illustrated page background",
+      "kind": "custom",
+      "refersTo": "world-backdrop",
+      "description": "Five distinct public environment paintings with the same protected reading area. Detail routes inherit their section; auth/admin use a quieter workshop. Neutral routes omit scenery.",
+      "html": "<div class=\"ds-world\"><img src=\"/images/backgrounds/sky-atlas.png\" alt=\"\" width=\"1536\" height=\"1024\" loading=\"lazy\" aria-hidden=\"true\"><div class=\"ds-world-wash\"></div></div>",
+      "css": ".ds-world{position:relative;height:280px;background:var(--bg,#11292a);overflow:hidden;pointer-events:none}.ds-world img{display:block;width:100%;height:100%;object-fit:cover;opacity:.52}.ds-world-wash{position:absolute;inset:0;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--bg,#11292a) 97%,transparent) 16%,color-mix(in srgb,var(--bg,#11292a) 97%,transparent) 84%,transparent)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A builder exploring Hyrule",
+    "overview": "Adonissimo is Lorenz Anthony Salvador’s personal nickname and the lead wordmark for his internship and full-stack developer portfolio. The implemented world expands the established Hyrule field journal into Tears of the Kingdom settings: open sky and pale stone, a jade Zonai workshop, warm fields, and cool mineral Depths. Shared serif headings, local sans controls, gold emphasis and consistent navigation make these places one interface. The owner’s name and full-stack focus accompany the brand; work and honest explanations provide the proof.\n\nThe character is playful, adventurous and visually careful. Four original painted realm scenes, four transparent relic/botanical PNGs, graphic chapter headings, complete scenic footer cutouts and decorative geometry establish place; familiar controls, compact content groups and readable articles support browsing. The manual book-cover welcome, route page turns and optional user-triggered music retain the earlier cinematic signature. The site remains visibly identified as an unofficial fan portfolio.\n\nThis is a source-observed design record, merged from the incumbent design and the completed branding interview. No browser, design engine or detector was available for this documentation pass. The earlier independent finish review returned **recapture** because required desktop/mobile screenshots were missing; that visual gate remains open. The operator subsequently supplied passing tests, TypeScript, ESLint and production-build results for 3.3.1. The 3.6.0 update passes the 83 existing Node tests and isolated source/lifecycle checks here, while its full build and browser verification still need the operator's environment. Source inspection does not establish rendered appearance, responsiveness, live backend behavior or full accessibility.\n\nSource 3.7.0 uses transparent foreground art, coordinated actual text/image/book/rune transitions and semantic magical route sounds. Two transparent edits were generated; sky/Depths reuse existing alpha artwork after the generation limit. The visible motion toggle is removed; full motion is the default. OS preferences remain automatic. Full browser, build and listening verification remain required.\n\nSource 3.8.0 repairs the explicit full-motion gate even under an OS reduced preference, restores the original wide PNG footer and connects Enter to the rune reveal. Ambient leaves/motes/background breathing and a desktop winged fairy cursor/light trail use fixed pools with hidden/blur cleanup. The expanded dock can pause ambient effects independently. 95 source tests and isolated TSX event/lifecycle checks pass; browser/build/audio/performance verification remains required.\n\nSource 3.9.0 adapts compact navigation, forms, project rows and the audio dock for phones. Speed-responsive fairy wings keep fluttering at rest. Day/night and realm-specific rays, mist and a fuller leaf field use bounded desktop/touch budgets. The Triforce opening has an original forest prelude that attempts autoplay without a sound button, with trusted-gesture retry and clean entry handoff. 98 Node tests and 129 syntax transforms pass; real browser/audio/performance/build verification is still required.\n\nSource 3.10.0 portals the shared animated fairy into the native welcome dialog. Fuller fog layers drift calmly across the opening and pages, with 48-second rays and 52–84-second mist legs. Existing PNG stone/forest mural wings protect the central copy. Enter releases a white/gold Triforce zoom over 820ms. Image generation was usage-limited, so no new illustration is claimed. 101 Node tests, 130 syntax transforms and isolated real-component checks pass; browser/build/listening/performance gates remain open.\n\nSource 3.11.0 adds a connected curved 3D paper sheet and moving shadow, with eight strips/940ms desktop and five/720ms compact. Prompt navigation, flat fallback, cancellation and the 3.10 welcome/atmosphere remain. 105 Node tests, 132 syntax transforms and isolated component checks pass; browser paint/performance and full build remain unverified.\n\nSource 3.11.1 explicitly loads the selected visible backdrop and hero eagerly, gives the hero high fetch priority, and declares root smooth scrolling for Next router integration. The visual world and motion timings remain. 105 tests and 132 syntax transforms pass; browser warning verification/full build remain local.\n\nSource 3.12.0 makes the atmosphere visible using three textured foreground cloud depths and stronger realm/day-night light shafts. The shared bounded canvas portals into the welcome and continues across routes, protecting reading and keeping calm drift. Two quality textures are cached; hidden/pause/cleanup stop work. 109 tests, 135 syntax transforms and isolated component lifecycle checks pass; real browser/contrast/performance/full-build gates remain open.",
+    "keyCharacteristics": [
+      "Four context-selected settings with one shared day/night preference.",
+      "Forest/parchment heritage extended through sky stone, jade and mineral ink.",
+      "Locally loaded editorial serif with compact, familiar sans-serif controls.",
+      "Tonal layering, thin rules, restrained corners and bounded interaction feedback.",
+      "Recognizable Zelda identity, original fan art and truthful portfolio states.",
+      "Manual-entry welcome, optional book turns and independently controlled music/effects."
+    ],
+    "rules": [],
+    "dos": [
+      "Do keep Adonissimo, Lorenz’s name and full-stack focus together in the initial content group.",
+      "Do select the realm by context and preserve the user’s independent day/night preference.",
+      "Do use semantic palette variables, the local serif/sans pairing and shared control geometry.",
+      "Do keep Projects and Contact easy to find with familiar labels and one clear primary action per group.",
+      "Do preserve truthful planned/published states, visible focus, labeled controls and reduced-motion/manual-audio paths.",
+      "Do use recognizable Zelda emblems and original fan artwork consistently, with decorative glyphs hidden from assistive technology.",
+      "Do retain the unofficial fan identification in the footer and keep source checks separate from browser/live-service evidence."
+    ],
+    "donts": [
+      "Don't replace the explicitly requested Zelda identity with generic fantasy symbols.",
+      "Don't turn every paragraph or row into a raised card, or add glass panels, fake grain, neon UI glow, gradient text or unrelated technology branding.",
+      "Don't use decorative glyphs or fantasy-only language as the sole navigation or operational label.",
+      "Don't use tiny text, clipped prose, excessive blank gaps or repeated ornament to manufacture compactness or fill missing content.",
+      "Don't invent project outcomes, professional experience, metrics, contact details, résumé links or screenshots.",
+      "Don't make reading or navigation depend on a long scene, automatic audio or decorative animation completing.",
+      "Don't describe source inspection or the recapture disposition as verified appearance, responsiveness, production readiness or full accessibility."
+    ]
+  }
+}

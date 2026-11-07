@@ -1,0 +1,27 @@
+Adonissimo 3.5.0 font delivery
+
+Display: Latin Modern Roman 10, regular and italic.
+Interface/body: Latin Modern Sans 10, regular and bold.
+Authors: Boguslaw Jackowski and Janusz M. Nowacki / GUST e-foundry.
+Upstream: https://www.gust.org.pl/projects/e-foundry/latin-modern
+Distribution: the local TeX Latin Modern font distribution.
+License: GUST Font License; see GUST-FONT-LICENSE.txt,
+README-Latin-Modern.TXT and MANIFEST-Latin-Modern.TXT.
+
+The four WOFF web fonts were converted from these original OTF files using
+fontTools lossless container compression. Glyph outlines, character mappings,
+font names and weights were not edited. Original OTF files are retained beside
+the WOFF files. Only the WOFF files are referenced by next/font/local.
+
+lmroman10-regular.otf -> LMRoman-Regular.otf -> LMRoman-Regular.woff
+lmroman10-italic.otf  -> LMRoman-Italic.otf  -> LMRoman-Italic.woff
+lmsans10-regular.otf  -> LMSans-Regular.otf  -> LMSans-Regular.woff
+lmsans10-bold.otf     -> LMSans-Bold.otf     -> LMSans-Bold.woff
+
+Display uses weight 400 with actual normal and italic files.
+Interface uses actual weights 400 and 700. Shared emphasis roles request 700.
+Loading uses display: swap and Next's adjusted Times New Roman/Arial fallback
+metrics. No remote font request is needed at build time or in the browser.
+
+The older DejaVuSerif.ttf is retained as historical project material and is
+not imported by the 3.5.0 layout.

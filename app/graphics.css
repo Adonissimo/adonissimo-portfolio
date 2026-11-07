@@ -1,0 +1,93 @@
+/* Illustrated places share the established palette, type and control system. */
+.realm-scene { position: relative; width: 100%; aspect-ratio: 3 / 2; background: transparent; pointer-events: none; user-select: none; }
+.realm-scene > img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.chapter-heading.has-scenery { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(240px, .65fr); gap: 40px; align-items: center; }
+.chapter-heading.has-scenery > .chapter-heading-copy { max-width: 760px; min-width: 0; }
+.chapter-illustration { position: relative; min-width: 0; }
+.chapter-illustration > .realm-scene { height: 174px; aspect-ratio: auto; }
+.chapter-seal { position: absolute; right: 12px; bottom: 12px; width: 46px; height: 46px; padding: 7px; color: var(--gold); background: var(--bg); border-radius: 50%; }
+.auth-page .chapter-heading.has-scenery, .contact-page .chapter-heading.has-scenery { display: block; }
+.auth-page .chapter-illustration, .contact-page .chapter-illustration { margin-top: 24px; }
+.auth-page .chapter-illustration > .realm-scene, .contact-page .chapter-illustration > .realm-scene { height: 190px; }
+.world-divider { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; height: 30px; color: var(--gold); }
+.world-divider > svg:first-child, .world-divider > svg:last-child { width: min(40%, 360px); height: 24px; opacity: .55; }
+.world-divider > svg:nth-child(2) { width: 30px; height: 30px; flex-shrink: 0; }
+.projects-section, .about-section { position: relative; border-top: 0; }
+.projects-section > .world-divider, .about-section > .world-divider { position: absolute; left: 0; top: -15px; }
+.quest-image > .realm-scene { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; }
+.quest-image:has(> .realm-scene), .case-art:has(> .realm-scene) { background: transparent; }
+.quest-state { top: 12px; right: 12px; padding: 5px 10px; font-size: 11px; color: var(--text); background: var(--bg); border-radius: 3px; }
+.browse-entry > .realm-scene { height: 200px; aspect-ratio: auto; }
+.about-section { grid-template-columns: .9fr 1.1fr 1fr; gap: 28px; align-items: center; }
+.about-vista { height: 240px; aspect-ratio: auto; }
+.about-copy h2 { font-size: clamp(28px, 2.6vw, 34px); }
+.about-copy > p { font-size: var(--type-body); }
+.home-inventory { align-self: center; min-width: 0; }
+.inventory-item dt { display: inline-flex; align-items: center; gap: 10px; }
+.tech-mark { width: 25px; height: 25px; flex: 0 0 25px; color: var(--cyan); }
+.inventory-item { gap: 12px; padding-block: 9px; }
+.inventory-item dd { font-size: 12px; max-width: 180px; }
+.chapter-inventory .tool-name { display: inline-flex; align-items: center; gap: 12px; color: var(--text); font-size: 14px; }
+.contact-frame { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 28px; align-items: center; padding-block: 26px; }
+.contact-vista { width: 110px; height: 110px; aspect-ratio: auto; }
+.contact-copy { min-width: 0; }
+.contact-frame .contact-pending { max-width: 250px; }
+.footer-scenery { position: relative; height: 86px; overflow: hidden; border-radius: 8px; background: var(--surface); }
+.footer-scenery > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.footer-scenery[data-scene='sky'] > img { object-position: 50% 51%; }
+.footer-scenery[data-scene='zonai'] > img { object-position: 50% 66%; }
+.footer-scenery[data-scene='fields'] > img { object-position: 50% 58%; }
+.footer-scenery[data-scene='depths'] > img { object-position: 50% 52%; }
+.reading-vista { height: 156px; aspect-ratio: auto; margin-block: 22px 8px; }
+.reading-page > .world-divider { margin-block: 12px 20px; }
+.case-art > .realm-scene { border-radius: inherit; }
+.case-study > .world-divider { margin-top: 20px; }
+.admin-vista { width: 160px; height: 64px; aspect-ratio: auto; margin-left: auto; flex: 0 0 160px; }
+@media (max-width: 1000px) {
+  .about-section { grid-template-columns: .8fr 1.1fr 1fr; gap: 24px; }
+  .inventory-item { align-items: flex-start; }
+  .inventory-item dt { gap: 7px; }
+  .inventory-item dd { max-width: 125px; }
+  .contact-frame { grid-template-columns: 90px minmax(0, 1fr) auto; gap: 22px; }
+  .contact-vista { width: 90px; height: 100px; }
+}
+@media (max-width: 760px) {
+  .chapter-heading.has-scenery { grid-template-columns: minmax(0, 1.3fr) minmax(180px, .7fr); gap: 24px; }
+  .chapter-illustration > .realm-scene { height: 150px; }
+  .about-section { grid-template-columns: 1fr 1fr; align-items: start; gap: 26px; }
+  .about-vista { height: 235px; }
+  .home-inventory { grid-column: 1 / -1; }
+  .home-inventory .inventory-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  .inventory-item { flex-direction: row; align-items: center; }
+  .inventory-item dd { text-align: right; max-width: 160px; }
+  .contact-frame { grid-template-columns: 80px minmax(0, 1fr); gap: 18px; }
+  .contact-vista { width: 80px; height: 80px; }
+  .contact-frame > .contact-actions, .contact-frame > .contact-pending { grid-column: 1 / -1; justify-self: start; }
+}
+@media (max-width: 650px) {
+  .admin-vista { display: none; }
+  .auth-page .chapter-illustration > .realm-scene, .contact-page .chapter-illustration > .realm-scene { height: 126px; }
+  .auth-page .chapter-illustration, .contact-page .chapter-illustration { margin-top: 18px; }
+}
+@media (max-width: 560px) {
+  .chapter-heading.has-scenery { grid-template-columns: 1fr; gap: 18px; }
+  .chapter-illustration > .realm-scene { height: 128px; }
+  .chapter-seal { width: 38px; height: 38px; right: 10px; bottom: 10px; }
+  .world-divider { gap: 9px; }
+  .world-divider > svg:nth-child(2) { width: 26px; height: 26px; }
+  .browse-entry > .realm-scene { height: 130px; }
+  .about-section { grid-template-columns: 1fr; gap: 22px; }
+  .about-vista { height: 148px; }
+  .about-copy h2 { font-size: 30px; }
+  .home-inventory .inventory-list { display: block; }
+  .inventory-item dd { max-width: 190px; }
+  .contact-frame { grid-template-columns: 72px minmax(0, 1fr); gap: 16px 18px; }
+  .contact-vista { width: 72px; height: 82px; }
+  .contact-frame h2 { font-size: 25px; }
+  .footer-scenery { height: 66px; }
+  .reading-vista { height: 118px; }
+}
+@media print {
+  .realm-scene, .world-divider, .chapter-illustration { display: none !important; }
+  .chapter-heading.has-scenery, .contact-frame, .about-section { display: block; }
+}

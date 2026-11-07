@@ -1,0 +1,26 @@
+/* An actual illustrated backdrop, with a neutral reading wash over the content. */
+body { isolation: isolate; }
+.world-backdrop { position: fixed; z-index: -1; inset: 68px 0 0; overflow: hidden; pointer-events: none; user-select: none; contain: strict; }
+.world-atlas { object-fit: cover; object-position: center top; opacity: .52; }
+.world-reading-wash {
+  position: absolute; inset: 0;
+  --reading-edge: max(20px, calc((100vw - 1160px) / 2));
+  --reading-wash: color-mix(in srgb, var(--bg) 97%, transparent);
+  background: linear-gradient(90deg, transparent, var(--reading-wash) var(--reading-edge), var(--reading-wash) calc(100% - var(--reading-edge)), transparent);
+}
+[data-theme='day'] .world-atlas { opacity: .42; }
+.world-backdrop[data-world='fields'] .world-atlas { opacity: .6; }
+[data-theme='day'] .world-backdrop[data-world='fields'] .world-atlas { opacity: .48; }
+.world-backdrop[data-world='depths'] .world-atlas { opacity: .35; }
+.world-backdrop[data-background='zonai'] .world-atlas { object-position: 28% top; }
+.world-backdrop[data-background='depths'] .world-atlas { object-position: 75% top; }
+.world-backdrop[data-background='riverside'] .world-atlas { object-position: 70% top; }
+.world-backdrop-quiet .world-atlas { opacity: .2 !important; }
+@media (max-width: 1000px) { .world-reading-wash { --reading-edge: 24px; } }
+@media (max-width: 760px) {
+  .world-atlas { object-position: 24% top; opacity: .36; }
+  .world-reading-wash { --reading-edge: 20px; --reading-wash: color-mix(in srgb, var(--bg) 98%, transparent); }
+  .world-backdrop[data-world='fields'] .world-atlas { opacity: .42; }
+}
+@supports not (color: color-mix(in srgb, black, transparent)) { .world-backdrop { display: none; } }
+@media print { .world-backdrop { display: none !important; } }

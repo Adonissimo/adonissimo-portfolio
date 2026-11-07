@@ -1,0 +1,51 @@
+/* Cutout relics frame the artwork. They never cover reading or control areas. */
+.realm-ornament { display: block; position: absolute; width: 180px; aspect-ratio: 1; pointer-events: none; user-select: none; }
+.realm-ornament > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.ancient-seal { position: absolute; width: 240px; height: 240px; color: var(--gold); stroke: currentColor; stroke-width: 1; pointer-events: none; opacity: .34; }
+.ancient-seal .seal-track { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.hero-landscape { isolation: isolate; }
+.hero-etching { z-index: -1; width: 94%; height: auto; aspect-ratio: 1; top: -11%; left: 3%; }
+.hero-art { position: relative; z-index: 0; }
+.hero-relic { z-index: 1; width: 196px; left: 50%; bottom: 38px; transform: translateX(-50%); }
+.hero-landscape .landscape-caption { position: relative; z-index: 2; }
+.chapter-illustration { isolation: isolate; }
+.chapter-etching { z-index: -1; width: 196px; height: 196px; top: -13px; right: -14px; }
+.chapter-relic { width: 150px; right: -12px; bottom: -8px; z-index: 1; }
+.chapter-seal { left: 12px; right: auto; z-index: 2; }
+.chapter-relic[data-relic='fields'] { width: 140px; right: -8px; }
+.section-margin-relic { width: 128px; left: -120px; top: 160px; }
+.about-vista-frame { position: relative; min-width: 0; }
+.about-relic { width: 140px; right: -14px; bottom: -9px; }
+.footer-landscape { position: relative; margin-bottom: 16px; }
+.footer-landscape .footer-scenery { margin-bottom: 0; }
+.footer-relic { width: 100px; right: 18px; bottom: -2px; }
+.auth-page .chapter-relic { width: 112px; right: 0; bottom: -4px; }
+.auth-page .chapter-etching { display: none; }
+.contact-page .chapter-relic { width: 120px; }
+.contact-page .chapter-etching { display: none; }
+.quest-image .realm-scene { outline: 1px solid transparent; outline-offset: -9px; }
+.quest-entry:is(:hover, :focus-within) .quest-image .realm-scene { outline-color: var(--gold); }
+html[data-motion='on'] .quest-image .realm-scene { transition: outline-color 200ms ease-out; }
+@media (max-width: 1399px) { .section-margin-relic { display: none; } }
+@media (max-width: 1000px) { .hero-relic { width: 160px; } }
+@media (max-width: 760px) {
+  .chapter-relic { width: 120px; right: -8px; }
+  .chapter-relic[data-relic='fields'] { width: 110px; }
+  .chapter-etching { width: 160px; height: 160px; top: -6px; right: -8px; }
+  .footer-relic { width: 84px; right: 10px; }
+}
+@media (max-width: 560px) {
+  .hero-relic { width: 112px; bottom: 38px; }
+  .hero-etching { top: -6%; width: 90%; left: 5%; }
+  .chapter-relic { width: 96px; right: 0; bottom: -4px; }
+  .chapter-relic[data-relic='fields'] { width: 96px; right: 0; }
+  .chapter-etching { width: 132px; height: 132px; top: -2px; right: 0; }
+  .chapter-seal { left: 10px; }
+  .about-relic { width: 96px; right: 0; bottom: -6px; }
+  .auth-page .chapter-relic, .contact-page .chapter-relic { width: 96px; right: 0; }
+  .footer-landscape { margin-bottom: 12px; }
+  .footer-relic { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { html:not([data-motion='on']) .quest-image .realm-scene { transition: none !important; } }
+html[data-motion='off'] .quest-image .realm-scene { transition: none; }
+@media print { .realm-ornament, .ancient-seal { display: none !important; } }

@@ -1,0 +1,21 @@
+.fairy-trail { position: fixed; inset: 0; z-index: 100; overflow: hidden; pointer-events: none; user-select: none; contain: strict; }
+.fairy-spark { position: absolute; width: 10px; height: 10px; opacity: 0; pointer-events: none; border-radius: 50%; background: radial-gradient(circle, #fffdeb 0 12%, var(--cyan) 28%, transparent 70%); }
+.fairy-spark:nth-child(3n) { background: radial-gradient(circle, #fffdeb 0 12%, var(--gold) 28%, transparent 70%); }
+.fairy-companion { --wing-beat: 750ms; position: absolute; top: 0; left: 0; width: 32px; height: 32px; visibility: hidden; pointer-events: none; will-change: transform; }
+.fairy-companion > svg { display: block; overflow: visible; }
+.fairy-wing { transform-box: fill-box; }
+.fairy-wing-left { transform-origin: 100% 50%; animation: fairy-flap-left var(--wing-beat) ease-in-out infinite alternate paused; }
+.fairy-wing-right { transform-origin: 0 50%; animation: fairy-flap-right var(--wing-beat) ease-in-out infinite alternate paused; }
+html[data-fairy-animated='true'] .fairy-wing { animation-play-state: running; }
+@keyframes fairy-flap-left { from { transform: scaleX(1) rotate(-5deg); } to { transform: scaleX(.28) rotate(12deg); } }
+@keyframes fairy-flap-right { from { transform: scaleX(1) rotate(5deg); } to { transform: scaleX(.28) rotate(-12deg); } }
+@media (hover: hover) and (pointer: fine) {
+  html[data-fairy-cursor='on'] body { cursor: url('/fairy-cursor.svg') 16 16, auto; }
+  html[data-fairy-cursor='on'] :is(a, button, summary, [role='button']) { cursor: url('/fairy-cursor.svg') 16 16, pointer; }
+  html[data-fairy-animated='true'] body, html[data-fairy-animated='true'] :is(a, button, summary, [role='button']) { cursor: none; }
+  html[data-fairy-cursor='on'] :is(input, textarea, [contenteditable='true']) { cursor: text; }
+  html[data-fairy-cursor='on'] :is(input[type='checkbox'], input[type='radio'], input[type='range'], input[type='submit'], select) { cursor: pointer; }
+  html[data-fairy-cursor='on'] :is(button:disabled, [aria-disabled='true']) { cursor: not-allowed; }
+}
+@media (hover: none), (pointer: coarse) { .fairy-trail { display: none; } }
+@media print { .fairy-trail { display: none !important; } }

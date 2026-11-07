@@ -1,0 +1,157 @@
+{
+  "ornaments/hero-relics.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-04",
+    "prompt": "ornaments/hero-relics.prompt.txt",
+    "source": "generated_images/exec-4ed344a3-8cee-44e9-a2c9-648507a54ead.png",
+    "usage": "Decorative realm ornament; not a project screenshot or official Nintendo asset",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true
+  },
+  "ornaments/zonai-relic.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-04",
+    "prompt": "ornaments/zonai-relic.prompt.txt",
+    "source": "generated_images/exec-4d407bae-1c1e-4712-b124-1541c4821feb.png",
+    "usage": "Decorative realm ornament; not a project screenshot or official Nintendo asset",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true
+  },
+  "ornaments/silent-princess.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-04",
+    "prompt": "ornaments/silent-princess.prompt.txt",
+    "source": "generated_images/exec-91230098-33ad-482b-b2f0-f6357c08f177.png",
+    "usage": "Decorative realm ornament; not a project screenshot or official Nintendo asset",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true
+  },
+  "ornaments/lightroot.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-04",
+    "prompt": "ornaments/lightroot.prompt.txt",
+    "source": "generated_images/exec-c696ce87-f8a5-4d23-9862-9ce6b31d3650.png",
+    "usage": "Decorative realm ornament; not a project screenshot or official Nintendo asset; also used as complete transparent Depths scenery in 3.7.0",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true
+  },
+  "hyrule-atlas.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-04",
+    "prompt": "hyrule-atlas.prompt.txt",
+    "source": "generated_images/exec-3e5673ab-6015-4e36-a1e7-90e7dcccc5fb.png",
+    "usage": "Decorative public page background; fictional atlas atmosphere, not a game map or project screenshot",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true
+  },
+  "sky-island.png": {
+    "kind": "generated original fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-04",
+    "prompt": "sky-island.prompt.txt",
+    "source": "generated_images/exec-9c188353-b716-4128-b8ea-b99f1cfba695.png",
+    "usage": "Home hero; no claim of official Nintendo artwork; original PNG source used throughout the theme"
+  },
+  "zonai-workshop.png": {
+    "kind": "generated original fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "zonai-workshop.prompt.txt",
+    "source": "generated_images/exec-779f1b6d-b81c-4c7c-afa8-ef1f8cfaaba5.png",
+    "usage": "Decorative zonai scenery; not a project screenshot or official Nintendo asset; original PNG source used throughout the theme"
+  },
+  "hyrule-fields.png": {
+    "kind": "generated original fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "hyrule-fields.prompt.txt",
+    "source": "generated_images/exec-eb2286d9-226e-4be4-9853-ea4c170693df.png",
+    "usage": "Decorative fields scenery; not a project screenshot or official Nintendo asset; original PNG source used throughout the theme"
+  },
+  "depths-lightroot.png": {
+    "kind": "generated original fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "depths-lightroot.prompt.txt",
+    "source": "generated_images/exec-739227f5-1d89-424a-b69f-325f97597d08.png",
+    "usage": "Decorative depths scenery; not a project screenshot or official Nintendo asset; original PNG source used throughout the theme"
+  },
+  "backgrounds/sky-atlas.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "backgrounds/sky-atlas.prompt.txt",
+    "source": "generated_images/exec-cf7af670-497b-45ec-979d-daf34289ff0b.png",
+    "usage": "Decorative setting-specific page background, not an official Nintendo asset, game map or project screenshot; also used as transparent foreground sky scenery in 3.7.0",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true
+  },
+  "backgrounds/zonai-atlas.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "backgrounds/zonai-atlas.prompt.txt",
+    "source": "generated_images/exec-4ca352e3-4360-4341-8d45-3abc3259b6a1.png",
+    "usage": "Decorative setting-specific page background, not an official Nintendo asset, game map or project screenshot",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true
+  },
+  "backgrounds/depths-atlas.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "backgrounds/depths-atlas.prompt.txt",
+    "source": "generated_images/exec-871ffe25-fa62-47fe-90ba-1b6d91ad8965.png",
+    "usage": "Decorative setting-specific page background, not an official Nintendo asset, game map or project screenshot",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true
+  },
+  "backgrounds/riverside-atlas.png": {
+    "kind": "generated original transparent fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "backgrounds/riverside-atlas.prompt.txt",
+    "source": "generated_images/exec-0a1c07ed-bcea-4a16-9447-3c077483dff0.png",
+    "usage": "Decorative setting-specific page background, not an official Nintendo asset, game map or project screenshot",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true
+  },
+  "zonai-workshop-cutout.png": {
+    "kind": "transparent edit of existing original fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "zonai-workshop-cutout.prompt.txt",
+    "source": "generated_images/exec-c9ba7b45-4c15-4f69-a4a0-940dcd13a0b3.png",
+    "reference": "zonai-workshop.png",
+    "usage": "Decorative transparent scenery across shared page components; not official Nintendo artwork or a project screenshot",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true
+  },
+  "hyrule-fields-cutout.png": {
+    "kind": "transparent edit of existing original fan illustration",
+    "tool": "built-in image generation",
+    "date": "2026-11-05",
+    "prompt": "hyrule-fields-cutout.prompt.txt",
+    "source": "generated_images/exec-e1519fcd-9d56-4850-8853-3b9dd018d456.png",
+    "reference": "hyrule-fields.png",
+    "usage": "Decorative transparent scenery across shared page components; not official Nintendo artwork or a project screenshot",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true
+  }
+}

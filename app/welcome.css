@@ -1,0 +1,78 @@
+/* A deliberate welcome waits for Enter; nothing fades away on its own. */
+.cinematic-intro.welcome-gate { animation: none; opacity: 1; clip-path: none; overflow-y: auto; overflow-x: hidden; }
+.welcome-gate[data-phase='leaving'] { transform-origin: 0 50%; animation: welcome-exit var(--welcome-exit-duration, 620ms) var(--cinema-ease) both; }
+.welcome-gate[data-phase='leaving']::backdrop { animation: welcome-backdrop var(--welcome-exit-duration, 620ms) ease-out both; }
+.welcome-gate .intro-scene { position: relative; inset: auto; min-height: calc(100dvh - 76px); padding: 54px 24px 20px; overflow: hidden; }
+.welcome-gate .intro-skip { position: relative; right: auto; bottom: auto; display: flex; width: max-content; max-width: calc(100% - 36px); margin: 8px max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) auto; }
+.welcome-gate .intro-scene::before, .welcome-gate .intro-scene::after { height: 6dvh; pointer-events: none; }
+.welcome-gate .intro-sigil { margin-bottom: 23px; }
+.welcome-gate .intro-letters { font-size: clamp(27px, 7.2vw, 86px); }
+.welcome-gate .intro-thread { margin-top: 20px; margin-bottom: 0; }
+.welcome-copy { position: relative; z-index: 3; text-align: center; margin-top: 20px; max-width: 480px; }
+.welcome-copy .welcome-heading { font-family: var(--serif); font-size: 27px; color: #eee8d7; letter-spacing: -.02em; }
+.welcome-copy > p:not(.welcome-heading) { font-size: 12px; line-height: 1.9; margin-top: 11px; color: #b8c7b2; }
+.welcome-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 13px 24px; margin-top: 24px; }
+.welcome-enter.button { background: #d6bc7e; color: #17271c; min-height: 48px; padding-inline: 25px; }
+.welcome-enter.button:focus-visible, .welcome-quiet:focus-visible { outline-color: #b5e6d2; }
+.welcome-quiet { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; font-size: .8125rem; padding: 8px 5px; color: #dcc48a; background: transparent; }
+.welcome-quiet:hover { color: #fff1c7; text-decoration: underline; text-underline-offset: 6px; }
+.welcome-copy .welcome-music-note { display: flex; justify-content: center; align-items: center; gap: 7px; margin-top: 15px; font-size: var(--type-small); color: #b8c7b2; }
+.welcome-music-note .icon { width: 13px; height: 13px; color: #d6bc7e; }
+@keyframes welcome-exit { from { opacity: 1; transform: perspective(1800px) rotateY(0); } to { opacity: 0; transform: perspective(1800px) rotateY(-78deg); } }
+@keyframes welcome-backdrop { from { opacity: 1; } to { opacity: 0; } }
+
+/* Persistent root-layout audio controls; source audio loads only on Play/Enter. */
+body[data-music-enabled='true'] { padding-bottom: 0; }
+.music-dock { display: none; position: fixed; right: 20px; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 65; width: min(338px, calc(100vw - 32px)); padding: 14px 16px; border: 1px solid var(--rule); border-radius: 12px; color: var(--text); background: var(--surface); }
+.has-js .music-dock { display: block; }
+.music-dock-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; }
+.music-dock-panel[hidden] { display: none; }
+.music-dock-panel[data-music-available='false'] { padding-top: 49px; }
+.music-dock-toggle { position: absolute; top: 14px; right: 16px; }
+.music-dock[data-minimized='true'] { width: 58px; padding: 6px; border-radius: 50%; }
+.music-dock[data-minimized='true'] .music-dock-toggle { position: static; color: var(--gold); }
+.music-track { display: flex; align-items: center; min-width: 0; gap: 9px; }
+.music-track > .icon { width: 20px; height: 20px; flex: 0 0 20px; color: var(--gold); }
+.music-track > div { min-width: 0; }
+.music-track small { display: block; color: var(--muted); font-size: var(--type-small); letter-spacing: .04em; }
+.music-track strong { display: block; font-family: var(--serif); font-size: 1rem; font-weight: 400; margin-top: 2px; overflow-wrap: anywhere; }
+.music-actions { display: flex; align-items: center; gap: 5px; padding-right: 49px; }
+.music-control { width: 44px; height: 44px; display: grid; place-items: center; background: var(--surface-raised); border-radius: 50%; color: var(--text); }
+.music-control:hover { color: var(--gold); }
+.music-control .icon { width: 17px; height: 17px; }
+.music-volume { display: grid; grid-column: 1 / -1; grid-template-columns: auto minmax(0, 1fr) 30px; align-items: center; gap: 11px; }
+.music-volume label, .music-volume output { color: var(--muted); font-size: var(--type-small); }
+.music-volume output { text-align: right; font-variant-numeric: tabular-nums; }
+.music-volume input { width: 100%; min-width: 0; height: 22px; margin: 0; accent-color: var(--gold); cursor: pointer; }
+.music-dock .music-status { grid-column: 1 / -1; color: var(--muted); font-size: var(--type-small); line-height: 1.6; min-height: 1.2rem; }
+
+@media (max-width: 560px) {
+  .welcome-gate .intro-scene { padding: 44px 18px 20px; }
+  .welcome-gate .intro-sigil { width: 41px; height: 37px; margin-bottom: 19px; }
+  .welcome-gate .intro-letters { font-size: clamp(23px, 7.1vw, 39px); }
+  .welcome-copy { margin-top: 11px; }
+  .welcome-copy .welcome-heading { font-size: 24px; }
+  .welcome-copy > p:not(.welcome-heading) { font-size: var(--type-small); }
+  .welcome-actions { flex-direction: column; gap: 7px; margin-top: 19px; }
+  .welcome-gate .intro-thread { margin-top: 15px; }
+  .welcome-copy .welcome-music-note { font-size: var(--type-small); margin-top: 10px; }
+  .music-dock { right: 16px; }
+  body[data-music-enabled='true'] { padding-bottom: 0; }
+}
+@media (max-height: 620px) {
+  .welcome-gate .intro-scene { padding-block: 30px 15px; }
+  .welcome-gate .intro-sigil { width: 32px; height: 29px; margin-bottom: 9px; }
+  .welcome-gate .intro-letters { font-size: clamp(24px, 5.6vw, 48px); line-height: 1.25; }
+  .welcome-gate .intro-signature, .welcome-gate .intro-thread { display: none; }
+  .welcome-copy { margin-top: 10px; }
+  .welcome-copy .welcome-heading { font-size: 20px; }
+  .welcome-copy > p:not(.welcome-heading) { font-size: var(--type-small); line-height: 1.6; margin-top: 7px; }
+  .welcome-actions { flex-direction: row; margin-top: 12px; gap: 16px; }
+  .welcome-enter.button { min-height: 43px; padding-block: 9px; font-size: .8125rem; }
+  .welcome-gate .intro-skip { margin-right: 15px; }
+  .welcome-copy .welcome-music-note { font-size: var(--type-small); margin-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion='on']) .welcome-gate, html:not([data-motion='on']) .welcome-gate[data-phase='leaving'] { animation: none !important; }
+}
+@media print { .music-dock { display: none !important; } body[data-music-enabled='true'] { padding-bottom: 0; } }

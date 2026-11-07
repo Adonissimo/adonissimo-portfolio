@@ -1,0 +1,106 @@
+/* ADONISSIMO: an authored prologue, short navigation wipes, and local control feedback. */
+:root { --cinema-ease: cubic-bezier(.16, 1, .3, 1); --cinema-quick: 180ms; }
+.hero .zelda-wordmark { max-width: 100%; }
+
+/* A normal page remains visible if animation scripting never runs. */
+/* Route arrival/departure is coordinated once in CinematicEffects, including Home. */
+.page-frame { transform-origin: 0 50%; }
+
+/* The dialog only mounts after hydration; native modality handles focus and Escape. */
+.cinematic-intro { position: fixed; inset: 0; margin: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; padding: 0; border: 0; overflow: hidden; background: #09120e; color: #dcc48a; overscroll-behavior: contain; animation: none; }
+.cinematic-intro::backdrop { background: #09120e; }
+.intro-scene { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 28px; isolation: isolate; }
+.intro-scene::before, .intro-scene::after { content: ''; position: absolute; left: 0; right: 0; height: 8.5dvh; background: #050a07; z-index: 2; }
+.intro-scene::before { top: 0; }
+.intro-scene::after { bottom: 0; }
+.intro-orbit { position: absolute; top: 50%; left: 50%; width: min(580px, 80vw); aspect-ratio: 1; border: 1px solid #d6bc7e25; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.orbit-one { animation: orbit-awaken 2600ms var(--cinema-ease) both; }
+.orbit-two { width: min(670px, 91vw); border-style: dashed; opacity: .35; animation: orbit-awaken 3000ms 120ms var(--cinema-ease) both reverse; }
+.intro-orbit::before, .intro-orbit::after { content: ''; position: absolute; width: 5px; height: 5px; background: #dcc48a; transform: rotate(45deg); }
+.intro-orbit::before { top: -3px; left: calc(50% - 2px); }
+.intro-orbit::after { bottom: -3px; left: calc(50% - 2px); }
+.intro-sigil { width: 57px; height: 52px; color: #e0c785; margin-bottom: 38px; animation: sigil-awaken 1500ms var(--cinema-ease) both; }
+.intro-sigil svg { width: 100%; height: 100%; }
+.intro-wordmark { display: flex; align-items: center; flex-direction: column; position: relative; z-index: 1; max-width: 100%; }
+.intro-legend { font-family: var(--serif); font-size: 11px; letter-spacing: .6em; padding-left: .6em; animation: legend-arrival 950ms 340ms var(--cinema-ease) both; }
+.intro-letters { font-family: var(--serif); font-size: clamp(27px, 7.5vw, 94px); font-weight: 400; line-height: 1.5; white-space: nowrap; letter-spacing: .08em; padding-left: .08em; }
+.intro-letters > span { display: inline-block; animation: letter-release 1050ms var(--cinema-ease) both; }
+.intro-signature { font-size: 8px; letter-spacing: .3em; text-align: center; margin-top: 18px; color: #b3c2a8; animation: legend-arrival 800ms 1500ms var(--cinema-ease) both; }
+.intro-thread { width: 150px; height: 1px; background: #dbc381; margin-top: 33px; transform-origin: center; animation: golden-thread 2500ms 420ms var(--cinema-ease) both; }
+.intro-skip { position: absolute; z-index: 4; right: max(24px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom)); display: inline-flex; align-items: center; gap: 14px; min-height: 44px; padding: 8px 13px; background: #13231b; color: #eee8d7; font-size: 11px; border: 1px solid #e2c88755; border-radius: 3px; }
+.intro-skip:focus-visible { outline-color: #b5e6d2; }
+.intro-skip:hover { background: #23382a; }
+.intro-skip .icon { width: 16px; height: 16px; }
+.intro-skip kbd { font-family: var(--sans); color: #b6c4ac; font-size: 9px; padding-left: 7px; border-left: 1px solid #b8c29e44; }
+@keyframes sigil-awaken { 0% { opacity: 0; transform: scale(.45) translateY(8px); filter: blur(8px); } 65% { opacity: 1; filter: blur(0); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } }
+@keyframes orbit-awaken { from { opacity: 0; transform: translate(-50%, -50%) scale(.85) rotate(-22deg); } to { opacity: .6; transform: translate(-50%, -50%) scale(1) rotate(0); } }
+@keyframes letter-release { from { opacity: 0; transform: translateY(24px) scale(.94); filter: blur(9px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+@keyframes legend-arrival { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes golden-thread { 0% { opacity: 0; transform: scaleX(0); } 28%, 76% { opacity: .8; transform: scaleX(1); } 100% { opacity: 0; transform: scaleX(1.35); } }
+
+/* Local state changes use native snapshots where supported, with direct-update fallback. */
+::view-transition-old(root) { animation: state-exit 180ms ease-out both; }
+::view-transition-new(root) { animation: state-enter 430ms var(--cinema-ease) both; }
+html[data-view-change='theme']::view-transition-new(root) { animation: theme-reveal 620ms var(--cinema-ease) both; }
+@keyframes state-exit { to { opacity: 0; } }
+@keyframes state-enter { from { opacity: .35; filter: blur(2px); } to { opacity: 1; filter: blur(0); } }
+@keyframes theme-reveal { from { clip-path: circle(0% at 88% 42px); } to { clip-path: circle(150% at 88% 42px); } }
+
+/* Controls share one gold sweep, one press response, and one drawn ripple. */
+a, button { position: relative; }
+.button { position: relative; overflow: hidden; isolation: isolate; }
+html[data-motion='on'] .button { transition: box-shadow 240ms, transform 240ms var(--cinema-ease), background-color 240ms; }
+html[data-motion='on'] .button::after { content: ''; position: absolute; inset: -60% auto -60% -60%; width: 30%; background: linear-gradient(100deg, transparent, #fff4cf35, transparent); transform: translateX(-180%) skewX(-18deg); pointer-events: none; }
+html[data-motion='on'] .button:hover::after, html[data-motion='on'] .button:focus-visible::after { animation: button-sweep 650ms var(--cinema-ease); }
+html[data-motion='on'] .button:hover { transform: translateY(-2px); }
+html[data-motion='on'] .button:active { transform: translateY(0) scale(.98); }
+@keyframes button-sweep { to { transform: translateX(720%) skewX(-18deg); } }
+.click-flare { position: absolute; width: 16px; height: 16px; border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 3; }
+.navigation a, .quiet-link, .quest-link, .header-contact, .back-link { background-image: linear-gradient(var(--gold), var(--gold)); background-repeat: no-repeat; background-size: 0 1px; background-position: 0 calc(100% - 4px); }
+html[data-motion='on'] :is(.navigation a, .quiet-link, .quest-link, .header-contact, .back-link) { transition: background-size 350ms var(--cinema-ease), color 180ms; }
+:is(.navigation a, .quiet-link, .quest-link, .header-contact, .back-link):is(:hover, :focus-visible) { background-size: 100% 1px; }
+html[data-motion='on'] :is(a, button) .icon { transition: transform 300ms var(--cinema-ease), color 180ms; }
+html[data-motion='on'] :is(.quiet-link, .quest-link, .header-contact):is(:hover, :focus-visible) > .icon { transform: translate(3px, -3px); }
+html[data-motion='on'] .button:is(:hover, :focus-visible) > .icon { transform: translateX(4px); }
+html[data-motion='on'] .theme-switch:hover .icon { transform: rotate(30deg); }
+html[data-motion='on'] .menu-switch[aria-expanded='true'] .icon { transform: rotate(90deg); }
+html[data-motion='on'] .journal-filters button { transition: color 180ms, background-color 200ms, transform 180ms var(--cinema-ease); }
+html[data-motion='on'] .journal-filters button:active { transform: scale(.96); }
+.quest-image { overflow: hidden; }
+html[data-motion='on'] .project-art { transition: transform 700ms var(--cinema-ease); }
+html[data-motion='on'] .quest-entry:is(:hover, :focus-within) .project-art { transform: scale(1.045); }
+html[data-motion='on'] .quest-entry { transition: border-color 300ms; }
+.quest-entry:is(:hover, :focus-within) { border-color: var(--gold); }
+html[data-motion='on'] .world-marker { transition: transform 400ms var(--cinema-ease), box-shadow 350ms; }
+html[data-motion='on'] .world-marker:is(:hover, :focus-visible) { transform: translateY(-4px) scale(1.06); }
+html[data-motion='on'] .world-marker > svg { transition: transform 500ms var(--cinema-ease); }
+html[data-motion='on'] .world-marker:hover > svg { transform: rotate(-12deg); }
+html[data-motion='on'] main section:target { outline: 1px solid transparent; outline-offset: 10px; animation: target-arrival 1000ms var(--cinema-ease); }
+@keyframes target-arrival { from { outline-color: var(--gold); } to { outline-color: transparent; } }
+
+.motion-controls { align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 16px; margin-top: 0; }
+.motion-controls button { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 7px 0; background: transparent; color: var(--muted); font-size: 12px; }
+.motion-controls .icon { width: 14px; height: 14px; color: var(--gold); }
+.motion-controls button:not(:disabled):hover { color: var(--gold); }
+.motion-controls button:disabled { opacity: .7; }
+
+html[data-motion='off'] { scroll-behavior: auto; }
+html[data-motion='off'] *, html[data-motion='off'] *::before, html[data-motion='off'] *::after { animation: none !important; transition: none !important; }
+html[data-motion='off'] .click-flare { display: none; }
+html[data-motion='off']::view-transition-old(root), html[data-motion='off']::view-transition-new(root) { animation: none !important; }
+@media (max-width: 560px) {
+  .intro-scene { padding-inline: 18px; }
+  .intro-letters { font-size: clamp(23px, 7.1vw, 39px); letter-spacing: .055em; }
+  .intro-legend { font-size: 8px; letter-spacing: .45em; }
+  .intro-sigil { width: 43px; height: 40px; margin-bottom: 25px; }
+  .intro-signature { font-size: 6px; letter-spacing: .15em; max-width: 260px; margin-top: 15px; }
+  .intro-skip { right: 18px; bottom: 18px; }
+  .motion-controls { justify-content: flex-start; gap: 20px; margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion='on']) { scroll-behavior: auto; }
+  html:not([data-motion='on']) *, html:not([data-motion='on']) *::before, html:not([data-motion='on']) *::after { animation: none !important; transition: none !important; }
+  html:not([data-motion='on']) .click-flare { display: none !important; }
+  html:not([data-motion='on'])::view-transition-old(root), html:not([data-motion='on'])::view-transition-new(root) { animation: none !important; }
+}
+@media print { .cinematic-intro, .motion-controls, .click-flare { display: none !important; } }

@@ -1,0 +1,7 @@
+import type { Metadata } from 'next';
+import { PageHeading } from '@/components/page-heading';
+import { TechMark } from '@/components/tech-mark';
+import { profile, toolkit } from '@/lib/content';
+import { CinematicLink as Link } from '@/components/cinematic-link';
+export const metadata: Metadata = { title: 'The adventurer' };
+export default function Page(){return <main id="main" data-realm="fields" className="chapter-page page-shell"><PageHeading realm="fields" title="The adventurer." description="Courage to try. Wisdom to learn."/><div className="about-chapter"><div className="prose"><h2>{profile.name}</h2><p>{profile.intro}</p><p>This field journal collects the projects I build and the lessons that come with them. Some quests are complete; others are ideas waiting for their moment.</p><p>I love the feeling of finding a new path in a Zelda game. Building a project feels similar: follow an idea, solve a few puzzles, and discover something you didn’t know you could do.</p><p>Some quests are finished. Others are just a pin on the map. They all belong here.</p><p>Based in {profile.location}. Hyrule at heart.</p><Link className="button" href="/projects">Explore the journal</Link></div><section><h2>In my inventory</h2><dl className="chapter-inventory">{toolkit.map(tool=><div key={tool.name}><dt><span className="tool-name"><TechMark name={tool.name}/>{tool.name}</span><span>{tool.role}</span></dt><dd>{tool.detail}</dd></div>)}</dl></section></div></main>;}

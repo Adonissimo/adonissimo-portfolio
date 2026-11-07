@@ -1,0 +1,101 @@
+/* One interface, four settings. The server-rendered main selects its setting;
+   no route effect or browser preference read is needed for the first render. */
+:root { --control-line: #708f7e; }
+:root[data-theme='day'] { --control-line: #637464; }
+:root:has(main[data-realm='sky']) {
+  --bg: #11292a; --surface: #183536; --surface-raised: #214341;
+  --text: #f0ecdf; --muted: #bbcbc4; --gold: #dec58a; --cyan: #a4dac7;
+  --rule: #a4c7bb40; --button: var(--gold); --button-ink: #11292a;
+}
+:root[data-theme='day']:has(main[data-realm='sky']) {
+  --bg: #f5f2e8; --surface: #e8e9dd; --surface-raised: #dde2d2;
+  --text: #20382f; --muted: #506358; --gold: #705421; --cyan: #236b59;
+  --rule: #4e6c5338; --button: #264d3b; --button-ink: #fff9e7;
+}
+:root:has(main[data-realm='zonai']) {
+  --bg: #101f1c; --surface: #172e27; --surface-raised: #213f34;
+  --text: #f0ecdf; --muted: #b4c6b8; --gold: #dcc08a; --cyan: #91d7b2;
+  --rule: #9cbd9b40; --button: var(--gold); --button-ink: #101f1c;
+}
+:root[data-theme='day']:has(main[data-realm='zonai']) {
+  --bg: #ebeee4; --surface: #dfe7d8; --surface-raised: #d3dfcc;
+  --text: #203b2a; --muted: #4d6349; --gold: #705421; --cyan: #28664b;
+  --rule: #4e6c5338; --button: #264d3b; --button-ink: #fff9e7;
+}
+:root:has(main[data-realm='fields']) {
+  --bg: #17251b; --surface: #203324; --surface-raised: #2a4230;
+  --text: #f1ead9; --muted: #c0cbb6; --gold: #dfc486; --cyan: #add2ad;
+  --rule: #b0c59740; --button: var(--gold); --button-ink: #17251b;
+}
+:root[data-theme='day']:has(main[data-realm='fields']) {
+  --bg: #f3efdf; --surface: #e8e8d3; --surface-raised: #dee1c8;
+  --text: #2d3e28; --muted: #526046; --gold: #705421; --cyan: #2f6751;
+  --rule: #5b714638; --button: #264d3b; --button-ink: #fff9e7;
+}
+:root:has(main[data-realm='depths']) {
+  --bg: #121c22; --surface: #1b2930; --surface-raised: #263943;
+  --text: #e8eee9; --muted: #bdcbc6; --gold: #dbc48c; --cyan: #9cdac8;
+  --rule: #9ebbb540; --button: var(--gold); --button-ink: #121c22;
+}
+:root[data-theme='day']:has(main[data-realm='depths']) {
+  --bg: #e8eeeb; --surface: #dce6df; --surface-raised: #cfddd5;
+  --text: #223c35; --muted: #496057; --gold: #705421; --cyan: #256653;
+  --rule: #4e6c6138; --button: #264d3b; --button-ink: #fff9e7;
+}
+input, textarea { caret-color: var(--gold); }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
+.field-form input:not([type=checkbox]), .field-form textarea, .field-form select,
+.filter-bar input, .filter-bar select, .filter-label select, .admin-content select { border-color: var(--control-line); }
+.field-form input[aria-invalid='true'], .field-form textarea[aria-invalid='true'], .field-form select[aria-invalid='true'] { border-color: var(--heart); }
+.hero-copy h1 { font-size: var(--type-hero); }
+.hero-copy > p strong { color: var(--text); font-weight: 700; }
+.hero-copy .hero-opportunity { font-size: 13px; line-height: 1.5; margin-top: 10px; color: var(--text); }
+.hero-landscape { margin: 0; }
+.hero-art { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; }
+.landscape-caption { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; font-size: 12px; letter-spacing: 0; color: var(--muted); }
+.landscape-caption svg { width: 23px; height: 23px; color: var(--gold); flex-shrink: 0; }
+.chapter-heading.has-realm { display: flex; justify-content: space-between; align-items: center; gap: 32px; max-width: none; }
+.chapter-heading.has-realm > div { max-width: 760px; }
+.chapter-heading.has-realm > svg { width: 90px; height: 90px; margin: 0; color: var(--cyan); flex-shrink: 0; }
+.auth-page .chapter-heading > svg { color: var(--gold); }
+.contact-page .chapter-heading.has-realm { align-items: flex-start; gap: 20px; }
+.contact-page .chapter-heading.has-realm > svg { width: 62px; height: 62px; }
+.reading-page .prose p, .reading-page .prose li { color: var(--text); }
+.reading-page .prose pre { color: var(--text); border-radius: 5px; }
+.collection-skeleton { width: 100%; }
+.skeleton-block { display: block; background: var(--surface-raised); border-radius: 4px; }
+.skeleton-heading { width: min(70%, 340px); height: 30px; margin-bottom: 16px; }
+.skeleton-line { height: 14px; margin-block: 12px; width: 100%; }
+.skeleton-line-short { width: 65%; }
+.skeleton-link { height: 18px; width: 120px; margin-top: 20px; }
+.skeleton-image { width: 100%; height: 200px; border-radius: 6px; }
+.skeleton-toolbar { display: grid; grid-template-columns: 2fr 1fr auto; gap: 16px; margin-bottom: 18px; }
+.skeleton-input { height: 66px; }
+.skeleton-button { width: 90px; height: 44px; align-self: end; }
+.skeleton-project { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 1.3fr); gap: 28px; padding-block: 24px; align-items: center; }
+.skeleton-post { padding-block: 24px; max-width: 850px; }
+.skeleton-table { display: grid; gap: 14px; padding: 20px; background: var(--surface); border-radius: 5px; }
+.skeleton-table .skeleton-line { margin-block: 7px; height: 32px; }
+.skeleton-filter-tabs { width: min(100%, 360px); height: 44px; }
+.skeleton-journal-controls { display: flex; }
+.collection-status[data-pending='true'] { color: var(--gold); }
+@media (max-width: 760px) {
+  .chapter-heading.has-realm { gap: 20px; }
+  .chapter-heading.has-realm > svg { width: 64px; height: 64px; }
+}
+@media (max-width: 560px) {
+  .hero-landscape { width: min(100%, 280px); margin: 18px auto 0; }
+  .landscape-caption { font-size: 11px; margin-top: 8px; }
+  .chapter-heading.has-realm { gap: 14px; }
+  .chapter-heading.has-realm > svg { width: 46px; height: 46px; }
+  .contact-page .chapter-heading.has-realm > svg { width: 46px; height: 46px; }
+  .skeleton-toolbar { grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
+  .skeleton-toolbar > :first-child { grid-column: 1 / -1; }
+  .skeleton-project { grid-template-columns: 100px minmax(0, 1fr); gap: 18px; padding-block: 20px; align-items: start; }
+  .skeleton-image { height: 130px; }
+  .skeleton-heading { width: 90%; height: 25px; }
+}
+@media print {
+  :root:has(main[data-realm]), :root[data-theme='day']:has(main[data-realm]) { --bg: #fff; --surface: #fff; --surface-raised: #eee; --text: #14231a; --muted: #394d3b; --gold: #6d5421; --cyan: #276e5c; }
+  .chapter-heading.has-realm > svg { display: none; }
+}

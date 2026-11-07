@@ -1,0 +1,1 @@
+export default function Loading(){return <main id="main" className="chapter-page page-shell" aria-busy="true"><h1>Turning the page…</h1><div className="loading-block" role="status">Opening the next chapter.</div></main>;}
