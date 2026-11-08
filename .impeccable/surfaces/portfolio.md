@@ -1,5 +1,9 @@
 # Adonissimo portfolio surfaces
 
+## Smooth cinema — 3.14.0
+
+Mode: Experience. Refine the existing Zelda world with a 5.6-second two-shot film, an 800ms overlapping title dissolve and a 3.2-second gateway journey plus one-second Triforce arrival. Use image readiness with a bounded fallback, gentle continuous camera motion, soft gold/jade light and 16/eight motes. Preserve Skip/silent entry/replay and the full-motion choice. Reduce overlapping route/scroll animations, replace stale animations on the same node, remove per-letter and parent blur, and cache fog reading masks with configured 30/24 paint caps. Keep existing PNG artwork and add no dependency. The separate Taste guide is unavailable. Source/lifecycle checks pass; actual browser performance and full build remain unverified.
+
 ## Opening film expansion — 3.13.0
 
 Mode: Experience. Honor the owner's request for films before the title and after Enter. A 4.8-second field-to-sky journey reveals the waiting title; a 2.6-second inward sky-gateway shot plus 820ms Triforce arrival responds to Enter. Camera crops, moving captions, ring tracing, calm mist/light and inherited fairy motion use existing PNG artwork and geometric interface motifs. Keep the film bounded and skippable, preserve deep-link bypass, pause the timer and CSS together in hidden tabs, reject stale callbacks, and keep sound preferences authoritative. The title must not auto-enter. Public pages, route book turns and private backend flows are outside this change. No new dependency or video payload. Source/lifecycle checks pass; browser/build/listening gates remain open.

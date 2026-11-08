@@ -3,7 +3,7 @@ import { paperTurnProfile } from './paper-motion.ts';
 export type MotionMode = 'full' | 'user-reduced' | 'system-reduced';
 // The retired footer toggle must not leave this full-motion edition disabled.
 export const motionKey = 'adonissimo-motion-v3';
-export const welcomeExitDuration = 820;
+export const welcomeExitDuration = 1000;
 export const routeExitDuration = 130;
 export const pageTurnDuration = paperTurnProfile(false).duration;
 export type PageTurnDirection = 'forward' | 'backward';

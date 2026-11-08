@@ -1,4 +1,10 @@
-# Opening cutscenes — 3.13.0
+# Opening cutscenes — 3.13.1
+
+## Cleanup patch and operator evidence
+
+The operator's 3.13.0 Windows report passes all 115 tests, TypeScript and the Next production build, but the zero-warning lint gate fails on a ref read in dialog cleanup. Version 3.13.1 captures the stable `exitIntent.current` object during effect setup and reads that object during cleanup. Enter/Skip continue to mutate its fields; they do not replace it. This avoids capturing stale booleans and preserves the final focus restoration and arrival event. No lint rule is disabled. `/supabase/.temp/` is also ignored to keep copied CLI-local state out of commits.
+
+The patched source passes 115 Node tests and the nine actual-component opening scenarios here. Those scenarios cover the latest mutable intent after Enter and Skip, cleanup/replay and focus/arrival behavior. ESLint, semantic TypeScript and the production build still need a local rerun on this patch; the earlier operator results do not certify the new version. The terminal should now print **3.13.1**.
 
 This update adds the two sequences requested by Lorenz, preserving the existing Zelda world and portfolio.
 

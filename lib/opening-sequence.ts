@@ -1,8 +1,10 @@
 import { welcomeExitDuration } from './motion.ts';
 
-export type OpeningPhase = 'prologue' | 'welcome' | 'entry' | 'arrival' | 'complete';
-export const prologueDuration = 4800;
-export const entrySceneDuration = 2600;
+export type OpeningPhase = 'prologue' | 'title' | 'welcome' | 'entry' | 'arrival' | 'complete';
+export const prologueDuration = 5600;
+export const titleRevealDuration = 800;
+export const entrySceneDuration = 3200;
+export const imageWarmupLimit = 1200;
 
 type OpeningClock = {
   now(): number;
@@ -53,7 +55,7 @@ export class OpeningSequence {
     this.timer = this.clock.schedule(() => {
       if (generation !== this.generation || !this.active) return;
       this.timer = undefined;
-      this.move(this.phase === 'prologue' ? 'welcome' : this.phase === 'entry' ? 'arrival' : 'complete');
+      this.move(this.phase === 'prologue' ? 'title' : this.phase === 'title' ? 'welcome' : this.phase === 'entry' ? 'arrival' : 'complete');
     }, this.remaining);
   }
 
@@ -61,7 +63,7 @@ export class OpeningSequence {
     this.cancel();
     if (phase === this.phase) return;
     this.phase = phase;
-    this.remaining = phase === 'prologue' ? prologueDuration : phase === 'entry' ? entrySceneDuration : phase === 'arrival' ? welcomeExitDuration : 0;
+    this.remaining = phase === 'prologue' ? prologueDuration : phase === 'title' ? titleRevealDuration : phase === 'entry' ? entrySceneDuration : phase === 'arrival' ? welcomeExitDuration : 0;
     this.arm();
     this.listeners.forEach(notify => notify());
   }
@@ -79,15 +81,15 @@ export class OpeningSequence {
   setFullMotion(fullMotion: boolean): void {
     this.fullMotion = fullMotion;
     if (fullMotion) return;
-    if (this.phase === 'prologue') this.move('welcome');
+    if (this.phase === 'prologue' || this.phase === 'title') this.move('welcome');
     else if (this.phase === 'entry' || this.phase === 'arrival') this.move('complete');
   }
 
   enter(): void {
-    if (this.phase === 'welcome') this.move(this.fullMotion ? 'entry' : 'complete');
+    if (this.phase === 'welcome' || this.phase === 'title') this.move(this.fullMotion ? 'entry' : 'complete');
   }
 
   skip(): void {
-    if (this.phase !== 'complete') this.move(this.phase === 'prologue' ? 'welcome' : 'complete');
+    if (this.phase !== 'complete') this.move(this.phase === 'prologue' || this.phase === 'title' ? 'welcome' : 'complete');
   }
 }

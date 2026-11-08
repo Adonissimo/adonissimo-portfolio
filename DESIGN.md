@@ -277,6 +277,14 @@ components:
 
 # Design System: Adonissimo — A builder exploring Hyrule
 
+## Smooth cinematic continuity — 3.14.0
+
+Mode: Experience. The owner's request keeps the TotK world and increases cinematic atmosphere while smoothing state changes. The 5.6-second field-to-sky film keeps its final shot beneath an 800ms title dissolve. Enter starts a slower gateway journey while the title recedes; that same camera continues under the one-second Triforce arrival, taking 4.2 seconds overall. Image decode readiness has a 1.2-second fallback ceiling. Captions remain outside raster art, with a protected dark foreground and a readable identity signature.
+
+Two soft light volumes, 16 desktop/eight compact gold-jade motes and existing textured fog/fairy create the aura. Browser-composited transform/opacity carry the camera and wordmark; per-letter blur, extra welcome-parent blur, full-main clipping and nested section/card reveals are removed. A new native animation replaces an existing one on its element. Fog reuses the reading mask and keeps 200k/100k pixel budgets with configured 30/24 paint-rate caps, preserving fractional cadence. These targets are not measured FPS.
+
+Interrupting the title dissolve captures its current opacity rather than jumping to a fully visible outgoing title. Skip, hidden-tab pause, silent entry, cleanup, deep links, manual full-motion preference and independent audio remain. The 117 source tests, 137 syntax transforms and isolated lifecycle/image checks pass; current browser paint, contrast, actual smoothness, full build and listening remain local gates. See docs/SMOOTH_CINEMA_UPDATE.md.
+
 ## Opening films — 3.13.0
 
 The welcome is an Experience surface. Its focal sequence is a journey from Hyrule fields to the sky, a waiting title, then travel through the sky gateway on Enter. The prologue uses two camera crops with a crossfade over 4.8 seconds. The entry scene uses the same sky PNG, a 2.6-second inward camera move and traced stone-ring geometry, ending in the existing 820ms white/gold Triforce zoom. Short serif captions sit above a dark foreground wash; Lorenz's name and full-stack focus remain visible. Letterbox framing, inherited calm foreground fog and the animated fairy connect the shots to the title.

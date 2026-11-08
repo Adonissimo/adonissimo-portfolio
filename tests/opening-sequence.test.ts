@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { OpeningSequence, entrySceneDuration, prologueDuration } from '../lib/opening-sequence.ts';
+import { OpeningSequence, entrySceneDuration, prologueDuration, titleRevealDuration } from '../lib/opening-sequence.ts';
 import { welcomeExitDuration } from '../lib/motion.ts';
 
 function filmClock() {
@@ -45,10 +45,12 @@ test('the first cutscene ends at the title and waits for a deliberate Enter', ()
   time.advance(prologueDuration - 1);
   assert.equal(film.getSnapshot(), 'prologue');
   time.advance(1);
+  assert.equal(film.getSnapshot(), 'title');
+  time.advance(titleRevealDuration);
   assert.equal(film.getSnapshot(), 'welcome');
   time.advance(60000);
   assert.equal(film.getSnapshot(), 'welcome');
-  assert.deepEqual(phases, ['welcome']);
+  assert.deepEqual(phases, ['title', 'welcome']);
   assert.equal(time.pending(), 0);
 });
 
@@ -75,6 +77,8 @@ test('hidden tabs pause the remaining film time and ignore stale callbacks', () 
   film.setActive(true); time.advance(prologueDuration - 1201);
   assert.equal(film.getSnapshot(), 'prologue');
   time.advance(1);
+  assert.equal(film.getSnapshot(), 'title');
+  time.advance(titleRevealDuration);
   assert.equal(film.getSnapshot(), 'welcome');
   film.enter(); time.advance(500); film.setActive(false); time.advance(50000);
   film.setActive(true); time.advance(entrySceneDuration - 500);
@@ -82,14 +86,15 @@ test('hidden tabs pause the remaining film time and ignore stale callbacks', () 
 });
 
 test('skip works in every phase and a cancelled cutscene cannot later dismiss the title', () => {
-  for (const target of ['prologue', 'welcome', 'entry', 'arrival'] as const) {
+  for (const target of ['prologue', 'title', 'welcome', 'entry', 'arrival'] as const) {
     const time = filmClock(), film = new OpeningSequence(true, time.clock);
     film.setActive(true);
-    if (target !== 'prologue') film.skip();
+    if (target === 'title') time.advance(prologueDuration);
+    else if (target !== 'prologue') film.skip();
     if (target === 'entry' || target === 'arrival') film.enter();
     if (target === 'arrival') time.advance(entrySceneDuration);
     film.skip(); time.lateCallbacks(); time.advance(60000);
-    assert.equal(film.getSnapshot(), target === 'prologue' ? 'welcome' : 'complete');
+    assert.equal(film.getSnapshot(), target === 'prologue' || target === 'title' ? 'welcome' : 'complete');
     assert.equal(time.pending(), 0);
   }
 });
@@ -115,6 +120,17 @@ test('effect cleanup and resubscription do not restart the prologue or keep orph
   film.setActive(true); time.advance(800); film.setActive(false); unsubscribe();
   assert.equal(time.pending(), 0);
   film.setActive(true); time.advance(prologueDuration - 800);
-  assert.equal(film.getSnapshot(), 'welcome');
+  assert.equal(film.getSnapshot(), 'title');
+  time.advance(titleRevealDuration);
   assert.equal(notifications, 0);
+});
+
+test('Enter can interrupt the title dissolve without a stale timer reopening the title', () => {
+  const time = filmClock(), film = new OpeningSequence(true, time.clock);
+  film.setActive(true); time.advance(prologueDuration + titleRevealDuration / 2);
+  assert.equal(film.getSnapshot(), 'title');
+  film.enter(); time.lateCallbacks(); time.advance(titleRevealDuration);
+  assert.equal(film.getSnapshot(), 'entry');
+  assert.equal(time.pending(), 1);
+  film.skip(); assert.equal(film.getSnapshot(), 'complete');
 });

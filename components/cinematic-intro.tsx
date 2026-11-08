@@ -15,7 +15,7 @@ import { openingForestTrack } from '@/lib/music';
 import { claimFairyHost } from '@/lib/fairy';
 import { OpeningMurals } from './opening-murals';
 import { OpeningCutscene } from './opening-cutscene';
-import { OpeningSequence, prologueDuration, entrySceneDuration } from '@/lib/opening-sequence';
+import { OpeningSequence, prologueDuration, titleRevealDuration, entrySceneDuration, imageWarmupLimit } from '@/lib/opening-sequence';
 
 export function CinematicIntro() {
   const pathname = usePathname();
@@ -33,6 +33,7 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
   const exitIntent = useRef({ committed: false, reveal: false });
   const entrySound = useRef(false);
   const [sequence] = useState(() => new OpeningSequence(mode === 'full'));
+  const [filmReady, setFilmReady] = useState(false);
   const phase = useSyncExternalStore(sequence.subscribe, sequence.getSnapshot, sequence.getSnapshot);
   const leaving = phase === 'entry' || phase === 'arrival' || phase === 'complete';
   const { player, state, title } = useBackgroundMusic();
@@ -42,6 +43,14 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
   const forestState = useSyncExternalStore(forest.subscribe, forest.getSnapshot, forest.getServerSnapshot);
   const compact = useSyncExternalStore(subscribeCompactEffects, compactEffectsSnapshot, serverCompactSnapshot);
   const visible = useSyncExternalStore(subscribeVisibility, visibleSnapshot, ambienceServerSnapshot);
+  const playing = visible && (filmReady || phase !== 'prologue');
+
+  useEffect(() => {
+    if (filmReady || phase !== 'prologue') return;
+    // Let image decode finish before the camera moves, with a nonblocking deadline.
+    const timer = setTimeout(() => setFilmReady(true), imageWarmupLimit);
+    return () => clearTimeout(timer);
+  }, [filmReady, phase]);
 
   useEffect(() => {
     if (!forestAudio.current) return;
@@ -51,7 +60,7 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
     void forest.play();
     // A blocked autoplay attempt can resume from a real gesture, with no extra button.
     const retry = (event: PointerEvent | KeyboardEvent) => {
-      if (!event.isTrusted || !['prologue', 'welcome'].includes(dialog.current?.dataset.phase ?? '')) return;
+      if (!event.isTrusted || !['prologue', 'title', 'welcome'].includes(dialog.current?.dataset.phase ?? '')) return;
       if (event instanceof KeyboardEvent && (event.key === 'Tab' || event.key === 'Escape' || event.metaKey || event.ctrlKey || event.altKey)) return;
       if (event.target instanceof Element && event.target.closest('.welcome-actions, .intro-skip')) return;
       const status = forest.getSnapshot().status;
@@ -69,8 +78,9 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
 
   useEffect(() => {
     const element = dialog.current;
-    const intent = exitIntent.current;
     if (!element) return;
+    // Capture the stable object, not its values: Enter/Skip update its fields later.
+    const intent = exitIntent.current;
     const opener = document.activeElement;
     const overflow = document.body.style.overflow;
     try { element.showModal(); }
@@ -82,7 +92,7 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
       document.body.style.overflow = overflow;
       if (element.open) element.close();
       if (intent.committed) {
-        const target = opener instanceof HTMLElement && opener !== document.body && opener.isConnected
+        const target = opener instanceof HTMLElement && opener !== document.body && opener.isConnected && !element.contains(opener)
           ? opener : document.querySelector<HTMLElement>('#hero-title');
         target?.focus({ preventScroll: true });
         if (intent.reveal) window.dispatchEvent(new Event('adonissimo-arrival'));
@@ -91,9 +101,9 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
   }, []);
 
   useEffect(() => {
-    sequence.setActive(visible);
+    sequence.setActive(playing);
     return () => sequence.setActive(false);
-  }, [sequence, visible]);
+  }, [sequence, playing]);
   useEffect(() => { sequence.setFullMotion(mode === 'full'); }, [sequence, mode]);
   useEffect(() => {
     if (phase === 'complete') {
@@ -102,7 +112,7 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
       return;
     }
     window.dispatchEvent(new Event('adonissimo-fog-refresh'));
-    if (phase === 'welcome') enterButton.current?.focus({ preventScroll: true });
+    if (phase === 'welcome' || phase === 'title') enterButton.current?.focus({ preventScroll: true });
     else if (phase === 'entry') skipButton.current?.focus({ preventScroll: true });
   }, [phase]);
   useEffect(() => {
@@ -110,7 +120,9 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
   }, [phase, effects.player]);
 
   function enter(sound: 'play' | 'pause') {
-    if (sequence.getSnapshot() !== 'welcome') return;
+    if (sequence.getSnapshot() !== 'welcome' && sequence.getSnapshot() !== 'title') return;
+    const titleScene = dialog.current?.querySelector<HTMLElement>('.intro-scene');
+    if (titleScene) titleScene.style.setProperty('--title-exit-opacity', getComputedStyle(titleScene).opacity);
     forest.pause();
     entrySound.current = sound === 'play';
     exitIntent.current.reveal = mode === 'full';
@@ -122,7 +134,7 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
   }
 
   function skip() {
-    if (sequence.getSnapshot() !== 'prologue') {
+    if (sequence.getSnapshot() !== 'prologue' && sequence.getSnapshot() !== 'title') {
       forest.pause();
       entrySound.current = false;
       effects.player.stop();
@@ -131,16 +143,17 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
     sequence.skip();
   }
 
-  const filmPlaying = phase === 'prologue' || leaving;
+  const filmPlaying = phase === 'prologue' || phase === 'title' || leaving;
+  const showTitle = phase === 'title' || phase === 'welcome' || phase === 'entry';
   const phaseDescription = phase === 'prologue' ? 'Opening cutscene: a journey from Hyrule fields to the sky islands. Skip to the title at any time.' : leaving ? 'Entering the portfolio through the sky gateway. Skip to the portfolio at any time.' : 'Full-stack projects, curious ideas, and paths worth exploring. Enter to visit the portfolio.';
 
-  return <dialog ref={dialog} className="cinematic-intro welcome-gate" data-sfx="none" data-visible={visible} data-phase={phase === 'arrival' ? 'leaving' : phase} data-film={filmPlaying ? 'true' : 'false'} style={{ '--welcome-exit-duration': `${welcomeExitDuration}ms`, '--prologue-duration': `${prologueDuration}ms`, '--entry-scene-duration': `${entrySceneDuration}ms` } as CSSProperties} aria-labelledby="intro-accessible-title" aria-describedby="intro-accessible-description" onCancel={event => { event.preventDefault(); skip(); }}>
+  return <dialog ref={dialog} className="cinematic-intro welcome-gate" data-sfx="none" data-visible={visible} data-playing={playing} data-phase={phase === 'arrival' ? 'leaving' : phase} data-film={filmPlaying ? 'true' : 'false'} style={{ '--welcome-exit-duration': `${welcomeExitDuration}ms`, '--prologue-duration': `${prologueDuration}ms`, '--title-reveal-duration': `${titleRevealDuration}ms`, '--entry-scene-duration': `${entrySceneDuration}ms` } as CSSProperties} aria-labelledby="intro-accessible-title" aria-describedby="intro-accessible-description" onCancel={event => { event.preventDefault(); skip(); }}>
     <h2 id="intro-accessible-title" className="sr-only">Welcome to {profile.brand}</h2>
     <p id="intro-accessible-description" className="sr-only" role="status">{phaseDescription}</p>
     <audio ref={forestAudio} loop preload="none" playsInline aria-hidden="true" hidden/>
     <div className="welcome-flash" aria-hidden="true"><span className="welcome-bloom"/><svg className="welcome-flash-crest" viewBox="0 0 40 36" focusable="false"><path d="m20 1 10 17.3H10ZM10 18.3 20 35.6H0Zm20 0 10 17.3H20Z"/></svg></div>
-    {filmPlaying && <OpeningCutscene kind={phase === 'prologue' ? 'prologue' : 'entry'} arriving={phase === 'arrival'}/>}
-    {phase === 'welcome' && <div className="intro-scene">
+    {filmPlaying && <OpeningCutscene kind={phase === 'prologue' || phase === 'title' ? 'prologue' : 'entry'} arriving={phase === 'arrival'} compact={compact} onReady={() => setFilmReady(true)}/>}
+    {showTitle && <div className="intro-scene">
       <OpeningMurals/>
       <div className="welcome-magic" aria-hidden="true"><AncientSeal className="welcome-rune"/><span className="welcome-gold-wave"/>{Array.from({ length: compact ? 12 : 24 }, (_, index) => <i className={index % 3 ? 'welcome-dust welcome-leaf' : 'welcome-dust'} key={index} style={{ '--dust-x': `${7 + index * 37 % 86}%`, '--dust-delay': `${-(index * .7)}s`, '--dust-duration': `${8 + index % 7}s` } as CSSProperties}/>)}</div>
       <div className="intro-orbit orbit-one" aria-hidden="true"/><div className="intro-orbit orbit-two" aria-hidden="true"/>
@@ -150,6 +163,6 @@ function WelcomeDialog({ mode }: { mode: MotionMode }) {
       <div className="intro-thread" aria-hidden="true"/>
       <div className="welcome-copy"><p className="welcome-heading">Your story begins here.</p><p>Full-stack projects, curious ideas, and paths worth exploring.<br/>Open the cover. Discover the next chapter.</p><div className="welcome-actions"><button ref={enterButton} type="button" className="button welcome-enter" disabled={leaving} onClick={() => enter('play')} aria-label={state.available ? `Enter ${profile.brand} with ${title}` : `Enter ${profile.brand}`}>Enter {profile.brand} <Icon name="book"/></button>{(state.available || effects.state.available) && <button type="button" className="welcome-quiet" disabled={leaving} onClick={() => enter('pause')}>Enter silently</button>}</div><label className="welcome-sound-choice"><input type="checkbox" checked={effects.state.enabled && effects.state.available} disabled={leaving || !effects.state.available} onChange={event => effects.player.setEnabled(event.target.checked)}/>Storybook sound effects</label>{state.available && <p className="welcome-music-note"><Icon name="music"/>{title} · starts when you enter</p>}<p className="welcome-forest-note" role="status">{forestState.error ? forestState.error.includes('browser paused') ? 'Forest prelude · waiting for your first interaction' : 'Forest audio is unavailable. You can still enter.' : forestState.status === 'playing' ? 'Forest prelude · wind, birds & soft flute' : 'Forest prelude · the woods are awakening'}</p></div>
     </div>}
-    <button ref={skipButton} type="button" className="intro-skip" onClick={skip}>{phase === 'prologue' ? 'Skip to title' : leaving ? 'Skip to portfolio' : 'Skip opening'} <Icon name="arrow"/><kbd>Esc</kbd></button>
+    <button ref={skipButton} type="button" className="intro-skip" onClick={skip}>{phase === 'prologue' || phase === 'title' ? 'Skip to title' : leaving ? 'Skip to portfolio' : 'Skip opening'} <Icon name="arrow"/><kbd>Esc</kbd></button>
   </dialog>;
 }

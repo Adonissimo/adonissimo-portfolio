@@ -18,33 +18,39 @@ export function CinematicEffects() {
     finishNavigation();
     if (mode !== 'full') return;
     const running = new Set<Animation>();
+    const perElement = new WeakMap<Element, Animation>();
     const decorations = new Set<HTMLElement>();
     const scrollTargets = new Set<Element>();
-    const ease = 'cubic-bezier(.16,1,.3,1)';
+    const ease = 'cubic-bezier(.22,.61,.36,1)';
     function play(element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) {
       if (document.visibilityState === 'hidden' || typeof element.animate !== 'function') return;
-      const animation = element.animate(frames, { ...options, duration: typeof options.duration === 'number' && compact ? options.duration * .75 : options.duration });
+      perElement.get(element)?.cancel();
+      const animation = element.animate(frames, { ...options, duration: typeof options.duration === 'number' && compact ? options.duration * .85 : options.duration });
+      perElement.set(element, animation);
       running.add(animation);
-      void animation.finished.catch(() => undefined).finally(() => running.delete(animation));
+      void animation.finished.catch(() => undefined).finally(() => {
+        running.delete(animation);
+        if (perElement.get(element) === animation) perElement.delete(element);
+      });
     }
     function enterPage() {
       const main = document.querySelector<HTMLElement>('main#main');
       if (!main || document.visibilityState === 'hidden') return;
       play(main, compact ? [
-        { opacity: .55, transform: `translateY(12px)` }, { opacity: 1, transform: 'none' }
+        { transform: 'translateY(10px)' }, { transform: 'none' }
       ] : [
-        { opacity: .55, transform: `perspective(1600px) rotateY(${sign * 3}deg) translateX(${sign * 22}px)`, clipPath: sign > 0 ? 'inset(0 0 0 3%)' : 'inset(0 3% 0 0)' },
-        { opacity: 1, transform: 'none', clipPath: 'inset(0)' }
-      ], { duration: 620, easing: ease });
+        { transform: `perspective(1600px) rotateY(${sign * 1.2}deg) translateX(${sign * 14}px)` },
+        { transform: 'none' }
+      ], { duration: 760, easing: ease });
       const text = main.querySelectorAll<HTMLElement>('h1, .hero-copy > p, .chapter-heading-copy > p, :scope > p, .hero-actions');
       Array.from(text).slice(0, 5).forEach((part, index) => play(part, [
-        { opacity: .35, transform: `translate(${sign * 18}px, 12px)`, clipPath: 'inset(0 0 18% 0)' },
-        { opacity: 1, transform: 'none', clipPath: 'inset(0)' }
-      ], { duration: 560, delay: Math.min(index * 35, 120), easing: ease }));
-      main.querySelectorAll<HTMLElement>('.hero-art, .chapter-illustration, .cms-cover, .reading-vista').forEach(picture => play(picture, [
-        { opacity: .3, transform: `translateX(${sign * 28}px) scale(.94)` },
+        { opacity: .7, transform: `translate(${sign * 10}px, 8px)` },
         { opacity: 1, transform: 'none' }
-      ], { duration: 840, delay: 65, easing: ease }));
+      ], { duration: 720, delay: Math.min(index * 28, 112), easing: ease }));
+      main.querySelectorAll<HTMLElement>('.hero-art, .chapter-illustration, .cms-cover, .reading-vista').forEach(picture => play(picture, [
+        { opacity: .75, transform: `translateX(${sign * 16}px) scale(1.025)` },
+        { opacity: 1, transform: 'none' }
+      ], { duration: 1000, delay: 40, easing: ease }));
       const backdrop = document.querySelector<HTMLElement>('.world-atlas');
       if (backdrop) play(backdrop, [{ transform: `scale(1.025) translateX(${sign * 6}px)` }, { transform: 'none' }], { duration: 960, easing: ease });
     }
@@ -66,10 +72,7 @@ export function CinematicEffects() {
       scrollTargets.forEach(target => {
         if (!revealed.has(target)) { observer?.unobserve(target); observer?.observe(target); }
       });
-      const copy = document.querySelector<HTMLElement>('.hero-copy');
       const scene = document.querySelector<HTMLElement>('.hero-landscape');
-      if (copy) play(copy, [{ opacity: .4, transform: 'translateY(17px)', filter: compact ? 'none' : 'blur(5px)' }, { opacity: 1, transform: 'translateY(0)', filter: compact ? 'none' : 'blur(0)' }], { duration: 900, easing: ease });
-      if (scene) play(scene, [{ opacity: .35, transform: 'scale(1.065)', filter: compact ? 'none' : 'blur(3px)' }, { opacity: 1, transform: 'scale(1)', filter: compact ? 'none' : 'blur(0)' }], { duration: 1200, easing: ease });
       scene?.querySelectorAll<SVGElement>('.seal-track').forEach(track => {
         if (document.visibilityState === 'hidden' || typeof track.animate !== 'function') return;
         const animation = track.animate([{ strokeDashoffset: 1, opacity: .2 }, { strokeDashoffset: 0, opacity: 1 }], { duration: 1100, easing: ease });
@@ -113,7 +116,7 @@ export function CinematicEffects() {
           } else if (target.classList.contains('inventory-list')) {
             target.querySelectorAll<HTMLElement>('.inventory-item').forEach((item, i) => play(item, [{ opacity: .4, transform: 'translateX(14px)' }, { opacity: 1, transform: 'translateX(0)' }], { duration: 540, delay: Math.min(i * 45, 180), easing: ease }));
           } else {
-            play(target, [{ opacity: .4, clipPath: 'inset(4% 0 0 0)', transform: 'translateY(14px)' }, { opacity: 1, clipPath: 'inset(0)', transform: 'translateY(0)' }], { duration: 700, easing: ease });
+            play(target, [{ opacity: .7, transform: 'translateY(12px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 800, easing: ease });
           }
         });
       }, { threshold: .12 });
@@ -121,6 +124,8 @@ export function CinematicEffects() {
         const targets = document.querySelectorAll('main > section:not(.hero), .quest-entry, .browse-entry, .inventory-list, .adventurer-sheet, .contact-frame, .chapter-illustration, .about-copy, .prose > h2, .prose > p, .prose > pre');
         targets.forEach(element => {
           if (watched.has(element) || watchedCount >= 64) return;
+          const parent = element.parentElement?.closest('main > section:not(.hero), .quest-entry, .browse-entry, .contact-frame, .about-copy');
+          if (parent && watched.has(parent)) return;
           watched.add(element);
           watchedCount++;
           scrollTargets.add(element);

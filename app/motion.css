@@ -1,5 +1,5 @@
 /* ADONISSIMO: an authored prologue, short navigation wipes, and local control feedback. */
-:root { --cinema-ease: cubic-bezier(.16, 1, .3, 1); --cinema-quick: 180ms; }
+:root { --cinema-ease: cubic-bezier(.22, .61, .36, 1); --cinema-quick: 180ms; }
 .hero .zelda-wordmark { max-width: 100%; }
 
 /* A normal page remains visible if animation scripting never runs. */
@@ -34,7 +34,7 @@
 .intro-skip kbd { font-family: var(--sans); color: #b6c4ac; font-size: 9px; padding-left: 7px; border-left: 1px solid #b8c29e44; }
 @keyframes sigil-awaken { 0% { opacity: 0; transform: scale(.45) translateY(8px); filter: blur(8px); } 65% { opacity: 1; filter: blur(0); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } }
 @keyframes orbit-awaken { from { opacity: 0; transform: translate(-50%, -50%) scale(.85) rotate(-22deg); } to { opacity: .6; transform: translate(-50%, -50%) scale(1) rotate(0); } }
-@keyframes letter-release { from { opacity: 0; transform: translateY(24px) scale(.94); filter: blur(9px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+@keyframes letter-release { from { opacity: 0; transform: translate3d(0, 14px, 0) scale(.98); } to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
 @keyframes legend-arrival { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes golden-thread { 0% { opacity: 0; transform: scaleX(0); } 28%, 76% { opacity: .8; transform: scaleX(1); } 100% { opacity: 0; transform: scaleX(1.35); } }
 

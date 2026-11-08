@@ -51,15 +51,32 @@ test('fog paints immediately, protects reading, reuses its tile and stops all wo
   assert(env.paints() > 0, 'A visible frame is drawn before the first animation tick.');
   assert(env.stops.some(([, color]) => color === '#ffffff2e'), 'The reading region has a fixed low-alpha mask.');
   const textures = env.textures();
+  const maskStops = env.stops.length;
   painter.active(true); assert.equal(env.frames.size, 1);
   for (let i = 1; i <= 30; i++) { const [key, callback] = env.frames.entries().next().value!; env.frames.delete(key); callback(i * 17); }
   assert.equal(env.textures(), textures, 'No cloud noise generation or tile uploads belong in the animation loop.');
+  assert.equal(env.stops.length, maskStops, 'The reading gradient is reused instead of allocated every painted frame.');
   assert.equal(env.frames.size, 1);
   painter.active(false); assert.equal(env.frames.size, 0);
   painter.active(true); painter.dispose(); assert.equal(env.frames.size, 0);
   assert.equal(env.tile.width, 1); assert.equal(env.tile.height, 1);
   const painted = env.paints(); painter.active(true); painter.resize(900, 600);
   assert.equal(env.paints(), painted);
+});
+
+test('fog reuses a mask for color changes but rebuilds it for new reading bounds or canvas dimensions', () => {
+  const env = surface();
+  const painter = createFogRenderer(env.canvas as unknown as HTMLCanvasElement, false, env.clock)!;
+  painter.resize(1440, 900);
+  const stops = env.stops.length;
+  painter.appearance({ tone: '#a0c4ba', left: .08, right: .92, quiet: false });
+  assert.equal(env.stops.length, stops);
+  painter.appearance({ tone: '#a0c4ba', left: .2, right: .8, quiet: false });
+  assert(env.stops.length > stops);
+  const moved = env.stops.length;
+  painter.resize(390, 844);
+  assert(env.stops.length > moved);
+  painter.dispose();
 });
 
 test('missing canvas capabilities allow a static fallback instead of blocking the portfolio', () => {

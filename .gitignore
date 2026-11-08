@@ -8,5 +8,4 @@ out/
 !.env.integration.example
 .DS_Store
 checkpoint-reports/
-
 /supabase/.temp/

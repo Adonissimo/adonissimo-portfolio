@@ -1,6 +1,6 @@
 {
   "name": "lorenz-zelda-portfolio",
-  "version": "3.13.1",
+  "version": "3.14.0",
   "private": true,
   "engines": {
     "node": "24.x"
@@ -22,13 +22,13 @@
     "checkpoint": "node --experimental-strip-types scripts/checkpoint.mjs"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.8.0",
-    "@supabase/supabase-js": "^2.80.0",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "server-only": "0.0.1",
-    "sharp": "0.35.5"
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.80.0",
+    "sharp": "0.35.5",
+    "server-only": "0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",

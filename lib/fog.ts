@@ -46,7 +46,7 @@ export function cloudPixels(width: number, height: number): Uint8ClampedArray {
 }
 
 export function fogBudget(compact: boolean) {
-  return compact ? { pixels: 100000, fps: 12, textureWidth: 128, textureHeight: 96 } : { pixels: 200000, fps: 18, textureWidth: 192, textureHeight: 128 };
+  return compact ? { pixels: 100000, fps: 24, textureWidth: 128, textureHeight: 96 } : { pixels: 200000, fps: 30, textureWidth: 192, textureHeight: 128 };
 }
 export function fogCanvasSize(width: number, height: number, compact: boolean) {
   const w = Number.isFinite(width) ? Math.max(1, width) : 1;
@@ -82,6 +82,7 @@ export function createFogRenderer(canvas: HTMLCanvasElement, compact: boolean, c
   let appliedTone = '';
   let appearance: FogAppearance = { tone: '#c2d6d0', left: .08, right: .92, quiet: false };
   let frame = 0, disposed = false, active = false, elapsed = 0, last = 0, painted = -Infinity;
+  let readingMask: CanvasGradient | undefined;
 
   function draw() {
     if (disposed) return;
@@ -100,15 +101,17 @@ export function createFogRenderer(canvas: HTMLCanvasElement, compact: boolean, c
     // Keep the texture visible over scenery and cards, with a fixed reading ceiling.
     const left = Number.isFinite(appearance.left) ? Math.max(0, Math.min(.45, appearance.left)) : .08;
     const right = Number.isFinite(appearance.right) ? Math.max(.55, Math.min(1, appearance.right)) : .92;
-    const mask = context!.createLinearGradient(0, 0, w, 0);
-    mask.addColorStop(0, appearance.quiet ? '#ffffff66' : '#ffffffff');
-    mask.addColorStop(Math.max(0, left - .025), appearance.quiet ? '#ffffff66' : '#ffffffff');
-    mask.addColorStop(Math.min(.49, left + .02), '#ffffff2e');
-    mask.addColorStop(Math.max(.51, right - .02), '#ffffff2e');
-    mask.addColorStop(Math.min(1, right + .025), appearance.quiet ? '#ffffff66' : '#ffffffff');
-    mask.addColorStop(1, appearance.quiet ? '#ffffff66' : '#ffffffff');
+    if (!readingMask) {
+      readingMask = context!.createLinearGradient(0, 0, w, 0);
+      readingMask.addColorStop(0, appearance.quiet ? '#ffffff66' : '#ffffffff');
+      readingMask.addColorStop(Math.max(0, left - .025), appearance.quiet ? '#ffffff66' : '#ffffffff');
+      readingMask.addColorStop(Math.min(.49, left + .02), '#ffffff2e');
+      readingMask.addColorStop(Math.max(.51, right - .02), '#ffffff2e');
+      readingMask.addColorStop(Math.min(1, right + .025), appearance.quiet ? '#ffffff66' : '#ffffffff');
+      readingMask.addColorStop(1, appearance.quiet ? '#ffffff66' : '#ffffffff');
+    }
     context!.globalCompositeOperation = 'destination-in';
-    context!.fillStyle = mask; context!.fillRect(0, 0, w, h);
+    context!.fillStyle = readingMask; context!.fillRect(0, 0, w, h);
     context!.globalCompositeOperation = 'source-over';
   }
   function tick(timestamp: number) {
@@ -116,7 +119,11 @@ export function createFogRenderer(canvas: HTMLCanvasElement, compact: boolean, c
     if (!active || disposed) return;
     const delta = last ? Math.max(0, Math.min(.2, (timestamp - last) / 1000)) : 0;
     last = timestamp; elapsed += delta;
-    if (timestamp - painted >= 1000 / budget.fps) { draw(); painted = timestamp; }
+    const interval = 1000 / budget.fps;
+    if (timestamp - painted >= interval) {
+      draw();
+      painted = Number.isFinite(painted) ? timestamp - (timestamp - painted) % interval : timestamp;
+    }
     frame = clock.request(tick);
   }
   return {
@@ -124,10 +131,12 @@ export function createFogRenderer(canvas: HTMLCanvasElement, compact: boolean, c
       if (disposed) return;
       const size = fogCanvasSize(width, height, compact);
       canvas.width = size.width; canvas.height = size.height;
+      readingMask = undefined;
       context.imageSmoothingEnabled = true; draw();
     },
     appearance(value: FogAppearance) {
       if (disposed) return;
+      if (value.left !== appearance.left || value.right !== appearance.right || value.quiet !== appearance.quiet) readingMask = undefined;
       appearance = value;
       if (appliedTone !== value.tone) {
         const tone = /^#[\da-f]{6}$/i.test(value.tone) ? value.tone.slice(1) : 'c2d6d0';
