@@ -28,10 +28,11 @@ test('phone and desktop fog buffers are bounded independently of high DPI', () =
 
 function surface() {
   const stops: Array<[number, string]> = [];
+  const draws: Array<{ alpha: number; operation: string }> = [];
   let paints = 0, textures = 0;
   const context = {
     globalAlpha: 1, globalCompositeOperation: 'source-over', fillStyle: '', imageSmoothingEnabled: true,
-    clearRect() {}, fillRect() {}, drawImage() { paints++; },
+    clearRect() {}, fillRect() {}, drawImage() { paints++; draws.push({ alpha: this.globalAlpha, operation: this.globalCompositeOperation }); },
     createLinearGradient() { return { addColorStop(position: number, color: string) { stops.push([position, color]); } }; },
     createImageData(w: number, h: number) { return { data: new Uint8ClampedArray(w * h * 4) }; },
     putImageData() { textures++; }
@@ -39,23 +40,23 @@ function surface() {
   const tile = { width: 1, height: 1, getContext: () => context };
   const canvas = { width: 1, height: 1, getContext: () => context, ownerDocument: { createElement: () => tile } };
   const frames = new Map<number, FrameRequestCallback>(); let id = 0;
-  return { canvas, context, stops, frames, tile, paints: () => paints, textures: () => textures,
+  return { canvas, context, stops, draws, frames, tile, paints: () => paints, textures: () => textures,
     clock: { request(callback: FrameRequestCallback) { frames.set(++id, callback); return id; }, cancel(key: number) { frames.delete(key); } } };
 }
 
-test('fog paints immediately, protects reading, reuses its tile and stops all work on pause/dispose', () => {
+test('fog paints a continuous field immediately, reuses its tile and stops all work on pause/dispose', () => {
   const env = surface();
   const painter = createFogRenderer(env.canvas as unknown as HTMLCanvasElement, true, env.clock)!;
-  painter.appearance({ tone: '#c2d6d0', left: .08, right: .92, quiet: false });
+  painter.appearance({ tone: '#c2d6d0', quiet: false });
   painter.resize(390, 844);
   assert(env.paints() > 0, 'A visible frame is drawn before the first animation tick.');
-  assert(env.stops.some(([, color]) => color === '#ffffff2e'), 'The reading region has a fixed low-alpha mask.');
+  assert.equal(env.stops.length, 0, 'A reading-column cutout must not divide the atmosphere into bright edges and a dark box.');
+  assert(env.draws.every(draw => draw.operation === 'source-over' && draw.alpha > 0 && draw.alpha < .5));
   const textures = env.textures();
-  const maskStops = env.stops.length;
   painter.active(true); assert.equal(env.frames.size, 1);
   for (let i = 1; i <= 30; i++) { const [key, callback] = env.frames.entries().next().value!; env.frames.delete(key); callback(i * 17); }
   assert.equal(env.textures(), textures, 'No cloud noise generation or tile uploads belong in the animation loop.');
-  assert.equal(env.stops.length, maskStops, 'The reading gradient is reused instead of allocated every painted frame.');
+  assert.equal(env.stops.length, 0, 'Animation must not recreate a layout-shaped clearing.');
   assert.equal(env.frames.size, 1);
   painter.active(false); assert.equal(env.frames.size, 0);
   painter.active(true); painter.dispose(); assert.equal(env.frames.size, 0);
@@ -64,18 +65,21 @@ test('fog paints immediately, protects reading, reuses its tile and stops all wo
   assert.equal(env.paints(), painted);
 });
 
-test('fog reuses a mask for color changes but rebuilds it for new reading bounds or canvas dimensions', () => {
+test('theme, quiet settings and viewport changes preserve continuous fog without a reading mask', () => {
   const env = surface();
   const painter = createFogRenderer(env.canvas as unknown as HTMLCanvasElement, false, env.clock)!;
   painter.resize(1440, 900);
-  const stops = env.stops.length;
-  painter.appearance({ tone: '#a0c4ba', left: .08, right: .92, quiet: false });
-  assert.equal(env.stops.length, stops);
-  painter.appearance({ tone: '#a0c4ba', left: .2, right: .8, quiet: false });
-  assert(env.stops.length > stops);
-  const moved = env.stops.length;
+  const publicAlphas = env.draws.slice(-6).map(draw => draw.alpha);
+  painter.appearance({ tone: '#a0c4ba', quiet: true });
+  const quietAlphas = env.draws.slice(-6).map(draw => draw.alpha);
+  assert(quietAlphas.every((alpha, i) => alpha < publicAlphas[i]), 'Private pages lower the whole effect, not a rectangular part of it.');
+  const textures = env.textures();
+  painter.appearance({ tone: '#a0c4ba', quiet: false });
+  assert.equal(env.textures(), textures, 'Changing opacity does not regenerate the cloud texture.');
+  assert.deepEqual(env.draws.slice(-6).map(draw => draw.alpha), publicAlphas);
   painter.resize(390, 844);
-  assert(env.stops.length > moved);
+  assert.equal(env.stops.length, 0);
+  assert(env.draws.every(draw => draw.operation === 'source-over'));
   painter.dispose();
 });
 

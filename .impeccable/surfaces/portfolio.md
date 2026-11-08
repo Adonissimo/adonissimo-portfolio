@@ -78,3 +78,11 @@ The page is flexible paper: a fixed spine, connected 3D strips, a curling free e
 ## Visible cinematic fog — 3.12.0
 
 The user cannot see the previous gradients. Replace them with three textured foreground cloud depths and stronger light shafts, active from welcome through all routes. A shared canvas portals into the native dialog, keeps calm wind and protects measured reading areas. Cap phone buffer/paint rate, cache the two texture budgets, pause when hidden and dispose on host change. Preserve the fairy, Triforce, paper, PNG art and audio. 109 source tests/135 syntax transforms and isolated lifecycle checks pass; texture inspection is not a browser screenshot or a measured performance result.
+
+### Letter shadows and visible atmosphere — 3.14.1
+
+A close dark text shadow and restrained gold heading halo replace reliance on the nearly opaque public reading veil. Day mode uses a pale edge around dark copy. Lighten public scene washes and film shades; enlarge and clarify existing welcome PNG mural panels. Keep page fog/rays between scenery and main/footer content. Keep quiet auth/private backdrops, crisp controls, existing motion/audio and compact layout. All 117 Node tests and seven isolated fog lifecycle checks pass; actual browser appearance/contrast and full build gates remain local. See docs/TEXT_LIGHT_UPDATE.md.
+
+### No green reading panels — 3.14.2
+
+Current owner screenshots supersede the lighter-wash approach in 3.14.1. Remove full-page/mural washes, text-column clearing in fog and rays, opaque welcome title cover/bands and film shade. Continuous atmosphere belongs behind copy, with tight text-edge shadows. Local green shading must follow real PNG alpha silhouettes using soft contact shadows; never fill a layout-sized rectangle. Keep functional controls/tables, quiet private art, pinned motion/audio and compact layouts. See docs/OPEN_SCENERY_UPDATE.md for actual source/component evidence and open browser/build gates.

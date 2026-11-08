@@ -1,26 +1,35 @@
-/* An actual illustrated backdrop, with a neutral reading wash over the content. */
+/* Open scenery: contrast belongs to letters and alpha-following PNG shadows. */
+:root {
+  --scene-copy-shadow: 0 1px 1px #030b08, 0 -1px 2px #030b08d9, 0 2px 4px #030b08f2;
+  --scene-heading-shadow: 0 1px 2px #030b08, 0 3px 6px #030b08e6, 0 0 14px #f3cf6c26;
+  --scenery-shadow: #092f2266;
+}
+[data-theme='day'] {
+  --scene-copy-shadow: 0 1px 1px #fffbed, 0 -1px 2px #fffbedf2, 0 2px 4px #fff7dde6;
+  --scene-heading-shadow: 0 1px 1px #fffbed, 0 3px 6px #fff7ddf2, 0 0 14px #edc97426;
+  --scenery-shadow: #234b332e;
+}
 body { isolation: isolate; }
 .world-backdrop { position: fixed; z-index: -1; inset: 68px 0 0; overflow: hidden; pointer-events: none; user-select: none; contain: strict; }
-.world-atlas { object-fit: cover; object-position: center top; opacity: .52; }
-.world-reading-wash {
-  position: absolute; inset: 0;
-  --reading-edge: max(20px, calc((100vw - 1160px) / 2));
-  --reading-wash: color-mix(in srgb, var(--bg) 97%, transparent);
-  background: linear-gradient(90deg, transparent, var(--reading-wash) var(--reading-edge), var(--reading-wash) calc(100% - var(--reading-edge)), transparent);
-}
-[data-theme='day'] .world-atlas { opacity: .42; }
-.world-backdrop[data-world='fields'] .world-atlas { opacity: .6; }
-[data-theme='day'] .world-backdrop[data-world='fields'] .world-atlas { opacity: .48; }
-.world-backdrop[data-world='depths'] .world-atlas { opacity: .35; }
+.world-atlas { object-fit: cover; object-position: center top; opacity: .68; filter: drop-shadow(0 6px 14px var(--scenery-shadow)); }
+.realm-scene > img, .hero-art { filter: drop-shadow(0 6px 12px var(--scenery-shadow)); }
+[data-theme='day'] .world-atlas { opacity: .56; }
+.world-backdrop[data-world='fields'] .world-atlas { opacity: .72; }
+[data-theme='day'] .world-backdrop[data-world='fields'] .world-atlas { opacity: .6; }
+.world-backdrop[data-world='depths'] .world-atlas { opacity: .52; }
 .world-backdrop[data-background='zonai'] .world-atlas { object-position: 28% top; }
 .world-backdrop[data-background='depths'] .world-atlas { object-position: 75% top; }
 .world-backdrop[data-background='riverside'] .world-atlas { object-position: 70% top; }
 .world-backdrop-quiet .world-atlas { opacity: .2 !important; }
-@media (max-width: 1000px) { .world-reading-wash { --reading-edge: 24px; } }
+body:has(.world-backdrop:not(.world-backdrop-quiet)) :is(main, .site-footer) { text-shadow: var(--scene-copy-shadow); }
+body:has(.world-backdrop:not(.world-backdrop-quiet)) main :is(h1, h2, h3, .zelda-wordmark) { text-shadow: var(--scene-heading-shadow); }
+body:has(.world-backdrop:not(.world-backdrop-quiet)) main :is(.hero-copy > p, .about-copy > p, .chapter-heading-copy > p, .contact-copy > p, .browse-entry p, .prose p, .prose li) { color: var(--text); }
+body:has(.world-backdrop:not(.world-backdrop-quiet)) main :is(button, .button, input, select, textarea, pre, code, .preview-note, .success-state) { text-shadow: none; }
 @media (max-width: 760px) {
-  .world-atlas { object-position: 24% top; opacity: .36; }
-  .world-reading-wash { --reading-edge: 20px; --reading-wash: color-mix(in srgb, var(--bg) 98%, transparent); }
-  .world-backdrop[data-world='fields'] .world-atlas { opacity: .42; }
+  .world-atlas { object-position: 24% top; opacity: .52; filter: drop-shadow(0 4px 8px var(--scenery-shadow)); }
+  .world-backdrop[data-world='fields'] .world-atlas { opacity: .58; }
 }
-@supports not (color: color-mix(in srgb, black, transparent)) { .world-backdrop { display: none; } }
-@media print { .world-backdrop { display: none !important; } }
+@media print {
+  .world-backdrop { display: none !important; }
+  body:has(.world-backdrop:not(.world-backdrop-quiet)) :is(main, .site-footer), body:has(.world-backdrop:not(.world-backdrop-quiet)) main :is(h1, h2, h3, .zelda-wordmark) { text-shadow: none; }
+}

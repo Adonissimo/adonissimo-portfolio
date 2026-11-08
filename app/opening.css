@@ -1,10 +1,9 @@
 /* One authored opening: three golden pieces assemble, then light releases on Enter. */
 .welcome-murals { position: absolute; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
-.welcome-murals::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, #09120ed9 29%, #09120ef2 42% 58%, #09120ed9 71%, transparent); }
-.welcome-mural { position: absolute; top: 5%; bottom: 2%; width: clamp(190px, 28vw, 390px); opacity: .62; overflow: hidden; }
+.welcome-mural { position: absolute; top: 5%; bottom: 2%; width: clamp(260px, 46vw, 680px); opacity: .82; overflow: hidden; }
 .welcome-mural-left { left: -2%; mask-image: linear-gradient(90deg, #000 62%, transparent); }
 .welcome-mural-right { right: -2%; mask-image: linear-gradient(270deg, #000 62%, transparent); }
-.welcome-mural > img { object-fit: cover; filter: saturate(.3) sepia(.2); }
+.welcome-mural > img { object-fit: cover; filter: saturate(.65) sepia(.1) drop-shadow(0 8px 18px #092f2266); }
 .welcome-mural-left > img { object-position: left center; }
 .welcome-mural-right > img { object-position: right center; }
 .welcome-mural .mural-seal { width: min(100%, 280px); height: auto; aspect-ratio: 1; top: 24%; left: 2%; color: #e0c385; opacity: .32; }
@@ -46,10 +45,9 @@
 @keyframes opening-cover-exit { 0%, 42% { opacity: 1; } to { opacity: 0; } }
 @keyframes crest-release { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(2.4) translateY(-14px); } }
 @media (max-width: 760px), (pointer: coarse) {
-  .welcome-mural { width: 150px; top: 8%; opacity: .32; }
+  .welcome-mural { width: 56vw; top: 8%; opacity: .58; }
   .welcome-mural-left { left: -35px; }
   .welcome-mural-right { right: -35px; }
-  .welcome-murals::after { background: linear-gradient(90deg, transparent, #09120ed9 27% 73%, transparent); }
   .mural-inscriptions { gap: 24px; left: 32%; }
   .mural-inscriptions > svg { width: 20px; height: 23px; }
   .welcome-mural-right .mural-inscriptions { right: 32%; }
@@ -61,8 +59,14 @@
 @media print { .welcome-magic, .welcome-flash, .welcome-murals { display: none !important; } }
 
 /* A two-shot prologue, the waiting title, then a gateway journey on Enter. */
-.welcome-gate .intro-scene { z-index: 2; background: #09120e; }
+.welcome-gate .intro-scene { z-index: 2; background: transparent; }
+.welcome-gate .intro-scene::before, .welcome-gate .intro-scene::after { content: none; }
 .welcome-gate .intro-signature { font-size: .75rem; letter-spacing: .12em; }
+.cinematic-intro { --opening-copy-shadow: 0 1px 1px #030b08, 0 -1px 2px #030b08f2, 0 2px 4px #030b08; --opening-gold-shadow: 0 1px 2px #030b08, 0 3px 6px #030b08f2, 0 0 16px #f2cf752e; }
+.welcome-gate :is(.welcome-copy, .intro-signature, .film-identity) { text-shadow: var(--opening-copy-shadow); }
+.welcome-gate :is(.intro-wordmark, .welcome-heading, .film-caption) { text-shadow: var(--opening-gold-shadow); }
+.welcome-gate :is(.welcome-quiet, .welcome-sound-choice) { text-shadow: var(--opening-copy-shadow); }
+.welcome-gate :is(.button, .intro-skip, input, kbd) { text-shadow: none; }
 .welcome-gate[data-phase='title'] .intro-scene { animation: film-title-dissolve var(--title-reveal-duration) ease-in-out both; }
 .welcome-gate[data-phase='entry'] .intro-scene { animation: film-title-away 520ms var(--cinema-ease) both; pointer-events: none; }
 .welcome-gate[data-film='true'] { overflow: hidden; }
@@ -76,7 +80,6 @@
 .film-forest > img { object-position: 42% 60%; }
 .film-sky { animation: film-sky-camera var(--prologue-duration) linear both; }
 .film-sky > img { object-position: 65% 46%; }
-.film-shade { position: absolute; inset: 0; background: linear-gradient(0deg, #07130ef2, #07130eb3 30%, transparent 72%), radial-gradient(ellipse at 64% 40%, transparent 26%, #07130e70 100%), linear-gradient(90deg, #07130eb3, transparent 68%); }
 .film-light { position: absolute; inset: -15%; opacity: .3; background: linear-gradient(112deg, transparent 22%, #ffebba 24%, transparent 32%), linear-gradient(112deg, transparent 46%, #ffe5a8 48%, transparent 54%); transform-origin: 70% 0; animation: film-light-pass var(--prologue-duration) ease-in-out both; }
 .film-haze { position: absolute; inset: -10%; background: radial-gradient(ellipse 80% 30% at 15% 85%, #d8e6d6b3, transparent 78%), radial-gradient(ellipse 65% 25% at 92% 38%, #f2e8c78c, transparent 78%); }
 .film-haze-far { opacity: .32; animation: film-haze-far var(--prologue-duration) ease-in-out both; }

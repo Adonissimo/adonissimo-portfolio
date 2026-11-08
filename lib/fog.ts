@@ -55,7 +55,7 @@ export function fogCanvasSize(width: number, height: number, compact: boolean) {
   return { width: Math.max(1, Math.floor(w * scale)), height: Math.max(1, Math.floor(h * scale)) };
 }
 
-export type FogAppearance = { tone: string; left: number; right: number; quiet: boolean };
+export type FogAppearance = { tone: string; quiet: boolean };
 export type FogClock = { request(callback: FrameRequestCallback): number; cancel(id: number): void };
 // Two small CPU buffers also survive the welcome-to-page portal handoff.
 const textureCache = new Map<boolean, Uint8ClampedArray>();
@@ -80,9 +80,8 @@ export function createFogRenderer(canvas: HTMLCanvasElement, compact: boolean, c
   pixels.data.set(source);
   texture.putImageData(pixels, 0, 0);
   let appliedTone = '';
-  let appearance: FogAppearance = { tone: '#c2d6d0', left: .08, right: .92, quiet: false };
+  let appearance: FogAppearance = { tone: '#c2d6d0', quiet: false };
   let frame = 0, disposed = false, active = false, elapsed = 0, last = 0, painted = -Infinity;
-  let readingMask: CanvasGradient | undefined;
 
   function draw() {
     if (disposed) return;
@@ -93,26 +92,12 @@ export function createFogRenderer(canvas: HTMLCanvasElement, compact: boolean, c
       const width = w * plane.width, height = h * plane.height;
       const phase = ((plane.offset + elapsed * plane.speed) % 1 + 1) % 1;
       const x = -phase * width, y = h * plane.top + Math.sin(elapsed * .025 + index * 2) * h * .012;
-      context!.globalAlpha = plane.alpha;
+      // One even strength across the viewport; never carve out a text column.
+      context!.globalAlpha = plane.alpha * (appearance.quiet ? .24 : .66);
       context!.drawImage(tile, x, y, width, height);
       context!.drawImage(tile, x + width, y, width, height);
     }
     context!.globalAlpha = 1;
-    // Keep the texture visible over scenery and cards, with a fixed reading ceiling.
-    const left = Number.isFinite(appearance.left) ? Math.max(0, Math.min(.45, appearance.left)) : .08;
-    const right = Number.isFinite(appearance.right) ? Math.max(.55, Math.min(1, appearance.right)) : .92;
-    if (!readingMask) {
-      readingMask = context!.createLinearGradient(0, 0, w, 0);
-      readingMask.addColorStop(0, appearance.quiet ? '#ffffff66' : '#ffffffff');
-      readingMask.addColorStop(Math.max(0, left - .025), appearance.quiet ? '#ffffff66' : '#ffffffff');
-      readingMask.addColorStop(Math.min(.49, left + .02), '#ffffff2e');
-      readingMask.addColorStop(Math.max(.51, right - .02), '#ffffff2e');
-      readingMask.addColorStop(Math.min(1, right + .025), appearance.quiet ? '#ffffff66' : '#ffffffff');
-      readingMask.addColorStop(1, appearance.quiet ? '#ffffff66' : '#ffffffff');
-    }
-    context!.globalCompositeOperation = 'destination-in';
-    context!.fillStyle = readingMask; context!.fillRect(0, 0, w, h);
-    context!.globalCompositeOperation = 'source-over';
   }
   function tick(timestamp: number) {
     frame = 0;
@@ -131,12 +116,10 @@ export function createFogRenderer(canvas: HTMLCanvasElement, compact: boolean, c
       if (disposed) return;
       const size = fogCanvasSize(width, height, compact);
       canvas.width = size.width; canvas.height = size.height;
-      readingMask = undefined;
       context.imageSmoothingEnabled = true; draw();
     },
     appearance(value: FogAppearance) {
       if (disposed) return;
-      if (value.left !== appearance.left || value.right !== appearance.right || value.quiet !== appearance.quiet) readingMask = undefined;
       appearance = value;
       if (appliedTone !== value.tone) {
         const tone = /^#[\da-f]{6}$/i.test(value.tone) ? value.tone.slice(1) : 'c2d6d0';

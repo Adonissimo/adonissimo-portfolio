@@ -28,7 +28,6 @@ export function OpeningCutscene({ kind, arriving = false, compact = false, onRea
       <span className="film-haze film-haze-far"/><span className="film-haze film-haze-near"/>
       <div className="film-carving"><AncientSeal className="film-seal"/><Triforce className="film-crest"/></div>
       <div className="film-stardust">{Array.from({ length: compact ? 8 : 16 }, (_, index) => <i key={index} style={{ '--mote-x': `${12 + index * 29 % 78}%`, '--mote-y': `${18 + index * 17 % 60}%`, '--mote-delay': `${-index * .43}s`, '--mote-life': `${6 + index % 4}s` } as CSSProperties}/>)}</div>
-      <span className="film-shade"/>
     </div>
     <div className="film-captions">
       {kind === 'prologue' ? <>

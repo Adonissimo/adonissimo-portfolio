@@ -1,6 +1,7 @@
-/* Textured cloud banks sit in front of scenery, with a protected reading column. */
-.world-fog { --fog-tone: #c2d6d0; --fog-left: 8%; --fog-right: 92%; --beam-color: #b6dfec; --beam-opacity: .42; position: fixed; inset: calc(var(--header-height, 74px) + env(safe-area-inset-top, 0px)) 0 0; z-index: 35; pointer-events: none; user-select: none; overflow: hidden; contain: strict; }
-.world-fog[data-context='opening'] { inset: 0; z-index: 3; --fog-tone: #c6d4bd; --beam-color: #ffe4a2; --beam-opacity: .5; }
+/* Continuous cloud/light field behind copy; no column-shaped clearing or veil. */
+.world-fog { --fog-tone: #c2d6d0; --beam-color: #b6dfec; --beam-opacity: .42; position: fixed; inset: calc(var(--header-height, 74px) + env(safe-area-inset-top, 0px)) 0 0; z-index: 0; pointer-events: none; user-select: none; overflow: hidden; contain: strict; }
+.world-fog[data-context='opening'] { inset: 0; z-index: 0; --fog-tone: #c6d4bd; --beam-color: #ffe4a2; --beam-opacity: .5; }
+.world-fog[data-context='page'] { z-index: 0; }
 [data-theme='day'] .world-fog[data-context='page'] { --fog-tone: #91a7a1; --beam-color: #ffda8f; --beam-opacity: .48; }
 .world-fog[data-environment='depths'][data-context='page'] { --fog-tone: #a0c4ba; --beam-color: #91e9c4; }
 .world-fog[data-environment='riverside'][data-context='page'] { --fog-tone: #c1d8dd; }
@@ -10,11 +11,10 @@
 [data-theme='day'] .world-fog[data-environment='riverside'][data-context='page'] { --fog-tone: #91a7af; }
 .world-fog[data-quiet='true'] { --beam-opacity: .3; }
 .world-fog-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 1; }
-.world-fog-rays { position: absolute; z-index: 1; inset: -8% -8%; opacity: var(--beam-opacity); background: linear-gradient(113deg, transparent 17%, var(--beam-color) 20%, transparent 26%), linear-gradient(113deg, transparent 45%, var(--beam-color) 48%, transparent 54%), linear-gradient(113deg, transparent 70%, var(--beam-color) 73%, transparent 77%); mask-image: linear-gradient(90deg, #000, #0003 var(--fog-left), #0003 var(--fog-right), #000); transform-origin: 80% -5%; animation: fog-rays-drift 48s -14s ease-in-out infinite alternate paused; }
+.world-fog-rays { position: absolute; z-index: 1; inset: -8% -8%; opacity: var(--beam-opacity); background: linear-gradient(113deg, transparent 17%, var(--beam-color) 20%, transparent 26%), linear-gradient(113deg, transparent 45%, var(--beam-color) 48%, transparent 54%), linear-gradient(113deg, transparent 70%, var(--beam-color) 73%, transparent 77%); transform-origin: 80% -5%; animation: fog-rays-drift 48s -14s ease-in-out infinite alternate paused; }
 .world-fog[data-active='true'] .world-fog-rays { animation-play-state: running; }
-.world-fog-fallback { position: absolute; inset: -12%; opacity: .3; background: radial-gradient(ellipse 70% 24% at 12% 18%, var(--fog-tone), transparent 78%), radial-gradient(ellipse 75% 28% at 85% 64%, var(--fog-tone), transparent 80%), radial-gradient(ellipse 85% 28% at 30% 95%, var(--fog-tone), transparent 80%); mask-image: linear-gradient(90deg, #000, #0008 var(--fog-left), #0008 var(--fog-right), #000); }
+.world-fog-fallback { position: absolute; inset: -12%; opacity: .2; background: radial-gradient(ellipse 70% 24% at 12% 18%, var(--fog-tone), transparent 78%), radial-gradient(ellipse 75% 28% at 85% 64%, var(--fog-tone), transparent 80%), radial-gradient(ellipse 85% 28% at 30% 95%, var(--fog-tone), transparent 80%); }
 .world-fog[data-renderer='canvas'] .world-fog-fallback { display: none; }
-.world-fog::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 42%, transparent 62%, #08120d18 100%); }
 @keyframes fog-rays-drift { from { transform: translateX(-1%) rotate(-1deg); } to { transform: translateX(1%) rotate(1deg); } }
 html[data-motion='off'] .world-fog-rays { animation: none; }
 @media print { .world-fog { display: none !important; } }

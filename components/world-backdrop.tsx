@@ -10,6 +10,5 @@ export function WorldBackdrop() {
 
   return <div className={`world-backdrop${backdrop.quiet ? ' world-backdrop-quiet' : ''}`} data-world={backdrop.realm} data-background={backdrop.scene} aria-hidden="true">
     <Image key={backdrop.scene} className="world-atlas" src={backdrop.src} alt="" fill sizes="100vw" loading="eager" draggable={false}/>
-    <div className="world-reading-wash"/>
   </div>;
 }

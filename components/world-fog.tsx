@@ -10,7 +10,7 @@ import { compactEffectsSnapshot, serverCompactSnapshot, subscribeCompactEffects 
 import { motionModeSnapshot, serverMotionSnapshot, subscribeMotion } from '@/lib/motion';
 import { serverThemeSnapshot, subscribeTheme, themeSnapshot } from '@/lib/theme';
 
-/** One foreground atmosphere, moved into the native opening when its dialog owns the top layer. */
+/** One scenery atmosphere; text shadows replace layout-sized reading cutouts. */
 export function WorldFog() {
   const pathname = usePathname();
   const host = useSyncExternalStore(subscribeFairyHost, fairyHostSnapshot, serverFairyHostSnapshot);
@@ -35,15 +35,7 @@ export function WorldFog() {
     renderer.current = painter;
     const measure = () => {
       const box = element.getBoundingClientRect();
-      const targets = host
-        ? [host.querySelector<HTMLElement>('.intro-wordmark, .film-captions'), host.querySelector<HTMLElement>('.welcome-copy, .film-identity')]
-        : [document.querySelector<HTMLElement>('main.page-shell, main .page-shell') ?? document.querySelector<HTMLElement>('main#main')];
-      const bounds = targets.filter((target): target is HTMLElement => Boolean(target)).map(target => target.getBoundingClientRect());
-      const left = bounds.length && box.width ? (Math.min(...bounds.map(bound => bound.left)) - box.left - 12) / box.width : .08;
-      const right = bounds.length && box.width ? (Math.max(...bounds.map(bound => bound.right)) - box.left + 12) / box.width : .92;
-      element.style.setProperty('--fog-left', `${Math.max(0, Math.min(.45, left)) * 100}%`);
-      element.style.setProperty('--fog-right', `${Math.max(.55, Math.min(1, right)) * 100}%`);
-      painter.appearance({ tone: getComputedStyle(element).getPropertyValue('--fog-tone').trim() || '#c2d6d0', left, right, quiet: element.dataset.quiet === 'true' });
+      painter.appearance({ tone: getComputedStyle(element).getPropertyValue('--fog-tone').trim() || '#c2d6d0', quiet: element.dataset.quiet === 'true' });
       painter.resize(box.width, box.height);
       element.dataset.renderer = 'canvas';
     };
