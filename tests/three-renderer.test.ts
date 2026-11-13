@@ -11,10 +11,11 @@ import type { createThreeRenderer } from '../lib/three-renderer.ts';
 function harness() {
   const pending = new Map<number, FrameRequestCallback>();
   let id = 0, now = 0, draws = 0, disposed = false, contextLost = false, fail = false, ratio = 1;
+  let renderedScene: THREE.Scene | undefined;
   class Renderer {
     setClearColor() {} setSize() {}
     setPixelRatio(value: number) { ratio = value; }
-    render() { if (fail) throw new Error('Test GPU failure'); draws++; }
+    render(scene: THREE.Scene) { if (fail) throw new Error('Test GPU failure'); renderedScene = scene; draws++; }
     dispose() { disposed = true; }
     forceContextLoss() { contextLost = true; }
   }
@@ -33,6 +34,7 @@ function harness() {
     step(ms = 40) { now += ms; const callbacks = [...pending.values()]; pending.clear(); callbacks.forEach(callback => callback(now)); },
     pending: () => pending.size, draws: () => draws, ratio: () => ratio,
     disposed: () => disposed && contextLost,
+    scene: () => renderedScene,
     fail: () => { fail = true; }
   };
 }
@@ -66,4 +68,26 @@ test('a GPU render failure reports fallback and never restarts a failed renderer
   h.fail(); scene.resize(1000, 700); assert.equal(failures, 1);
   scene.setActive(true); h.step(); assert.equal(h.pending(), 0);
   scene.theme(true); assert.equal(failures, 1); scene.dispose(); assert.ok(h.disposed());
+});
+
+test('realistic scenery has reflection lighting, material relief and finite detailed geometry', () => {
+  const h = harness(), renderer = h.create({} as HTMLCanvasElement, 'hero', true);
+  renderer.resize(900, 600);
+  const scene = h.scene(); assert.ok(scene?.environment);
+  let relief = 0, metal = 0, detailed = 0;
+  const ownedTextures = new Set<THREE.Texture>([scene.environment]);
+  scene.traverse(object => {
+    if (!(object instanceof THREE.Mesh)) return;
+    const positions = object.geometry.attributes.position;
+    assert.ok(Array.from(positions.array).every(Number.isFinite));
+    if (positions.count > 100) detailed++;
+    const material = object.material as THREE.MeshStandardMaterial;
+    if (material.bumpMap) { relief++; ownedTextures.add(material.bumpMap); }
+    if (material.roughnessMap) ownedTextures.add(material.roughnessMap);
+    if (material.metalness > .9) metal++;
+  });
+  assert.ok(relief > 5); assert.ok(metal >= 3); assert.ok(detailed > 5);
+  let released = 0;
+  ownedTextures.forEach(texture => texture.addEventListener('dispose', () => { released++; }));
+  renderer.dispose(); assert.equal(released, ownedTextures.size);
 });
