@@ -9,3 +9,7 @@ out/
 .DS_Store
 checkpoint-reports/
 /supabase/.temp/
+*.pem
+*.key
+*.p12
+*.pfx

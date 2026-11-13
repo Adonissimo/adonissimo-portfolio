@@ -6,6 +6,8 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const local = path => fileURLToPath(new URL(`../${path}`, import.meta.url));
 const tests = readdirSync(local('tests')).filter(name => name.endsWith('.test.ts')).sort().map(name => `tests/${name}`);
 const checks = [
+  { name: 'Secret exposure', args: ['scripts/check-secrets.mjs'] },
+  { name: 'Secret scanner tests', args: ['--test', 'tests/secrets.test.mjs'] },
   { name: 'Tests', args: ['--experimental-strip-types', '--test', ...tests] },
   { name: 'TypeScript', file: 'node_modules/typescript/bin/tsc', args: ['--noEmit'] },
   { name: 'ESLint', file: 'node_modules/eslint/bin/eslint.js', before: 'scripts/check-lint-tooling.mjs', args: ['.', '--max-warnings=0'] },

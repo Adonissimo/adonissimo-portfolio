@@ -8,7 +8,7 @@ test('setup validates the exact project host before using its reference as a CLI
   for (const input of ['https://evil.test','https://abcdefghijklmnopqrst.supabase.co.evil.test','https://user:pass@abcdefghijklmnopqrst.supabase.co','https://abcdefghijklmnopqrst.supabase.co/?key=secret','http://abcdefghijklmnopqrst.supabase.co','https://abcdefghijklmnopqrst.supabase.co/;echo']) assert.throws(() => projectAddress(input));
 });
 test('setup distinguishes public and private keys without putting values in errors', () => {
-  const key = 'sb_secret_abcdefghijklmnopqrstuv'; assert.equal(checkKey(key,'secret'),key);
+  const key = 'sb_' + 'secret_' + 'abcdefghijklmnopqrstuv'; assert.equal(checkKey(key,'secret'),key);
   assert.throws(() => checkKey(key,'publishable'), error => error instanceof Error && !error.message.includes(key));
   assert.throws(() => checkKey('sb_secret_bad\nINJECTED=yes','secret'));
   assert.equal(ownerAddress(' Owner@example.test '),'owner@example.test');

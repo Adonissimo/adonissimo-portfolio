@@ -6,6 +6,7 @@
     "node": "24.x"
   },
   "scripts": {
+    "security:secrets": "node scripts/check-secrets.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
