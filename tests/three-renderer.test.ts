@@ -5,6 +5,7 @@ import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
 import * as THREE from 'three';
 import * as motion from '../lib/three-motion.ts';
+import * as scenery from '../lib/three-scenery.ts';
 import type { createThreeRenderer } from '../lib/three-renderer.ts';
 
 /** Real scene/geometry code with only the GPU and browser clock replaced. */
@@ -12,6 +13,12 @@ function harness() {
   const pending = new Map<number, FrameRequestCallback>();
   let id = 0, now = 0, draws = 0, disposed = false, contextLost = false, fail = false, ratio = 1;
   let renderedScene: THREE.Scene | undefined;
+  const imageLoads: Array<{ url: string; texture: THREE.Texture; ready: (texture: THREE.Texture) => void; error: () => void }> = [];
+  class TextureLoader {
+    load(url: string, ready: (texture: THREE.Texture) => void, _progress: unknown, error: () => void) {
+      const texture = new THREE.Texture(); imageLoads.push({ url, texture, ready, error }); return texture;
+    }
+  }
   class Renderer {
     setClearColor() {} setSize() {}
     setPixelRatio(value: number) { ratio = value; }
@@ -23,7 +30,7 @@ function harness() {
   const compiledModule = { exports: {} as { createThreeRenderer: typeof createThreeRenderer } };
   runInNewContext(compiled, {
     exports: compiledModule.exports, module: compiledModule,
-    require: (name: string) => name === 'three' ? { ...THREE, WebGLRenderer: Renderer } : motion,
+    require: (name: string) => name === 'three' ? { ...THREE, WebGLRenderer: Renderer, TextureLoader } : name === './three-scenery' ? scenery : motion,
     window: { devicePixelRatio: 3 },
     document: { createElement: () => ({ width: 0, height: 0, getContext: () => null }) },
     requestAnimationFrame: (callback: FrameRequestCallback) => { pending.set(++id, callback); return id; },
@@ -35,6 +42,7 @@ function harness() {
     pending: () => pending.size, draws: () => draws, ratio: () => ratio,
     disposed: () => disposed && contextLost,
     scene: () => renderedScene,
+    imageLoads,
     fail: () => { fail = true; }
   };
 }
@@ -90,4 +98,47 @@ test('realistic scenery has reflection lighting, material relief and finite deta
   let released = 0;
   ownedTextures.forEach(texture => texture.addEventListener('dispose', () => { released++; }));
   renderer.dispose(); assert.equal(released, ownedTextures.size);
+});
+
+test('photographed PBR maps use compact assets and late loads cannot render after disposal', () => {
+  const h = harness(), renderer = h.create({} as HTMLCanvasElement, 'hero', true);
+  assert.equal(h.imageLoads.length, 6);
+  assert.ok(h.imageLoads.every(load => load.url.endsWith('-512.png')));
+  const color = h.imageLoads.find(load => load.url.includes('rock-color'))!;
+  const normal = h.imageLoads.find(load => load.url.includes('rock-normal'))!;
+  assert.equal(color.texture.colorSpace, THREE.SRGBColorSpace);
+  assert.equal(normal.texture.colorSpace, THREE.NoColorSpace);
+  renderer.resize(900, 600); renderer.setActive(false);
+  const pausedDraws = h.draws(); color.ready(color.texture);
+  assert.equal(h.draws(), pausedDraws + 1); assert.equal(h.pending(), 0);
+  const before = h.draws(); renderer.dispose();
+  h.imageLoads.forEach(load => { load.ready(load.texture); load.error(); });
+  assert.equal(h.draws(), before); assert.ok(h.disposed());
+});
+
+test('photographed texture failures keep geometry and procedural relief available', () => {
+  const h = harness(), renderer = h.create({} as HTMLCanvasElement, 'entry', false);
+  assert.ok(h.imageLoads.every(load => load.url.endsWith('-1024.png')));
+  h.imageLoads.forEach(load => load.error()); renderer.resize(900, 600);
+  let relief = 0;
+  h.scene()!.traverse(object => {
+    if (!(object instanceof THREE.Mesh)) return;
+    const material = object.material as THREE.MeshStandardMaterial;
+    if (material.bumpMap) { assert.equal(material.normalMap, null); relief++; }
+  });
+  assert.ok(relief > 5); assert.ok(h.draws() > 0); renderer.dispose();
+});
+
+test('foreground terrain has dense smooth geometry and foliage uses individual instanced leaves', () => {
+  const terrain = scenery.createIslandGeometry(1.1, 0, false, true);
+  assert.ok(terrain.cliff.attributes.position.count > 6000);
+  assert.ok(terrain.ground.attributes.position.count > 4000);
+  for (const geometry of Object.values(terrain)) {
+    for (const attribute of ['position', 'normal', 'uv']) assert.ok(Array.from(geometry.attributes[attribute].array).every(Number.isFinite));
+    geometry.dispose();
+  }
+  const h = harness(), renderer = h.create({} as HTMLCanvasElement, 'hero', false);
+  renderer.resize(1200, 800); let largestCanopy = 0;
+  h.scene()!.traverse(object => { if (object instanceof THREE.InstancedMesh) largestCanopy = Math.max(largestCanopy, object.count); });
+  assert.equal(largestCanopy, 1100); renderer.dispose();
 });

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { clampProgress, paperPoint, threeBudget, type ThreeSceneKind } from './three-motion';
+import { createIslandGeometry, createLeafGeometry, createLeafTexture } from './three-scenery';
 
 /** Decorations only. No route, focus, loading, or audio state belongs to this renderer. */
 export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneKind, compact: boolean) {
@@ -26,6 +27,26 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
   const geometries: THREE.BufferGeometry[] = [];
   const materials: THREE.Material[] = [stone, moss, gold, jade, bark];
   const textures: THREE.Texture[] = [];
+  const instances: THREE.InstancedMesh[] = [];
+  let disposed = false, failed = false, frame = 0, active = false, elapsed = 0, previous = 0, lastPaint = 0;
+  let onFailure: (() => void) | undefined;
+  function photographedMaterial(material: THREE.MeshStandardMaterial, name: 'rock' | 'ground') {
+    const loader = new THREE.TextureLoader(), size = compact ? 512 : 1024;
+    const ready = (texture: THREE.Texture) => { if (disposed) texture.dispose(); else render(); };
+    const load = (map: string, slots: Array<'map' | 'normalMap' | 'roughnessMap' | 'aoMap'>, color = false) => {
+      const texture = loader.load(`/textures/terrain/${name}-${map}-${size}.png`, ready, undefined, () => {
+        if (disposed) return;
+        slots.forEach(slot => { material[slot] = null; }); material.needsUpdate = true; render();
+      });
+      texture.colorSpace = color ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(name === 'rock' ? 2 : 3, name === 'rock' ? 2 : 3);
+      texture.anisotropy = compact ? 2 : 4;
+      textures.push(texture); slots.forEach(slot => { material[slot] = texture; });
+    };
+    load('color', ['map'], true); load('normal', ['normalMap']); load('arm', ['roughnessMap', 'aoMap']);
+    material.normalScale.set(.8, .8); material.aoMapIntensity = .7; material.color.set(0xf1eee4); material.needsUpdate = true;
+  }
   /** Authored mineral/fiber relief, generated once rather than sampled every frame. */
   function surfaceTexture(organic: boolean) {
     const size = compact ? 64 : 128, data = new Uint8Array(size * size * 4);
@@ -89,40 +110,55 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
     paper = mesh(new THREE.PlaneGeometry(1, 1, budget.segments, 12), material) as typeof paper;
     world.visible = false;
   } else {
+    photographedMaterial(stone, 'rock'); photographedMaterial(moss, 'ground');
+    const leafTexture = createLeafTexture(); textures.push(leafTexture);
+    const leafMaterial = new THREE.MeshStandardMaterial({ map: leafTexture, side: THREE.DoubleSide, roughness: .83, color: 0xc5c5a4 }); materials.push(leafMaterial);
+    const foliageGeometry = createLeafGeometry(); geometries.push(foliageGeometry);
     for (let i = 0; i < budget.islands; i++) {
       const island = new THREE.Group(); world.add(island); islands.push(island);
       const radius = i === 0 ? 1.1 : .32 + i % 3 * .13;
-      const rockGeometry = new THREE.CylinderGeometry(radius * .96, radius * .08, radius * 2.2, compact ? 18 : 32, compact ? 8 : 14);
-      const vertices = rockGeometry.attributes.position;
-      for (let vertex = 0; vertex < vertices.count; vertex++) {
-        const x = vertices.getX(vertex), y = vertices.getY(vertex), z = vertices.getZ(vertex);
-        const angle = Math.atan2(z, x);
-        const strata = 1 + Math.sin(y / radius * 18 + i) * .045 + Math.sin(angle * 5 + y * 3) * .075 + Math.sin(angle * 11 + i) * .025;
-        vertices.setXYZ(vertex, x * strata, y + Math.sin(angle * 7 + i) * .025 * radius, z * strata);
-      }
-      rockGeometry.computeVertexNormals();
-      const rock = mesh(rockGeometry, stone, island); rock.position.y = -radius * 1.1;
-      const grass = mesh(new THREE.CylinderGeometry(radius * .96, radius, .12, compact ? 18 : 32), moss, island); grass.position.y = .02;
+      const terrain = createIslandGeometry(radius, i, compact, i === 0);
+      mesh(terrain.cliff, stone, island); mesh(terrain.ground, moss, island); mesh(terrain.base, stone, island);
       const tree = new THREE.Group(); island.add(tree); tree.position.set(radius * .42, .08, -.1);
-      const trunk = mesh(new THREE.CylinderGeometry(.026, .065, .72, 8), bark, tree); trunk.position.y = .36; trunk.rotation.z = -.12;
-      for (let branch = 0; branch < (compact ? 3 : 5); branch++) {
+      const trunk = mesh(new THREE.CylinderGeometry(.026, .065, .72, compact ? 16 : 24, 8), bark, tree); trunk.position.y = .36; trunk.rotation.z = -.12;
+      for (let branch = 0; branch < (compact ? 6 : 10); branch++) {
         const angle = branch * 2.4;
-        const limb = mesh(new THREE.CylinderGeometry(.009, .026, .4, 6), bark, tree);
+        const limb = mesh(new THREE.CylinderGeometry(.006, .026, .4, compact ? 10 : 16, 4), bark, tree);
         limb.position.set(Math.sin(angle) * .12, .53 + branch * .025, Math.cos(angle) * .12);
         limb.rotation.set(Math.cos(angle) * .7, 0, -Math.sin(angle) * .7);
-        const canopy = mesh(new THREE.SphereGeometry(.22, compact ? 8 : 12, 8), moss, tree);
-        canopy.position.set(Math.sin(angle) * .2, .75 + branch * .035, Math.cos(angle) * .2); canopy.scale.set(1.15, .7, 1);
       }
-      for (let boulder = 0; boulder < (compact ? 3 : 6); boulder++) {
+      const leafCount = i === 0 ? (compact ? 360 : 1100) : (compact ? 100 : 220);
+      const leaves = new THREE.InstancedMesh(foliageGeometry, leafMaterial, leafCount); tree.add(leaves); instances.push(leaves);
+      const transform = new THREE.Object3D(), tint = new THREE.Color();
+      for (let leaf = 0; leaf < leafCount; leaf++) {
+        const angle = leaf * 2.399963, fraction = (leaf + .5) / leafCount;
+        const height = 1 - fraction * 2, spread = Math.sqrt(1 - height * height);
+        const interior = .64 + (Math.sin(leaf * 78.23) * .5 + .5) * .36;
+        transform.position.set(Math.cos(angle) * spread * .43 * interior, .8 + height * .28, Math.sin(angle) * spread * .38 * interior);
+        transform.rotation.set(leaf * .79, angle, Math.sin(leaf * .7) * .9);
+        const size = .07 + leaf % 7 * .006; transform.scale.set(size, size * 1.7, size); transform.updateMatrix();
+        leaves.setMatrixAt(leaf, transform.matrix);
+        tint.setHSL(.22 + Math.sin(leaf * .6) * .025, .22 + leaf % 5 * .025, .55 + leaf % 9 * .025); leaves.setColorAt(leaf, tint);
+      }
+      leaves.instanceMatrix.needsUpdate = true; if (leaves.instanceColor) leaves.instanceColor.needsUpdate = true;
+      for (let boulder = 0; boulder < (compact ? 6 : 12); boulder++) {
         const angle = boulder * 2.4 + i;
-        const pebble = mesh(new THREE.IcosahedronGeometry(radius * (.09 + boulder % 2 * .04), 1), stone, island);
+        const pebble = mesh(new THREE.SphereGeometry(radius * (.09 + boulder % 2 * .04), compact ? 16 : 24, compact ? 12 : 20), stone, island);
         pebble.position.set(Math.sin(angle) * radius * .73, .1, Math.cos(angle) * radius * .73); pebble.scale.set(1.4, .7, 1);
       }
       island.position.set(i === 0 ? 0 : Math.sin(i * 2.4) * 3.5, i === 0 ? -.7 : Math.cos(i * 1.7) * 1.6, i === 0 ? 0 : -1 - i * .65);
       island.rotation.y = i * .7;
     }
     gateway.position.set(0, .55, 0);
-    const ring = mesh(new THREE.TorusGeometry(.72, .11, compact ? 10 : 16, compact ? 48 : 80), stone, gateway);
+    const ringGeometry = new THREE.TorusGeometry(.72, .11, compact ? 24 : 40, compact ? 96 : 160);
+    const ringVertices = ringGeometry.attributes.position, ringNormals = ringGeometry.attributes.normal;
+    for (let vertex = 0; vertex < ringVertices.count; vertex++) {
+      const x = ringVertices.getX(vertex), y = ringVertices.getY(vertex), z = ringVertices.getZ(vertex);
+      const erosion = (Math.sin(x * 43 + y * 31) * Math.sin(y * 57 - z * 39) + Math.sin(x * 17 - y * 19)) * .003;
+      ringVertices.setXYZ(vertex, x + ringNormals.getX(vertex) * erosion, y + ringNormals.getY(vertex) * erosion, z + ringNormals.getZ(vertex) * erosion);
+    }
+    ringGeometry.computeVertexNormals();
+    const ring = mesh(ringGeometry, stone, gateway);
     ring.rotation.z = Math.PI / 8;
     mesh(new THREE.TorusGeometry(.55, .018, 8, compact ? 48 : 80), jade, gateway);
     const foot = mesh(new THREE.CylinderGeometry(.85, .96, .14, compact ? 24 : 48), stone, gateway); foot.position.y = -.72; foot.scale.z = .45;
@@ -136,10 +172,8 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
       const crest = mesh(new THREE.ExtrudeGeometry(shape, { depth: .045, bevelEnabled: true, bevelThickness: .008, bevelSize: .008, bevelSegments: compact ? 1 : 3 }), gold, gateway); crest.position.set(x, y, .1);
     }
   }
-  let disposed = false, failed = false, frame = 0, active = false, elapsed = 0, previous = 0, lastPaint = 0;
   let pointerX = 0, pointerY = 0, aimX = 0, aimY = 0, width = 1, height = 1;
   let turnStarted: number | undefined, turnDuration = 940, backward = false;
-  let onFailure: (() => void) | undefined;
   function render() {
     if (disposed || failed) return;
     try { renderer.render(scene, camera); } catch { failed = true; active = false; onFailure?.(); }
@@ -193,10 +227,11 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
     turn(reverse: boolean, duration: number) { backward = reverse; turnDuration = duration; turnStarted = elapsed; world.visible = true; start(); },
     cancelTurn() { turnStarted = undefined; world.visible = kind !== 'paper'; render(); },
     failure(callback: () => void) { onFailure = callback; },
-    theme(day: boolean) { stone.color.set(day ? 0xd6cdb4 : 0xb3bca9); sun.intensity = day ? 2.8 : 1.7; scene.environmentIntensity = day ? .85 : .5; render(); },
+    theme(day: boolean) { stone.color.set(day ? 0xf4eee1 : 0xc4cfc7); sun.intensity = day ? 2.8 : 1.7; scene.environmentIntensity = day ? .85 : .5; render(); },
     dispose() {
       if (disposed) return; disposed = true; active = false; cancelAnimationFrame(frame);
       geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose()); textures.forEach(texture => texture.dispose());
+      instances.forEach(instance => instance.dispose());
       renderer.dispose(); renderer.forceContextLoss();
     }
   };

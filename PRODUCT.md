@@ -8,7 +8,7 @@ web
 
 ## Three.js enhancement
 
-Home's illustration and opening films now include original procedural Three.js sky islands and a gateway. Page turns use a continuous paper mesh, with existing DOM/CSS fallback. No imported Nintendo models or new raster assets are added. Existing welcome/Skip behavior, captions, audio ownership, backend authorization and real content remain. WebGL is optional and client-loaded; production build and source tests are distinct from the currently blocked browser verification and unverified live deployment.
+Home's illustration and opening films include original procedural Three.js sky islands and a gateway. Detailed terrain uses photographed CC0 Poly Haven rock/forest-floor color, normal and roughness/occlusion maps, dense eroded cliff/ground meshes and individually instanced leaves instead of rounded canopy blobs. Texture provenance is in public/textures/terrain/README.md. Page turns use a continuous paper mesh, with existing DOM/CSS fallback. No imported Nintendo models are added. Existing welcome/Skip behavior, captions, audio ownership, backend authorization and real content remain. WebGL is optional and client-loaded; production build and source tests are distinct from the currently blocked browser verification and unverified live deployment.
 
 ## Stack
 
