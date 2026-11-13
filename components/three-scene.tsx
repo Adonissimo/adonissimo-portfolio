@@ -9,6 +9,7 @@ import { paperTurnProfile } from '@/lib/paper-motion';
 import type { ThreeSceneKind } from '@/lib/three-motion';
 import type { createThreeRenderer } from '@/lib/three-renderer';
 import { fairyHostSnapshot, serverFairyHostSnapshot, subscribeFairyHost } from '@/lib/fairy';
+import { capturePageTrace } from '@/lib/page-trace';
 
 /** Lazy WebGL enhancement. Original DOM artwork and paper remain usable fallbacks. */
 export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
@@ -27,7 +28,7 @@ export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
     const surface = canvas.current;
     if (!surface || mode !== 'full') return;
     const container = surface.parentElement;
-    let cancelled = false, failed = false, intersecting = kind !== 'hero';
+    let cancelled = false, failed = false, intersecting = kind !== 'hero', turnSequence = 0;
     let renderer: ReturnType<typeof createThreeRenderer> | undefined;
     let resizeObserver: ResizeObserver | undefined, intersectionObserver: IntersectionObserver | undefined, phaseObserver: MutationObserver | undefined;
     const dialog = surface.closest('dialog');
@@ -45,9 +46,13 @@ export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
     function resetPointer() { renderer?.pointer(0, 0); }
     function turn(event: Event) {
       if (!state.current.active) return;
+      const sequence = ++turnSequence;
       renderer?.turn((event as CustomEvent<PageTurnDirection>).detail === 'backward', paperTurnProfile(compact).duration);
+      void capturePageTrace(compact).then(image => {
+        if (image && !cancelled && !failed && sequence === turnSequence && state.current.active) renderer?.pageTrace(image);
+      }).catch(() => undefined);
     }
-    function visibility() { if (document.visibilityState === 'hidden') renderer?.cancelTurn(); }
+    function visibility() { if (document.visibilityState === 'hidden') { turnSequence++; renderer?.cancelTurn(); } }
     // The import stays off the server and out of the initial route bundle.
     void import('@/lib/three-renderer').then(module => {
       if (cancelled) return;
@@ -73,7 +78,7 @@ export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
       } catch { clearReady(); renderer?.dispose(); painter.current = null; }
     }).catch(clearReady);
     return () => {
-      cancelled = true; clearReady(); resizeObserver?.disconnect(); intersectionObserver?.disconnect(); phaseObserver?.disconnect();
+      cancelled = true; turnSequence++; clearReady(); resizeObserver?.disconnect(); intersectionObserver?.disconnect(); phaseObserver?.disconnect();
       surface.removeEventListener('webglcontextlost', lost); surface.removeEventListener('three-state-change', syncActive); window.removeEventListener('pointermove', pointer); window.removeEventListener('blur', resetPointer);
       window.removeEventListener('adonissimo-page-turn', turn); document.removeEventListener('visibilitychange', visibility);
       renderer?.dispose(); painter.current = null;

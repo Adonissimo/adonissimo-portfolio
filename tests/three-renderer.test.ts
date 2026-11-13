@@ -142,3 +142,21 @@ test('foreground terrain has dense smooth geometry and foliage uses individual i
   h.scene()!.traverse(object => { if (object instanceof THREE.InstancedMesh) largestCanopy = Math.max(largestCanopy, object.count); });
   assert.equal(largestCanopy, 1100); renderer.dispose();
 });
+
+test('page trace maps outgoing content onto the proper half and releases it on cancellation', () => {
+  const h = harness(), renderer = h.create({} as HTMLCanvasElement, 'paper', false);
+  renderer.resize(1200, 800); renderer.setActive(true); renderer.turn(false, 940); h.step();
+  const image = { width: 1200, height: 800 } as HTMLCanvasElement;
+  renderer.pageTrace(image);
+  let front: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshStandardMaterial> | undefined;
+  h.scene()!.traverse(object => {
+    if (object instanceof THREE.Mesh && (object.material as THREE.MeshStandardMaterial).map?.image === image && object.geometry.attributes.position.count > 100) front = object;
+  });
+  assert.ok(front); assert.equal(front.material.side, THREE.FrontSide);
+  assert.equal(front.geometry.attributes.uv.getX(0), .5);
+  let released = 0; front.material.map!.addEventListener('dispose', () => { released++; });
+  renderer.cancelTurn(); assert.equal(released, 1);
+  renderer.turn(true, 720); renderer.pageTrace(image);
+  assert.equal(front.geometry.attributes.uv.getX(0), 0);
+  renderer.dispose(); assert.equal(h.pending(), 0);
+});

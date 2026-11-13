@@ -28,3 +28,14 @@ test('render budgets are bounded and compact devices receive less GPU work', () 
   assert.ok(compact.pixels < desktop.pixels); assert.ok(compact.fps < desktop.fps); assert.ok(compact.segments < desktop.segments);
   assert.ok(desktop.pixels <= 1_200_000); assert.ok(desktop.islands <= 9);
 });
+
+test('the curved sheet keeps its width instead of stretching through the turn', () => {
+  for (const progress of [.2, .5, .8]) {
+    let length = 0;
+    for (let i = 1; i <= 200; i++) {
+      const a = paperPoint((i - 1) / 200, .5, progress, false), b = paperPoint(i / 200, .5, progress, false);
+      length += Math.hypot(b.x - a.x, b.z - a.z);
+    }
+    assert.ok(Math.abs(length - 1) < .00001);
+  }
+});

@@ -14,7 +14,7 @@
     "prelint": "node scripts/check-lint-tooling.mjs",
     "lint:tooling": "node scripts/check-lint-tooling.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test tests/content.test.ts tests/motion.test.ts tests/audio.test.ts tests/sound-effects.test.ts tests/music-session.test.ts tests/phase-three.test.ts tests/demo-store.test.ts tests/backend.test.ts tests/setup.test.ts tests/checkpoint.test.ts tests/ambience.test.ts tests/device.test.ts tests/paper-motion.test.ts tests/fog.test.ts tests/opening-sequence.test.ts tests/three-motion.test.ts tests/three-renderer.test.ts",
+    "test": "node --experimental-strip-types --test tests/content.test.ts tests/motion.test.ts tests/audio.test.ts tests/sound-effects.test.ts tests/music-session.test.ts tests/phase-three.test.ts tests/demo-store.test.ts tests/backend.test.ts tests/setup.test.ts tests/checkpoint.test.ts tests/ambience.test.ts tests/device.test.ts tests/paper-motion.test.ts tests/fog.test.ts tests/opening-sequence.test.ts tests/three-motion.test.ts tests/three-renderer.test.ts tests/page-trace.test.ts",
     "check": "node scripts/check.mjs",
     "seed": "node --experimental-strip-types scripts/seed.mjs",
     "test:integration": "node --test tests/backend.integration.mjs",
@@ -25,6 +25,7 @@
   "dependencies": {
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.80.0",
+    "html-to-image": "^1.11.13",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -37,12 +38,12 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.187.0",
     "eslint": "9.39.5",
     "eslint-config-next": "16.4.3",
     "tailwindcss": "4.3.3",
     "typescript": "^5.9.3",
-    "typescript-eslint": "8.72.1",
-    "@types/three": "^0.187.0"
+    "typescript-eslint": "8.72.1"
   },
   "overrides": {
     "@typescript-eslint/typescript-estree@8.72.1": {

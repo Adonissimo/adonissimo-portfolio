@@ -90,6 +90,17 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
   const gateway = new THREE.Group(); world.add(gateway);
   const islands: THREE.Group[] = [];
   let paper: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshStandardMaterial> | undefined;
+  let paperBack: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshStandardMaterial> | undefined;
+  let trace: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | undefined;
+  let foldShadow: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | undefined;
+  let stockTexture: THREE.Texture | undefined;
+  let traceTextures: THREE.Texture[] = [];
+  function clearTrace() {
+    traceTextures.forEach(texture => texture.dispose()); traceTextures = [];
+    if (paper) paper.material.map = stockTexture ?? null;
+    if (paperBack) paperBack.material.map = stockTexture ?? null;
+    if (trace) { trace.material.map = null; trace.visible = false; }
+  }
   if (kind === 'paper') {
     const source = document.createElement('canvas'); source.width = 512; source.height = 768;
     const ink = source.getContext('2d');
@@ -104,10 +115,23 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
         ink.beginPath(); ink.moveTo(x, y); ink.lineTo(x - 36, y + 62); ink.lineTo(x + 36, y + 62); ink.closePath(); ink.fill();
       }
     }
-    const texture = new THREE.CanvasTexture(source); texture.colorSpace = THREE.SRGBColorSpace; textures.push(texture);
-    const material = new THREE.MeshStandardMaterial({ map: texture, bumpMap: organicRelief, bumpScale: .012, side: THREE.DoubleSide, roughness: .97, transparent: true });
+    const texture = new THREE.CanvasTexture(source); texture.colorSpace = THREE.SRGBColorSpace; textures.push(texture); stockTexture = texture;
+    const material = new THREE.MeshStandardMaterial({ map: texture, bumpMap: organicRelief, bumpScale: .012, side: THREE.FrontSide, roughness: .97, transparent: true });
     materials.push(material);
     paper = mesh(new THREE.PlaneGeometry(1, 1, budget.segments, 12), material) as typeof paper;
+    const reverse = material.clone(); reverse.side = THREE.BackSide; materials.push(reverse);
+    paperBack = new THREE.Mesh(paper!.geometry, reverse); world.add(paperBack);
+    const traceMaterial = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }); materials.push(traceMaterial);
+    trace = mesh(new THREE.PlaneGeometry(1, 1), traceMaterial) as typeof trace; trace!.position.z = -.05; trace!.visible = false;
+    const shadowPixels = new Uint8Array(64 * 16 * 4);
+    for (let y = 0; y < 16; y++) for (let x = 0; x < 64; x++) {
+      const offset = (y * 64 + x) * 4;
+      shadowPixels[offset + 3] = Math.round(Math.exp(-((x / 63 - .5) ** 2) * 22) * Math.sin(y / 15 * Math.PI) * 255);
+    }
+    const shadowTexture = new THREE.DataTexture(shadowPixels, 64, 16); shadowTexture.needsUpdate = true;
+    shadowTexture.magFilter = THREE.LinearFilter; textures.push(shadowTexture);
+    const shadowMaterial = new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, opacity: 0, depthWrite: false, color: 0x1b130a }); materials.push(shadowMaterial);
+    foldShadow = mesh(new THREE.PlaneGeometry(1, 1), shadowMaterial) as typeof foldShadow; foldShadow!.position.z = -.025;
     world.visible = false;
   } else {
     photographedMaterial(stone, 'rock'); photographedMaterial(moss, 'ground');
@@ -184,15 +208,26 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
       const progress = clampProgress((seconds - turnStarted) * 1000 / turnDuration);
       const positions = paper.geometry.attributes.position;
       const segments = budget.segments, rows = 12;
-      const pageHeight = 4.6, pageWidth = Math.min(4.6, 4.6 * camera.aspect * .54);
+      const pageHeight = 14 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), pageWidth = pageHeight * camera.aspect / 2;
       for (let row = 0; row <= rows; row++) for (let column = 0; column <= segments; column++) {
         const point = paperPoint(column / segments, 1 - row / rows, progress, backward);
         positions.setXYZ(row * (segments + 1) + column, point.x * pageWidth, point.y * pageHeight, point.z * pageWidth);
       }
       positions.needsUpdate = true; paper.geometry.computeVertexNormals();
       paper.material.opacity = Math.min(1, progress / .1, (1 - progress) / .18);
+      if (paperBack) paperBack.material.opacity = paper.material.opacity;
+      if (trace) {
+        trace.scale.set(pageWidth * 2, pageHeight, 1);
+        trace.material.opacity = .48 * Math.max(0, 1 - progress / .85);
+      }
+      if (foldShadow) {
+        const curl = Math.sin(progress * Math.PI);
+        foldShadow.scale.set(pageWidth * (.2 + curl * .65), pageHeight, 1);
+        foldShadow.position.x = (backward ? -1 : 1) * pageWidth * Math.cos(progress * Math.PI) * .4;
+        foldShadow.material.opacity = curl * .34;
+      }
       world.visible = progress < 1;
-      if (progress === 1) turnStarted = undefined;
+      if (progress === 1) { turnStarted = undefined; clearTrace(); }
       camera.position.set(0, 0, 7); camera.lookAt(0, 0, 0);
     } else {
       pointerX += (aimX - pointerX) * .06; pointerY += (aimY - pointerY) * .06;
@@ -224,12 +259,39 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
     resize,
     setActive(value: boolean) { active = value && !failed; if (active) start(); else { cancelAnimationFrame(frame); frame = 0; previous = 0; } },
     pointer(x: number, y: number) { aimX = Math.max(-1, Math.min(1, x)); aimY = Math.max(-1, Math.min(1, y)); },
-    turn(reverse: boolean, duration: number) { backward = reverse; turnDuration = duration; turnStarted = elapsed; world.visible = true; start(); },
-    cancelTurn() { turnStarted = undefined; world.visible = kind !== 'paper'; render(); },
+    turn(reverse: boolean, duration: number) {
+      clearTrace(); backward = reverse; turnDuration = duration; turnStarted = elapsed; world.visible = true;
+      if (paper) {
+        const uv = paper.geometry.attributes.uv;
+        for (let row = 0; row <= 12; row++) for (let column = 0; column <= budget.segments; column++) uv.setXY(row * (budget.segments + 1) + column, column / budget.segments, 1 - row / 12);
+        uv.needsUpdate = true;
+      }
+      start();
+    },
+    pageTrace(image: HTMLCanvasElement) {
+      if (disposed || turnStarted === undefined || !paper || !paperBack || !trace) return;
+      clearTrace();
+      const texture = new THREE.CanvasTexture(image); texture.colorSpace = THREE.SRGBColorSpace; texture.minFilter = THREE.LinearFilter; texture.generateMipmaps = false;
+      const reverse = document.createElement('canvas'); reverse.width = image.width; reverse.height = image.height;
+      const ink = reverse.getContext('2d');
+      if (ink) {
+        ink.fillStyle = '#e6d7b3'; ink.fillRect(0, 0, reverse.width, reverse.height);
+        ink.globalAlpha = .12; ink.drawImage(image, 0, 0); ink.globalAlpha = 1;
+      }
+      const reverseTexture = new THREE.CanvasTexture(reverse); reverseTexture.colorSpace = THREE.SRGBColorSpace; reverseTexture.minFilter = THREE.LinearFilter; reverseTexture.generateMipmaps = false;
+      traceTextures = [texture, reverseTexture]; paper.material.map = texture; paperBack.material.map = reverseTexture;
+      const uv = paper.geometry.attributes.uv;
+      for (let row = 0; row <= 12; row++) for (let column = 0; column <= budget.segments; column++) uv.setXY(row * (budget.segments + 1) + column, column / budget.segments * .5 + (backward ? 0 : .5), 1 - row / 12);
+      uv.needsUpdate = true; paper.material.needsUpdate = true; paperBack.material.needsUpdate = true;
+      trace.material.map = texture; trace.material.needsUpdate = true; trace.visible = true;
+      update(elapsed); render();
+    },
+    cancelTurn() { turnStarted = undefined; clearTrace(); world.visible = kind !== 'paper'; render(); },
     failure(callback: () => void) { onFailure = callback; },
     theme(day: boolean) { stone.color.set(day ? 0xf4eee1 : 0xc4cfc7); sun.intensity = day ? 2.8 : 1.7; scene.environmentIntensity = day ? .85 : .5; render(); },
     dispose() {
       if (disposed) return; disposed = true; active = false; cancelAnimationFrame(frame);
+      clearTrace();
       geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose()); textures.forEach(texture => texture.dispose());
       instances.forEach(instance => instance.dispose());
       renderer.dispose(); renderer.forceContextLoss();

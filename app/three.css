@@ -10,5 +10,6 @@
 .story-turn[data-three-ready='true'] > .story-leaf,
 .story-turn[data-three-ready='true'] > .story-cast-shadow { visibility: hidden; }
 .three-scene-paper { filter: drop-shadow(12px 16px 20px #0005); }
+.page-trace-source *, .page-trace-source *::before, .page-trace-source *::after { animation: none !important; transition: none !important; caret-color: transparent !important; }
 html:not([data-motion='on']) .three-scene { display: none; }
 @media print { .three-scene { display: none !important; } }

@@ -8,10 +8,13 @@ export function clampProgress(value: number): number {
 export function paperPoint(u: number, v: number, progress: number, backward: boolean) {
   const p = clampProgress(progress), x = clampProgress(u), y = clampProgress(v) - .5;
   const sign = backward ? -1 : 1;
-  const turn = p * Math.PI;
-  const curl = Math.sin(p * Math.PI) * .85;
-  const angle = turn + curl * x;
-  return { x: sign * x * Math.cos(angle), y, z: x * Math.sin(angle) + curl * Math.sin(x * Math.PI) * .16 };
+  const lift = Math.sin(p * Math.PI);
+  const turn = p * Math.PI + lift * y * .16;
+  const curl = lift * (.95 + y * .25);
+  // Integrating the tangent preserves the sheet's width instead of stretching its free edge.
+  const px = Math.abs(curl) < .00001 ? x * Math.cos(turn) : (Math.sin(turn + curl * x) - Math.sin(turn)) / curl;
+  const pz = Math.abs(curl) < .00001 ? x * Math.sin(turn) : (Math.cos(turn) - Math.cos(turn + curl * x)) / curl;
+  return { x: sign * px, y, z: pz };
 }
 
 export function threeBudget(compact: boolean) {
