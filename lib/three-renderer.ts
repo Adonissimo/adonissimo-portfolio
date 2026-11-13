@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import { clampProgress, paperPoint, threeBudget, type ThreeSceneKind } from './three-motion';
+import { createFrameClock, damp, paperPoint, smoothProgress, threeBudget, type ThreeSceneKind } from './three-motion';
 import { createIslandGeometry, createLeafGeometry, createLeafTexture } from './three-scenery';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 /** Decorations only. No route, focus, loading, or audio state belongs to this renderer. */
 export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneKind, compact: boolean) {
@@ -24,19 +25,24 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
   const jade = new THREE.MeshPhysicalMaterial({ color: 0x78a98d, roughness: .3, metalness: .08, clearcoat: .4 });
   const bark = new THREE.MeshStandardMaterial({ color: 0x65523c, roughness: .98 });
   // All resources are registered at allocation, including materials not currently visible.
-  const geometries: THREE.BufferGeometry[] = [];
+  const geometries = new Set<THREE.BufferGeometry>();
   const materials: THREE.Material[] = [stone, moss, gold, jade, bark];
   const textures: THREE.Texture[] = [];
   const instances: THREE.InstancedMesh[] = [];
-  let disposed = false, failed = false, frame = 0, active = false, elapsed = 0, previous = 0, lastPaint = 0;
+  const clock = createFrameClock(budget.fps);
+  let disposed = false, failed = false, frame = 0, redrawFrame = 0, active = false, elapsed = 0;
   let onFailure: (() => void) | undefined;
+  function requestRedraw() {
+    if (disposed || failed || active || redrawFrame) return;
+    redrawFrame = requestAnimationFrame(() => { redrawFrame = 0; if (document.visibilityState !== 'hidden') render(); });
+  }
   function photographedMaterial(material: THREE.MeshStandardMaterial, name: 'rock' | 'ground') {
     const loader = new THREE.TextureLoader(), size = compact ? 512 : 1024;
-    const ready = (texture: THREE.Texture) => { if (disposed) texture.dispose(); else render(); };
+    const ready = (texture: THREE.Texture) => { if (disposed) texture.dispose(); else requestRedraw(); };
     const load = (map: string, slots: Array<'map' | 'normalMap' | 'roughnessMap' | 'aoMap'>, color = false) => {
       const texture = loader.load(`/textures/terrain/${name}-${map}-${size}.png`, ready, undefined, () => {
         if (disposed) return;
-        slots.forEach(slot => { material[slot] = null; }); material.needsUpdate = true; render();
+        slots.forEach(slot => { material[slot] = null; }); material.needsUpdate = true; requestRedraw();
       });
       texture.colorSpace = color ? THREE.SRGBColorSpace : THREE.NoColorSpace;
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -84,8 +90,24 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
   environment.magFilter = environment.minFilter = THREE.LinearFilter; environment.needsUpdate = true;
   textures.push(environment); scene.environment = environment; scene.environmentIntensity = .75;
   function mesh(geometry: THREE.BufferGeometry, material: THREE.Material, parent: THREE.Object3D = world) {
-    geometries.push(geometry);
+    geometries.add(geometry);
     const object = new THREE.Mesh(geometry, material); parent.add(object); return object;
+  }
+  /** Bake static transforms once so detailed meshes sharing a material use one draw. */
+  function batchStatic(parent: THREE.Group, material: THREE.Material) {
+    const objects = parent.children.filter((object): object is THREE.Mesh => object instanceof THREE.Mesh && !(object instanceof THREE.InstancedMesh) && object.material === material);
+    if (objects.length < 2) return;
+    const baked = objects.map(object => {
+      object.updateMatrix();
+      const geometry = object.geometry.clone();
+      if (!geometry.index) geometry.setIndex(Array.from({ length: geometry.attributes.position.count }, (_, index) => index));
+      return geometry.applyMatrix4(object.matrix);
+    });
+    const combined = mergeGeometries(baked, false);
+    baked.forEach(geometry => geometry.dispose());
+    if (!combined) return;
+    objects.forEach(object => { parent.remove(object); object.geometry.dispose(); geometries.delete(object.geometry); });
+    mesh(combined, material, parent);
   }
   const gateway = new THREE.Group(); world.add(gateway);
   const islands: THREE.Group[] = [];
@@ -137,7 +159,7 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
     photographedMaterial(stone, 'rock'); photographedMaterial(moss, 'ground');
     const leafTexture = createLeafTexture(); textures.push(leafTexture);
     const leafMaterial = new THREE.MeshStandardMaterial({ map: leafTexture, side: THREE.DoubleSide, roughness: .83, color: 0xc5c5a4 }); materials.push(leafMaterial);
-    const foliageGeometry = createLeafGeometry(); geometries.push(foliageGeometry);
+    const foliageGeometry = createLeafGeometry(); geometries.add(foliageGeometry);
     for (let i = 0; i < budget.islands; i++) {
       const island = new THREE.Group(); world.add(island); islands.push(island);
       const radius = i === 0 ? 1.1 : .32 + i % 3 * .13;
@@ -170,6 +192,7 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
         const pebble = mesh(new THREE.SphereGeometry(radius * (.09 + boulder % 2 * .04), compact ? 16 : 24, compact ? 12 : 20), stone, island);
         pebble.position.set(Math.sin(angle) * radius * .73, .1, Math.cos(angle) * radius * .73); pebble.scale.set(1.4, .7, 1);
       }
+      batchStatic(tree, bark); batchStatic(island, stone);
       island.position.set(i === 0 ? 0 : Math.sin(i * 2.4) * 3.5, i === 0 ? -.7 : Math.cos(i * 1.7) * 1.6, i === 0 ? 0 : -1 - i * .65);
       island.rotation.y = i * .7;
     }
@@ -195,6 +218,7 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
       const shape = new THREE.Shape(); shape.moveTo(0, .14); shape.lineTo(-.14, -.1); shape.lineTo(.14, -.1); shape.closePath();
       const crest = mesh(new THREE.ExtrudeGeometry(shape, { depth: .045, bevelEnabled: true, bevelThickness: .008, bevelSize: .008, bevelSegments: compact ? 1 : 3 }), gold, gateway); crest.position.set(x, y, .1);
     }
+    batchStatic(gateway, stone); batchStatic(gateway, gold);
   }
   let pointerX = 0, pointerY = 0, aimX = 0, aimY = 0, width = 1, height = 1;
   let turnStarted: number | undefined, turnDuration = 940, backward = false;
@@ -202,10 +226,10 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
     if (disposed || failed) return;
     try { renderer.render(scene, camera); } catch { failed = true; active = false; onFailure?.(); }
   }
-  function update(seconds: number) {
+  function update(seconds: number, delta = 0) {
     if (kind === 'paper') {
       if (!paper || turnStarted === undefined) return;
-      const progress = clampProgress((seconds - turnStarted) * 1000 / turnDuration);
+      const progress = smoothProgress((seconds - turnStarted) * 1000 / turnDuration);
       const positions = paper.geometry.attributes.position;
       const segments = budget.segments, rows = 12;
       const pageHeight = 14 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), pageWidth = pageHeight * camera.aspect / 2;
@@ -230,13 +254,13 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
       if (progress === 1) { turnStarted = undefined; clearTrace(); }
       camera.position.set(0, 0, 7); camera.lookAt(0, 0, 0);
     } else {
-      pointerX += (aimX - pointerX) * .06; pointerY += (aimY - pointerY) * .06;
-      const entry = kind === 'entry' ? clampProgress(seconds / 4.2) : 0;
-      const journey = kind === 'prologue' ? clampProgress(seconds / 5.6) : 0;
+      pointerX = damp(pointerX, aimX, delta); pointerY = damp(pointerY, aimY, delta);
+      const entry = kind === 'entry' ? smoothProgress(seconds / 4.2) : 0;
+      const journey = kind === 'prologue' ? smoothProgress(seconds / 5.6) : 0;
       camera.position.set(pointerX * .24, .25 + pointerY * .15 + journey * .65, 7 - entry * 7.6 - journey * 1.3);
       camera.lookAt(0, .25 + journey * .3, -1);
       world.rotation.y = Math.sin(seconds * .13) * .055 + pointerX * .06;
-      islands.forEach((island, i) => { island.position.y += (Math.sin(seconds * .65 + i) * .08 + (i === 0 ? -.7 : Math.cos(i * 1.7) * 1.6) - island.position.y) * .1; });
+      islands.forEach((island, i) => { island.position.y = (i === 0 ? -.7 : Math.cos(i * 1.7) * 1.6) + (Math.sin(seconds * .65 + i) - Math.sin(i)) * .06; });
       gateway.rotation.y = Math.sin(seconds * .3) * .1;
       if (kind === 'hero') world.scale.setScalar(1.18);
     }
@@ -244,11 +268,11 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
   function tick(now: number) {
     frame = 0;
     if (!active || disposed) return;
-    const delta = previous ? Math.min(64, now - previous) : 0; previous = now; elapsed += delta / 1000;
-    if (now - lastPaint >= 1000 / budget.fps) { lastPaint = now; update(elapsed); render(); }
+    const sample = clock.step(now); elapsed = sample.seconds;
+    if (sample.paint) { update(elapsed, sample.delta); render(); }
     if (active && (kind !== 'paper' || turnStarted !== undefined)) frame = requestAnimationFrame(tick);
   }
-  function start() { if (!frame && active && !disposed) { previous = 0; frame = requestAnimationFrame(tick); } }
+  function start() { if (!frame && active && !disposed) { clock.pause(); frame = requestAnimationFrame(tick); } }
   function resize(w: number, h: number) {
     width = Math.max(1, w); height = Math.max(1, h);
     const ratio = Math.min(window.devicePixelRatio || 1, compact ? 1.25 : 1.75, Math.sqrt(budget.pixels / (width * height)));
@@ -257,13 +281,19 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
   }
   return {
     resize,
-    setActive(value: boolean) { active = value && !failed; if (active) start(); else { cancelAnimationFrame(frame); frame = 0; previous = 0; } },
+    setActive(value: boolean) {
+      active = value && !failed;
+      if (active) { cancelAnimationFrame(redrawFrame); redrawFrame = 0; start(); }
+      else { cancelAnimationFrame(frame); frame = 0; clock.pause(); }
+    },
     pointer(x: number, y: number) { aimX = Math.max(-1, Math.min(1, x)); aimY = Math.max(-1, Math.min(1, y)); },
     turn(reverse: boolean, duration: number) {
       clearTrace(); backward = reverse; turnDuration = duration; turnStarted = elapsed; world.visible = true;
       if (paper) {
+        paper.material.side = reverse ? THREE.BackSide : THREE.FrontSide; paper.material.needsUpdate = true;
+        if (paperBack) { paperBack.material.side = reverse ? THREE.FrontSide : THREE.BackSide; paperBack.material.needsUpdate = true; }
         const uv = paper.geometry.attributes.uv;
-        for (let row = 0; row <= 12; row++) for (let column = 0; column <= budget.segments; column++) uv.setXY(row * (budget.segments + 1) + column, column / budget.segments, 1 - row / 12);
+        for (let row = 0; row <= 12; row++) for (let column = 0; column <= budget.segments; column++) uv.setXY(row * (budget.segments + 1) + column, backward ? 1 - column / budget.segments : column / budget.segments, 1 - row / 12);
         uv.needsUpdate = true;
       }
       start();
@@ -281,7 +311,7 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
       const reverseTexture = new THREE.CanvasTexture(reverse); reverseTexture.colorSpace = THREE.SRGBColorSpace; reverseTexture.minFilter = THREE.LinearFilter; reverseTexture.generateMipmaps = false;
       traceTextures = [texture, reverseTexture]; paper.material.map = texture; paperBack.material.map = reverseTexture;
       const uv = paper.geometry.attributes.uv;
-      for (let row = 0; row <= 12; row++) for (let column = 0; column <= budget.segments; column++) uv.setXY(row * (budget.segments + 1) + column, column / budget.segments * .5 + (backward ? 0 : .5), 1 - row / 12);
+      for (let row = 0; row <= 12; row++) for (let column = 0; column <= budget.segments; column++) uv.setXY(row * (budget.segments + 1) + column, .5 + (backward ? -1 : 1) * column / budget.segments * .5, 1 - row / 12);
       uv.needsUpdate = true; paper.material.needsUpdate = true; paperBack.material.needsUpdate = true;
       trace.material.map = texture; trace.material.needsUpdate = true; trace.visible = true;
       update(elapsed); render();
@@ -290,7 +320,7 @@ export function createThreeRenderer(canvas: HTMLCanvasElement, kind: ThreeSceneK
     failure(callback: () => void) { onFailure = callback; },
     theme(day: boolean) { stone.color.set(day ? 0xf4eee1 : 0xc4cfc7); sun.intensity = day ? 2.8 : 1.7; scene.environmentIntensity = day ? .85 : .5; render(); },
     dispose() {
-      if (disposed) return; disposed = true; active = false; cancelAnimationFrame(frame);
+      if (disposed) return; disposed = true; active = false; cancelAnimationFrame(frame); cancelAnimationFrame(redrawFrame);
       clearTrace();
       geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose()); textures.forEach(texture => texture.dispose());
       instances.forEach(instance => instance.dispose());

@@ -50,3 +50,9 @@ test('private routes never capture and a stalled capture is bounded and removed'
   await Promise.resolve(); await Promise.resolve(); h.expire();
   assert.equal(await pending, null); assert.ok(h.state().removed);
 });
+
+test('a new turn immediately cancels obsolete capture work', async () => {
+  const h = harness('/', true), previous = h.capture(false), latest = h.capture(false);
+  assert.equal(await previous, null);
+  h.expire(); assert.equal(await latest, null); assert.ok(h.state().removed);
+});

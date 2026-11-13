@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { clampProgress, paperPoint, threeBudget } from '../lib/three-motion.ts';
+import { clampProgress, createFrameClock, damp, paperPoint, smoothProgress, threeBudget } from '../lib/three-motion.ts';
 
 test('paper spine stays fixed and backward turns mirror the sheet', () => {
   for (const progress of [0, .1, .5, .9, 1]) {
@@ -38,4 +38,31 @@ test('the curved sheet keeps its width instead of stretching through the turn', 
     }
     assert.ok(Math.abs(length - 1) < .00001);
   }
+});
+
+test('frame caps preserve fractional cadence across common display refresh rates', () => {
+  for (const refresh of [30, 60, 90, 120, 144]) for (const fps of [30, 60]) {
+    const clock = createFrameClock(fps); let paints = 0;
+    for (let frame = 0; frame <= refresh * 3; frame++) if (clock.step(frame * 1000 / refresh).paint) paints++;
+    assert.ok(Math.abs(paints - (Math.min(fps, refresh) * 3 + 1)) <= 1, `${refresh}Hz at ${fps}fps produced ${paints} paints`);
+  }
+});
+
+test('animation clocks catch up after a visible hitch but exclude paused time', () => {
+  const clock = createFrameClock(60); clock.step(0);
+  assert.equal(clock.step(500).seconds, .5);
+  clock.pause(); assert.equal(clock.step(10_000).seconds, .5);
+  assert.ok(Math.abs(clock.step(10_200).seconds - .7) < .000001);
+});
+
+test('pointer damping takes the same time on 30Hz and high-refresh displays', () => {
+  const samples = [30, 60, 144].map(fps => {
+    let position = 0;
+    for (let frame = 0; frame < fps; frame++) position = damp(position, 1, 1 / fps);
+    return position;
+  });
+  assert.ok(Math.abs(samples[0] - samples[2]) < 1e-12);
+  assert.equal(smoothProgress(0), 0); assert.equal(smoothProgress(1), 1);
+  assert.ok(smoothProgress(.001) / .001 < .001);
+  assert.ok((1 - smoothProgress(.999)) / .001 < .001);
 });

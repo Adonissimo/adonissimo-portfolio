@@ -9,7 +9,7 @@ import { paperTurnProfile } from '@/lib/paper-motion';
 import type { ThreeSceneKind } from '@/lib/three-motion';
 import type { createThreeRenderer } from '@/lib/three-renderer';
 import { fairyHostSnapshot, serverFairyHostSnapshot, subscribeFairyHost } from '@/lib/fairy';
-import { capturePageTrace } from '@/lib/page-trace';
+import { cancelPageTrace, capturePageTrace } from '@/lib/page-trace';
 
 /** Lazy WebGL enhancement. Original DOM artwork and paper remain usable fallbacks. */
 export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
@@ -31,17 +31,22 @@ export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
     let cancelled = false, failed = false, intersecting = kind !== 'hero', turnSequence = 0;
     let renderer: ReturnType<typeof createThreeRenderer> | undefined;
     let resizeObserver: ResizeObserver | undefined, intersectionObserver: IntersectionObserver | undefined, phaseObserver: MutationObserver | undefined;
+    let pointerBox = { left: 0, top: 0, width: 0, height: 0 };
     const dialog = surface.closest('dialog');
     function syncActive() {
       renderer?.setActive(!failed && state.current.active && intersecting && (!dialog || dialog.dataset.playing === 'true'));
     }
     function clearReady() { if (container) delete container.dataset.threeReady; }
     function lost(event: Event) { event.preventDefault(); failed = true; clearReady(); renderer?.setActive(false); }
-    function measure() { const box = surface!.getBoundingClientRect(); renderer?.resize(box.width, box.height); }
-    function pointer(event: PointerEvent) {
-      if (compact || event.pointerType === 'touch' || !state.current.active) return;
+    function measure() {
       const box = surface!.getBoundingClientRect();
-      if (box.width && box.height) renderer?.pointer((event.clientX - box.left) / box.width * 2 - 1, -((event.clientY - box.top) / box.height * 2 - 1));
+      pointerBox = { left: box.left + (kind === 'hero' ? window.scrollX : 0), top: box.top + (kind === 'hero' ? window.scrollY : 0), width: box.width, height: box.height };
+      renderer?.resize(box.width, box.height);
+    }
+    function pointer(event: PointerEvent) {
+      if (compact || failed || !intersecting || event.pointerType === 'touch' || !state.current.active) return;
+      const x = event.clientX + (kind === 'hero' ? window.scrollX : 0), y = event.clientY + (kind === 'hero' ? window.scrollY : 0);
+      if (pointerBox.width && pointerBox.height) renderer?.pointer((x - pointerBox.left) / pointerBox.width * 2 - 1, -((y - pointerBox.top) / pointerBox.height * 2 - 1));
     }
     function resetPointer() { renderer?.pointer(0, 0); }
     function turn(event: Event) {
@@ -52,7 +57,7 @@ export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
         if (image && !cancelled && !failed && sequence === turnSequence && state.current.active) renderer?.pageTrace(image);
       }).catch(() => undefined);
     }
-    function visibility() { if (document.visibilityState === 'hidden') { turnSequence++; renderer?.cancelTurn(); } }
+    function visibility() { if (document.visibilityState === 'hidden') { turnSequence++; if (kind === 'paper') cancelPageTrace(); renderer?.cancelTurn(); } }
     // The import stays off the server and out of the initial route bundle.
     void import('@/lib/three-renderer').then(module => {
       if (cancelled) return;
@@ -70,7 +75,7 @@ export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
         if (dialog) { phaseObserver = new MutationObserver(syncActive); phaseObserver.observe(dialog, { attributes: true, attributeFilter: ['data-playing'] }); }
         surface.addEventListener('webglcontextlost', lost);
         surface.addEventListener('three-state-change', syncActive);
-        window.addEventListener('pointermove', pointer, { passive: true });
+        if (kind !== 'paper' && !compact) window.addEventListener('pointermove', pointer, { passive: true });
         window.addEventListener('blur', resetPointer);
         if (kind === 'paper') window.addEventListener('adonissimo-page-turn', turn);
         document.addEventListener('visibilitychange', visibility);
@@ -78,7 +83,7 @@ export function ThreeScene({ kind }: { kind: ThreeSceneKind }) {
       } catch { clearReady(); renderer?.dispose(); painter.current = null; }
     }).catch(clearReady);
     return () => {
-      cancelled = true; turnSequence++; clearReady(); resizeObserver?.disconnect(); intersectionObserver?.disconnect(); phaseObserver?.disconnect();
+      cancelled = true; turnSequence++; if (kind === 'paper') cancelPageTrace(); clearReady(); resizeObserver?.disconnect(); intersectionObserver?.disconnect(); phaseObserver?.disconnect();
       surface.removeEventListener('webglcontextlost', lost); surface.removeEventListener('three-state-change', syncActive); window.removeEventListener('pointermove', pointer); window.removeEventListener('blur', resetPointer);
       window.removeEventListener('adonissimo-page-turn', turn); document.removeEventListener('visibilitychange', visibility);
       renderer?.dispose(); painter.current = null;

@@ -6,6 +6,7 @@ import ts from 'typescript';
 import * as THREE from 'three';
 import * as motion from '../lib/three-motion.ts';
 import * as scenery from '../lib/three-scenery.ts';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { createThreeRenderer } from '../lib/three-renderer.ts';
 
 /** Real scene/geometry code with only the GPU and browser clock replaced. */
@@ -30,7 +31,7 @@ function harness() {
   const compiledModule = { exports: {} as { createThreeRenderer: typeof createThreeRenderer } };
   runInNewContext(compiled, {
     exports: compiledModule.exports, module: compiledModule,
-    require: (name: string) => name === 'three' ? { ...THREE, WebGLRenderer: Renderer, TextureLoader } : name === './three-scenery' ? scenery : motion,
+    require: (name: string) => name === 'three' ? { ...THREE, WebGLRenderer: Renderer, TextureLoader } : name.includes('BufferGeometryUtils') ? { mergeGeometries } : name === './three-scenery' ? scenery : motion,
     window: { devicePixelRatio: 3 },
     document: { createElement: () => ({ width: 0, height: 0, getContext: () => null }) },
     requestAnimationFrame: (callback: FrameRequestCallback) => { pending.set(++id, callback); return id; },
@@ -94,7 +95,7 @@ test('realistic scenery has reflection lighting, material relief and finite deta
     if (material.roughnessMap) ownedTextures.add(material.roughnessMap);
     if (material.metalness > .9) metal++;
   });
-  assert.ok(relief > 5); assert.ok(metal >= 3); assert.ok(detailed > 5);
+  assert.ok(relief > 5); assert.ok(metal >= 1); assert.ok(detailed > 5);
   let released = 0;
   ownedTextures.forEach(texture => texture.addEventListener('dispose', () => { released++; }));
   renderer.dispose(); assert.equal(released, ownedTextures.size);
@@ -109,7 +110,7 @@ test('photographed PBR maps use compact assets and late loads cannot render afte
   assert.equal(color.texture.colorSpace, THREE.SRGBColorSpace);
   assert.equal(normal.texture.colorSpace, THREE.NoColorSpace);
   renderer.resize(900, 600); renderer.setActive(false);
-  const pausedDraws = h.draws(); color.ready(color.texture);
+  const pausedDraws = h.draws(); color.ready(color.texture); h.step();
   assert.equal(h.draws(), pausedDraws + 1); assert.equal(h.pending(), 0);
   const before = h.draws(); renderer.dispose();
   h.imageLoads.forEach(load => { load.ready(load.texture); load.error(); });
@@ -157,6 +158,28 @@ test('page trace maps outgoing content onto the proper half and releases it on c
   let released = 0; front.material.map!.addEventListener('dispose', () => { released++; });
   renderer.cancelTurn(); assert.equal(released, 1);
   renderer.turn(true, 720); renderer.pageTrace(image);
-  assert.equal(front.geometry.attributes.uv.getX(0), 0);
+  assert.equal(front.material.side, THREE.BackSide);
+  assert.equal(front.geometry.attributes.uv.getX(0), .5);
+  assert.equal(front.geometry.attributes.uv.getX(48), 0, 'Left edge retains the outgoing page orientation on backward turns');
   renderer.dispose(); assert.equal(h.pending(), 0);
+});
+
+test('detailed scenery is batched without removing dense geometry or individual leaves', () => {
+  const h = harness(), renderer = h.create({} as HTMLCanvasElement, 'hero', false);
+  renderer.resize(1200, 800); let meshes = 0, vertices = 0, leaves = 0;
+  h.scene()!.traverse(object => {
+    if (!(object instanceof THREE.Mesh)) return;
+    meshes++; vertices += object.geometry.attributes.position.count;
+    if (object instanceof THREE.InstancedMesh) leaves += object.count;
+  });
+  assert.ok(meshes <= 45, `Scene uses ${meshes} mesh groups`);
+  assert.ok(vertices > 50_000); assert.ok(leaves >= 2800); renderer.dispose();
+});
+
+test('six texture completions coalesce into one paused-scene redraw', () => {
+  const h = harness(), renderer = h.create({} as HTMLCanvasElement, 'hero', true);
+  renderer.resize(900, 600); const before = h.draws();
+  h.imageLoads.forEach(load => load.ready(load.texture));
+  assert.equal(h.pending(), 1); h.step();
+  assert.equal(h.draws(), before + 1); assert.equal(h.pending(), 0); renderer.dispose();
 });

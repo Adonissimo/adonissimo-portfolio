@@ -1,10 +1,15 @@
 /** Only public portfolio routes may supply a temporary, local page-turn texture. */
+let cancelCapture: (() => void) | undefined;
+
+export function cancelPageTrace(): void { cancelCapture?.(); }
+
 export function canTracePage(pathname: string): boolean {
   return ['/', '/about', '/contact', '/projects', '/blog'].includes(pathname)
     || pathname.startsWith('/projects/') || pathname.startsWith('/blog/');
 }
 
 export async function capturePageTrace(compact: boolean): Promise<HTMLCanvasElement | null> {
+  cancelPageTrace();
   if (!canTracePage(window.location.pathname)) return null;
   const main = document.querySelector('main');
   if (!main) return null;
@@ -40,6 +45,9 @@ export async function capturePageTrace(compact: boolean): Promise<HTMLCanvasElem
   });
   const ratio = Math.min(1, Math.sqrt((compact ? 420_000 : 1_200_000) / (width * height)));
   const abort = new AbortController();
+  let cancel: () => void = () => undefined;
+  const cancelled = new Promise<null>(resolve => { cancel = () => { abort.abort(); source.remove(); resolve(null); }; });
+  cancelCapture = cancel;
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     const deadline = new Promise<null>(resolve => { timer = setTimeout(() => { abort.abort(); resolve(null); }, 550); });
@@ -49,6 +57,6 @@ export async function capturePageTrace(compact: boolean): Promise<HTMLCanvasElem
       imagePlaceholder: placeholder,
       style: { position: 'relative', left: '0', top: '0', opacity: '1', transform: 'none' }
     })).catch(() => null);
-    return await Promise.race([capture, deadline]);
-  } finally { if (timer) clearTimeout(timer); abort.abort(); source.remove(); }
+    return await Promise.race([capture, deadline, cancelled]);
+  } finally { if (cancelCapture === cancel) cancelCapture = undefined; if (timer) clearTimeout(timer); abort.abort(); source.remove(); }
 }
