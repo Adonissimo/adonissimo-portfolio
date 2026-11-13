@@ -31,6 +31,7 @@ import './fairy.css';
 import './mobile.css';
 import './opening.css';
 import './fog.css';
+import './three.css';
 
 const fieldSerif = localFont({
   src: [

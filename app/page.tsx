@@ -13,6 +13,7 @@ import { AncientSeal, RealmOrnament } from '@/components/realm-ornament';
 import { Icon } from '@/components/icons';
 import { HomeProjects } from '@/components/home-projects';
 import { HomeProjectsSkeleton } from '@/components/loading-state';
+import { ThreeScene } from '@/components/three-scene';
 
 const siteUrl = getSiteUrl();
 export const dynamic = 'force-dynamic';
@@ -33,7 +34,7 @@ export default function Home() {
         <p><strong>I’m {profile.displayName}.</strong> I build full-stack web projects with curiosity and care.</p><p className="hero-opportunity">Open to internships and developer opportunities.</p>
         <div className="hero-actions"><a href="#projects" className="button" data-sfx="discover">Explore projects <Icon name="arrow"/></a><Link href="/about" className="quiet-link">Meet Lorenz <Icon name="diagonal"/></Link></div>
       </div>
-      <figure className="hero-landscape"><AncientSeal className="hero-etching"/><Image className="hero-art" src="/images/backgrounds/sky-atlas.png" alt="Original fan artwork of floating sky islands, stone gateways, golden foliage and a waterfall." width={1536} height={1024} sizes="(max-width: 560px) 280px, (max-width: 1000px) 48vw, 510px" loading="eager" fetchPriority="high" draggable={false}/><RealmOrnament realm="sky" className="hero-relic" sizes="(max-width: 560px) 112px, 196px"/><figcaption className="landscape-caption"><RealmGlyph realm="sky"/>A new path is always worth exploring.</figcaption></figure>
+      <figure className="hero-landscape"><ThreeScene kind="hero"/><AncientSeal className="hero-etching"/><Image className="hero-art" src="/images/backgrounds/sky-atlas.png" alt="Original fan artwork of floating sky islands, stone gateways, golden foliage and a waterfall." width={1536} height={1024} sizes="(max-width: 560px) 280px, (max-width: 1000px) 48vw, 510px" loading="eager" fetchPriority="high" draggable={false}/><RealmOrnament realm="sky" className="hero-relic" sizes="(max-width: 560px) 112px, 196px"/><figcaption className="landscape-caption"><RealmGlyph realm="sky"/>A new path is always worth exploring.</figcaption></figure>
       <div className="hero-hud"><span className="hearts" aria-hidden="true"><Icon name="heart"/><Icon name="heart"/><Icon name="heart"/></span><span className="hero-location">{profile.location} · Hyrule at heart</span><a href="#projects" className="discover-link">The adventure log <span aria-hidden="true">↓</span></a></div>
     </section>
 

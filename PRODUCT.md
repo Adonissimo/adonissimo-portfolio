@@ -6,6 +6,10 @@
 
 web
 
+## Three.js enhancement
+
+Home's illustration and opening films now include original procedural Three.js sky islands and a gateway. Page turns use a continuous paper mesh, with existing DOM/CSS fallback. No imported Nintendo models or new raster assets are added. Existing welcome/Skip behavior, captions, audio ownership, backend authorization and real content remain. WebGL is optional and client-loaded; production build and source tests are distinct from the currently blocked browser verification and unverified live deployment.
+
 ## Stack
 
 The user asked for modern React/Vercel tooling. This implementation uses Next.js App Router, React, TypeScript, Tailwind CSS, and ESLint. The user has deployed it to Vercel and reports that Google sign-in works. Version 3.0.0 introduced the Track A Supabase Auth/Postgres/RLS/Storage integration, Resend outbox and Cloudflare Turnstile verification in source. The current source is 3.14.2, with compact layouts, interview-defined TotK branding, realm scenery and transparent PNG ornaments, five setting-specific PNG page backdrops, local serif/sans typography, selective skeleton loading and a browser-assisted three-checkpoint runner. Navigation moves actual text and artwork with a book leaf, rune/spark reveal and semantic paper/bell sounds. Foreground scenery is transparent, full motion is the default and the visible motion toggle is retired. It also configures a scoped TypeScript lint dependency patch whose installed-tree verification remains open. The user's new-computer report passes all four ordinary gates for 3.5.0, not the later source. Phase 4 live acceptance remains open for the other required flows; deployment alone does not complete Phase 5.

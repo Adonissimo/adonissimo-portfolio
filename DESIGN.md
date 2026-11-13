@@ -277,6 +277,14 @@ components:
 
 # Design System: Adonissimo — A builder exploring Hyrule
 
+## Three.js cinematic enhancement
+
+Three.js now supplies original low-poly sky islands, a carved gateway and a metallic Triforce in Home's pointer-responsive illustration and both opening films. Existing PNG shots, captions and the welcome sequence remain authoritative. A continuously deformed, double-sided paper mesh follows existing forward/backward page-turn events and timings. DOM paper, rune/spark feedback and static artwork remain fallbacks when WebGL is unavailable or loses its context. Canvas layers never intercept input.
+
+The renderer loads through a client-only dynamic import. Compact devices use fewer islands/segments, a 420,000-pixel buffer ceiling and 30fps cap; desktop uses 1,200,000 pixels and 60fps. These are configured budgets, not measured performance. Hidden documents pause rendering; offscreen Home scenes pause; ambient pause stops Home's idle animation independently of audio. Existing full-motion/manual-reduction behavior remains. Geometry, materials, textures and contexts are disposed during teardown.
+
+Source and production-build checks pass locally. GPU rendering, browser layout, measured frame rate and listening are unverified: the browser host was unavailable and native browser access stopped because the browser URL could not be established reliably. No live-service behavior is certified by these checks.
+
 ## Smooth cinematic continuity — 3.14.0
 
 Mode: Experience. The owner's request keeps the TotK world and increases cinematic atmosphere while smoothing state changes. The 5.6-second field-to-sky film keeps its final shot beneath an 800ms title dissolve. Enter starts a slower gateway journey while the title recedes; that same camera continues under the one-second Triforce arrival, taking 4.2 seconds overall. Image decode readiness has a 1.2-second fallback ceiling. Captions remain outside raster art, with a protected dark foreground and a readable identity signature.

@@ -7,6 +7,7 @@ import { Triforce } from './zelda-art';
 import { AncientSeal } from './realm-ornament';
 import { compactEffectsSnapshot, serverCompactSnapshot, subscribeCompactEffects } from '@/lib/device';
 import { paperBendFrames, paperTurnProfile } from '@/lib/paper-motion';
+import { ThreeScene } from './three-scene';
 
 /** Nested strips share their edges; small rotations accumulate into a curved page. */
 function PaperRib({ index, count }: { index: number; count: number }) {
@@ -137,5 +138,5 @@ export function StorybookTransition() {
     };
   }, [mode, compact]);
 
-  return <div ref={stage} className="story-turn" aria-hidden="true"><div className="story-shade"/><div className="story-leaf"><div className="story-leaf-face story-leaf-front"><AncientSeal className="story-seal"/><Triforce/><span>A Hyrule Field Journal</span><i/></div><div className="story-leaf-face story-leaf-back"><AncientSeal className="story-seal"/><Triforce/><span>The adventure continues</span><i/></div><div className="story-paper" style={{ '--paper-strips': paperTurnProfile(compact).strips } as CSSProperties}><PaperRib index={0} count={paperTurnProfile(compact).strips}/></div></div><div className="route-magic"><AncientSeal/>{Array.from({ length: compact ? 6 : 12 }, (_, index) => <i key={index} className="story-spark"/>)}</div><div className="story-cast-shadow"/></div>;
+  return <div ref={stage} className="story-turn" aria-hidden="true"><ThreeScene kind="paper"/><div className="story-shade"/><div className="story-leaf"><div className="story-leaf-face story-leaf-front"><AncientSeal className="story-seal"/><Triforce/><span>A Hyrule Field Journal</span><i/></div><div className="story-leaf-face story-leaf-back"><AncientSeal className="story-seal"/><Triforce/><span>The adventure continues</span><i/></div><div className="story-paper" style={{ '--paper-strips': paperTurnProfile(compact).strips } as CSSProperties}><PaperRib index={0} count={paperTurnProfile(compact).strips}/></div></div><div className="route-magic"><AncientSeal/>{Array.from({ length: compact ? 6 : 12 }, (_, index) => <i key={index} className="story-spark"/>)}</div><div className="story-cast-shadow"/></div>;
 }

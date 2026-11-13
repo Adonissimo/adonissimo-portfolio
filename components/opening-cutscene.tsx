@@ -5,6 +5,7 @@ import { useRef, type CSSProperties } from 'react';
 import { profile } from '@/lib/content';
 import { AncientSeal } from './realm-ornament';
 import { Triforce } from './zelda-art';
+import { ThreeScene } from './three-scene';
 
 /** Two short, authored camera sequences made from the portfolio's existing PNG art. */
 export function OpeningCutscene({ kind, arriving = false, compact = false, onReady }: { kind: 'prologue' | 'entry'; arriving?: boolean; compact?: boolean; onReady?: () => void }) {
@@ -23,6 +24,7 @@ export function OpeningCutscene({ kind, arriving = false, compact = false, onRea
     <div className="film-stage">
       {kind === 'prologue' && <div className="film-shot film-forest"><Image src="/images/hyrule-fields.png" alt="" fill sizes="100vw" loading="eager" draggable={false} onLoad={event => settled(event.currentTarget, 'forest')} onError={event => settled(event.currentTarget, 'forest', true)}/></div>}
       <div className={`film-shot ${kind === 'prologue' ? 'film-sky' : 'film-gateway'}`}><Image src="/images/sky-island.png" alt="" fill sizes="100vw" loading="eager" draggable={false} onLoad={event => settled(event.currentTarget, 'sky')} onError={event => settled(event.currentTarget, 'sky', true)}/></div>
+      <ThreeScene kind={kind}/>
       <div className="film-aura"><span className="film-aura-crown"/><span className="film-aura-heart"/></div>
       <span className="film-light"/>
       <span className="film-haze film-haze-far"/><span className="film-haze film-haze-near"/>
