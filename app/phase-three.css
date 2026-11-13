@@ -27,6 +27,9 @@
 .contact-sheet { min-width: 0; }
 .contact-form { grid-template-columns: 1fr 1fr; margin-top: 0; }
 .contact-form > * { grid-column: 1 / -1; }
+.contact-error-summary h2 { font-size: 1.125rem; }
+.contact-error-summary ul { padding-inline-start: 20px; }
+.contact-error-summary a { text-decoration: underline; }
 .contact-form .contact-field-name, .contact-form .contact-field-email { grid-column: auto; }
 .filter-bar { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 18px; }
 .cms-filter-bar { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; align-items: end; }
