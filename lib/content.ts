@@ -33,6 +33,26 @@ export const profile = {
 // Add real projects here. Planned entries never get demo or repository links.
 export const projects: readonly Project[] = [
   {
+    slug: 'zeldabonk',
+    title: 'ZeldaBonk',
+    description: 'A Zelda-inspired browser survival game with Adventure and Survival modes, eight maps, 24 levels, heroes, upgrades, and saved progress.',
+    status: 'built',
+    art: 'sword',
+    tags: ['JavaScript', 'Canvas', 'Game development'],
+    year: '2026',
+    stage: 'Built · playable online',
+    overview: 'ZeldaBonk is my unofficial Zelda fan game, playable directly in the browser. Explore eight realms in Adventure mode or take on a timed Survival run.',
+    challenge: 'Bring movement, automatic weapon attacks, realm objectives, and persistent progression together in a browser game with clear controls.',
+    approach: [
+      'Offer Adventure and Survival modes with different objectives.',
+      'Support keyboard movement and touch controls, with camera and control settings.',
+      'Connect realm checkpoints, hero unlocks, and permanent upgrades to saved progress.',
+      'Explain combat, progression, and controls through an in-game field guide.'
+    ],
+    outcome: 'The game is deployed on Vercel and available to play. Its public interface includes eight maps, 24 levels, guardian battles, an inventory, and a Great Fairy upgrade camp.',
+    liveUrl: 'https://zelabonk.vercel.app/'
+  },
+  {
     slug: 'hyrule-portfolio',
     title: 'The Hyrule Portfolio',
     description: 'A personal quest log built with React, Next.js, and a little Hylian imagination.',

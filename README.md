@@ -145,3 +145,5 @@ Set `NEXT_PUBLIC_SITE_URL` to the real HTTPS origin before release. No fake doma
 ## Personal content
 
 `lib/content.ts` still holds your public biography/toolkit and the initial seed source. Update it with real facts and links. After Supabase is configured, maintain projects and posts in the real dashboard. Editing a source fallback project will not replace a live CMS entry. Do not use an older Phase 3 archive to replace this backend-enabled project.
+
+To import one newly supplied built project from that seed source, run `npm.cmd run seed -- --project zeldabonk` (substitute its existing slug). This local operator command requires configured Supabase credentials and an existing confirmed, active Owner matching `OWNER_BOOTSTRAP_EMAIL`. It does not require the retired bootstrap password, create accounts, or change roles. Existing CMS records and their edits are skipped. Ordinary ongoing content edits remain in the dashboard.

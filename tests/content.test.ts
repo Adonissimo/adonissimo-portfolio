@@ -42,3 +42,10 @@ test('stored theme accepts only supported values', () => {
   assert.equal(validTheme('night'), true);
   for (const input of ['dark', '', null, undefined, false, {}]) assert.equal(validTheme(input), false);
 });
+
+test('ZeldaBonk is a built project with the owner-supplied playable URL and no invented source link', () => {
+  const game = getProject('zeldabonk');
+  assert.ok(game); assert.equal(game.title, 'ZeldaBonk'); assert.equal(game.status, 'built');
+  assert.equal(safeHttps(game.liveUrl), 'https://zelabonk.vercel.app/'); assert.equal(game.sourceUrl, undefined);
+  assert.ok(filterProjects(projects, 'built').includes(game));
+});

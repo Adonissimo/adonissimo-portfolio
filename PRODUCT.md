@@ -34,7 +34,7 @@ Tears of the Kingdom is the principal world. Settings follow context: sky island
 
 ## Evidence on Hand
 
-The portfolio implementation is the only real project supplied. Future projects are reserved slots, not fabricated case studies. No email, GitHub username, LinkedIn URL, resume, employment history, or project metrics have been supplied. The user-supplied MP3 `28. Zelda's Theme.mp3` is bundled as `public/audio/zeldas-lullaby.mp3`, labeled Zelda's Lullaby according to the user's correction.
+Real supplied projects include this portfolio and ZeldaBonk, Lorenz's browser game at https://zelabonk.vercel.app/. On 26 November 2026, its public page returned HTTP 200 and described Adventure/Survival modes, eight maps, 24 levels, heroes, upgrades and saved progress. This is page-content evidence, not a gameplay verification. Future project slots remain clearly planned. No email, LinkedIn URL, resume, employment history, or project metrics have been supplied. The user-supplied MP3 `28. Zelda's Theme.mp3` is bundled as `public/audio/zeldas-lullaby.mp3`, labeled Zelda's Lullaby according to the user's correction.
 
 ## Capabilities and Constraints
 
