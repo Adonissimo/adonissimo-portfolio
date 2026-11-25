@@ -313,6 +313,10 @@ All 115 Node tests and 137 source syntax transforms pass. Isolated actual-compon
 
 ## Overview
 
+ZeldaBonk's project detail uses a compact store-inspired showcase within the shared Zonai portfolio. Real screenshots lead, with a nearby Play action and a short, factual game introduction. Visitors can select title/training screenshots, inspect eight realm previews, and browse eleven original transparent character portraits with readable roles/play styles. Map cards show the game's own landmark/guardian labels. A native dialog offers full images, previous/next controls, arrow keys, Escape, focus restoration and background scroll locking. There is no automatic carousel or added motion. The same showcase serves CMS-backed and source-fallback project details; publishing/auth rules remain unchanged.
+
+The local production showcase was checked in the browser on 26 November 2026 at desktop width and 375px: screenshot selection, map/portrait viewing, arrow-key navigation, Escape/focus restoration, night/day appearance, all eight maps and eleven heroes, and no horizontal overflow. Actual menu, realm, roster and practice gameplay were observed while collecting media. This is scoped showcase evidence; it does not certify every game level or the portfolio's unrelated backend flows.
+
 **Creative North Star: "A builder exploring Hyrule"**
 
 Adonissimo is Lorenz Anthony Salvador’s personal nickname and the lead wordmark for his internship and full-stack developer portfolio. The implemented world expands the established Hyrule field journal into Tears of the Kingdom settings: open sky and pale stone, a jade Zonai workshop, warm fields, and cool mineral Depths. Shared serif headings, local sans controls, gold emphasis and consistent navigation make these places one interface. The owner’s name and full-stack focus accompany the brand; work and honest explanations provide the proof.

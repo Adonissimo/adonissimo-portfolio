@@ -34,6 +34,8 @@ Tears of the Kingdom is the principal world. Settings follow context: sky island
 
 ## Evidence on Hand
 
+The ZeldaBonk project page includes real title/gameplay screenshots, eight realm previews and eleven transparent character PNGs captured from the live game on 26 November 2026. The image-first showcase provides a nearby Play action, screenshot selection, map/hero browsing and a keyboard-accessible native full-image viewer. Training captures are identified as practice, and locked map labels are not represented as unlocked campaign progress. Original capture provenance is in public/images/projects/zeldabonk/README.md.
+
 Real supplied projects include this portfolio and ZeldaBonk, Lorenz's browser game at https://zelabonk.vercel.app/. On 26 November 2026, its public page returned HTTP 200 and described Adventure/Survival modes, eight maps, 24 levels, heroes, upgrades and saved progress. This is page-content evidence, not a gameplay verification. Future project slots remain clearly planned. No email, LinkedIn URL, resume, employment history, or project metrics have been supplied. The user-supplied MP3 `28. Zelda's Theme.mp3` is bundled as `public/audio/zeldas-lullaby.mp3`, labeled Zelda's Lullaby according to the user's correction.
 
 ## Capabilities and Constraints

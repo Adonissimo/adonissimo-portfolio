@@ -14,7 +14,7 @@
     "prelint": "node scripts/check-lint-tooling.mjs",
     "lint:tooling": "node scripts/check-lint-tooling.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test tests/content.test.ts tests/motion.test.ts tests/audio.test.ts tests/sound-effects.test.ts tests/music-session.test.ts tests/phase-three.test.ts tests/demo-store.test.ts tests/backend.test.ts tests/setup.test.ts tests/checkpoint.test.ts tests/ambience.test.ts tests/device.test.ts tests/paper-motion.test.ts tests/fog.test.ts tests/opening-sequence.test.ts tests/three-motion.test.ts tests/three-renderer.test.ts tests/page-trace.test.ts tests/seed.test.ts",
+    "test": "node --experimental-strip-types --test tests/content.test.ts tests/motion.test.ts tests/audio.test.ts tests/sound-effects.test.ts tests/music-session.test.ts tests/phase-three.test.ts tests/demo-store.test.ts tests/backend.test.ts tests/setup.test.ts tests/checkpoint.test.ts tests/ambience.test.ts tests/device.test.ts tests/paper-motion.test.ts tests/fog.test.ts tests/opening-sequence.test.ts tests/three-motion.test.ts tests/three-renderer.test.ts tests/page-trace.test.ts tests/seed.test.ts tests/zeldabonk-media.test.ts",
     "check": "node scripts/check.mjs",
     "seed": "node --experimental-strip-types scripts/seed.mjs",
     "test:integration": "node --test tests/backend.integration.mjs",
