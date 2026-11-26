@@ -40,6 +40,19 @@
 .bonk-character > strong { font-size: 18px; }
 .bonk-character > span { font-size: 14px; line-height: 1.55; margin-top: 6px; }
 .bonk-character > .bonk-character-role { margin-top: 2px; color: var(--gold); font-size: 13px; }
+.bonk-character:focus-visible { background: var(--surface); }
+/* One short greeting per interaction; text and card geometry stay still. */
+@keyframes bonk-hero-greeting {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  35% { transform: translateY(-8px) rotate(-4deg) scale(1.06); }
+  65% { transform: translateY(-3px) rotate(3deg) scale(1.03); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion='off']) .bonk-character:focus-visible img { animation: bonk-hero-greeting 560ms ease-out; }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  html:not([data-motion='off']) .bonk-character:hover img { animation: bonk-hero-greeting 560ms ease-out; }
+}
 .bonk-map:hover, .bonk-character:hover { background: var(--surface); }
 .bonk-source-note { color: var(--muted); font-size: 13px; }
 .bonk-lightbox { width: min(960px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 16px; border: 1px solid var(--rule); border-radius: 8px; color: var(--text); background: var(--surface); overflow-y: auto; overscroll-behavior: contain; }
