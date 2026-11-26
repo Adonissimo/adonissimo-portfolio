@@ -29,4 +29,4 @@ export const gameHeroes = [
   { id: 'darunia', name: 'Darunia', role: 'Sage of Fire', style: 'Heavy hammer strikes and a Goron Body Slam.' },
   { id: 'ruto', name: 'Ruto', role: 'Sage of Water', style: 'Water attacks that push enemies back.' },
   { id: 'nabooru', name: 'Nabooru', role: 'Sage of Spirit', style: 'Iron Knuckle axe attacks and a Spirit Medallion story scene.' }
-].map(hero => ({ ...hero, src: `${base}/character-${hero.id}.png`, title: hero.name, alt: hero.id === 'darunia' ? 'Custom Darunia pixel art with golden skin, an ivory mane and beard, white markings, and brown wrist cuffs.' : `${hero.name} character artwork exported from ZeldaBonk.`, caption: `${hero.role}. ${hero.style}${hero.id === 'darunia' ? ' Custom portfolio portrait based on the supplied model reference.' : ''}` }));
+].map(hero => ({ ...hero, src: `${base}/character-${hero.id}.png`, title: hero.name, alt: `${hero.name} character artwork exported from ZeldaBonk.`, caption: `${hero.role}. ${hero.style}` }));

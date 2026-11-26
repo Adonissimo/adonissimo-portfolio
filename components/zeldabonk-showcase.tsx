@@ -65,7 +65,7 @@ export function ZeldaBonkShowcase({ liveUrl }: { liveUrl?: string | null }) {
         <Image src={hero.src} alt={hero.alt} width={112} height={112} loading="lazy"/>
         <strong>{hero.name}</strong><span className="bonk-character-role">{hero.role}</span><span>{hero.style}</span>
       </button>)}</div>
-      <p className="bonk-source-note">Original roster and Ocarina of Time allies, as shown in ZeldaBonk. Screenshots and ten PNG portraits captured from the live game. Darunia uses custom pixel art based on the supplied model reference. Unofficial fan game; not affiliated with Nintendo.</p>
+      <p className="bonk-source-note">Original roster and Ocarina of Time allies, as shown in ZeldaBonk. Screenshots and PNG portraits captured from the live game. Unofficial fan game; not affiliated with Nintendo.</p>
     </section>
 
     <dialog ref={dialog} className="bonk-lightbox" aria-label="ZeldaBonk image viewer" onKeyDown={keyboard} onClose={() => { setExpanded(null); opener.current?.focus({ preventScroll: true }); }}>
