@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent, type CSSProperties } from 'react';
 import { safeHttps } from '@/lib/content';
 import { gameHeroes, gameRealms, gameScreens } from '@/lib/zeldabonk-media';
 import { Icon } from './icons';
@@ -62,7 +62,7 @@ export function ZeldaBonkShowcase({ liveUrl }: { liveUrl?: string | null }) {
       <h2 id="bonk-heroes-title">Find a hero that feels like you.</h2>
       <p>Fast cuts, heavy hits, water attacks, or a little mischief. Meet the full roster and their in-game artwork.</p>
       <div className="bonk-character-grid">{gameHeroes.map((hero, index) => <button type="button" className="bonk-character" key={hero.id} aria-label={`Enlarge ${hero.name} character art`} onClick={event => open(gameScreens.length + gameRealms.length + index, event.currentTarget)}>
-        <Image src={hero.src} alt={hero.alt} width={112} height={112} loading="lazy"/>
+        <span className="bonk-character-art" style={{ '--bonk-walk': `url("/images/projects/zeldabonk/character-${hero.id}-walk.png")` } as CSSProperties}><Image src={hero.src} alt={hero.alt} width={112} height={112} loading="lazy"/></span>
         <strong>{hero.name}</strong><span className="bonk-character-role">{hero.role}</span><span>{hero.style}</span>
       </button>)}</div>
       <p className="bonk-source-note">Original roster and Ocarina of Time allies, as shown in ZeldaBonk. Screenshots and PNG portraits captured from the live game. Unofficial fan game; not affiliated with Nintendo.</p>

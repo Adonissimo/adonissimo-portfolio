@@ -26,3 +26,13 @@ test('game captures preserve their real viewport and character PNGs retain trans
     assert.equal(image.format, 'png'); assert.equal(image.width, 112); assert.equal(image.height, 112); assert.equal(image.hasAlpha, true);
   }
 });
+
+test('every hero has an eight-frame transparent game walk sheet', async () => {
+  for (const hero of gameHeroes) {
+    const sheet = sharp(fileURLToPath(new URL(`../public/images/projects/zeldabonk/character-${hero.id}-walk.png`, import.meta.url)));
+    const info = await sheet.metadata();
+    assert.equal(info.width, 896); assert.equal(info.height, 112); assert.equal(info.hasAlpha, true);
+    const frames = await Promise.all(Array.from({length: 8}, (_, index) => sheet.clone().extract({left:index*112,top:0,width:112,height:112}).raw().toBuffer()));
+    assert.ok(frames.some(frame => !frame.equals(frames[0])), hero.id + ' walk frames must change');
+  }
+});

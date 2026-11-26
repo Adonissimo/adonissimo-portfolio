@@ -41,16 +41,15 @@
 .bonk-character > span { font-size: 14px; line-height: 1.55; margin-top: 6px; }
 .bonk-character > .bonk-character-role { margin-top: 2px; color: var(--gold); font-size: 13px; }
 .bonk-character:focus-visible { background: var(--surface); }
-/* One short greeting per interaction; text and card geometry stay still. */
-@keyframes bonk-hero-greeting {
-  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-  35% { transform: translateY(-8px) rotate(-4deg) scale(1.06); }
-  65% { transform: translateY(-3px) rotate(3deg) scale(1.03); }
-}
-/* Match the shared motion preference: explicit on overrides the OS default. */
-html[data-motion='on'] .bonk-character:is(:hover, :focus-visible) img { animation: bonk-hero-greeting 800ms ease-out; }
+/* Original game walk frames: eight frames at ten frames per second. */
+.bonk-character > .bonk-character-art { align-self: center; display: block; width: 112px; height: 112px; margin: 0 0 10px; background-repeat: no-repeat; background-size: 896px 112px; image-rendering: pixelated; }
+.bonk-character-art img { margin: 0; }
+@keyframes bonk-hero-walk { to { background-position: -896px 0; } }
+html[data-motion='on'] .bonk-character:is(:hover, :focus-visible) .bonk-character-art { background-image: var(--bonk-walk); animation: bonk-hero-walk 800ms steps(8) 5; }
+html[data-motion='on'] .bonk-character:is(:hover, :focus-visible) .bonk-character-art img { opacity: 0; }
 @media (prefers-reduced-motion: no-preference) {
-  html:not([data-motion]) .bonk-character:is(:hover, :focus-visible) img { animation: bonk-hero-greeting 800ms ease-out; }
+  html:not([data-motion]) .bonk-character:is(:hover, :focus-visible) .bonk-character-art { background-image: var(--bonk-walk); animation: bonk-hero-walk 800ms steps(8) 5; }
+  html:not([data-motion]) .bonk-character:is(:hover, :focus-visible) .bonk-character-art img { opacity: 0; }
 }
 .bonk-map:hover, .bonk-character:hover { background: var(--surface); }
 .bonk-source-note { color: var(--muted); font-size: 13px; }
