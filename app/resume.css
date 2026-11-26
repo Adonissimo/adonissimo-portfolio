@@ -1,0 +1,37 @@
+/* Resume-backed content uses the existing realm palette and compact reading shell. */
+.resume-intro { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(240px,1fr); gap: 48px; align-items: start; }
+.resume-page h2 { font: 400 clamp(1.5rem,3vw,1.9rem)/1.25 var(--serif); }
+.resume-page h3 { font-size: 1.1rem; line-height: 1.4; }
+.resume-page p { line-height: 1.7; }
+.resume-page .resume-eyebrow { color: var(--gold); font-size: 13px; margin-bottom: 10px; }
+.resume-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 22px; }
+.resume-education { border-left: 1px solid var(--rule); padding-left: 28px; }
+.resume-education > div { margin-top: 22px; }
+.resume-education h3 { margin: 5px 0; }
+.resume-meta, .resume-stack { color: var(--muted); font-size: 13px; }
+.resume-section { margin-top: 42px; padding-top: 26px; border-top: 1px solid var(--rule); }
+.resume-section-heading { margin-bottom: 22px; }
+.resume-section-heading > p { color: var(--muted); margin-top: 8px; }
+.resume-work-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 28px; }
+.resume-work-grid h3 { margin: 6px 0 10px; }
+.resume-work-grid .resume-stack { margin-block: 12px; }
+.language-skills { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px 22px; list-style: none; margin: 0; padding: 0; }
+.language-skills li { display: flex; align-items: center; gap: 12px; padding: 12px 0; min-width: 0; }
+.language-skills .tech-mark { object-fit: contain; }
+.language-skills li > span { display: grid; gap: 4px; }
+.language-skills strong { font-size: 15px; font-weight: 600; }
+.language-skills small { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.language-skills-compact { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 14px; }
+.language-skills-compact li { gap: 8px; padding-block: 9px; }
+.language-skills-compact small { font-size: 11px; }
+.resume-supporting-skills { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 32px; margin-top: 26px; }
+.resume-supporting-skills dt { color: var(--gold); font-size: 14px; margin-bottom: 6px; }
+.resume-supporting-skills dd { color: var(--muted); font-size: 14px; line-height: 1.65; margin: 0; }
+.resume-credentials { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 32px; padding: 0; margin: 0; list-style: none; }
+.resume-credentials li { display: grid; gap: 6px; }
+.resume-credentials strong { font-size: 15px; }
+.resume-credentials span { color: var(--muted); font-size: 13px; line-height: 1.6; }
+.resume-leadership { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 28px; }
+.resume-leadership p { font-size: 14px; margin-top: 10px; }
+@media (max-width: 900px) { .language-skills { grid-template-columns: repeat(3,minmax(0,1fr)); } .language-skills-compact { grid-template-columns: repeat(2,minmax(0,1fr)); } .resume-intro { gap: 28px; } }
+@media (max-width: 640px) { .resume-intro, .resume-work-grid, .resume-leadership { grid-template-columns: 1fr; gap: 24px; } .resume-education { border-left: 0; border-top: 1px solid var(--rule); padding: 22px 0 0; } .language-skills { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px 16px; } .resume-supporting-skills, .resume-credentials { grid-template-columns: 1fr; } .resume-section { margin-top: 30px; } }

@@ -552,3 +552,6 @@ A close dark text shadow and restrained gold heading halo replace reliance on th
 ### No green reading panels — 3.14.2
 
 Current owner screenshots supersede the lighter-wash approach in 3.14.1. Remove full-page/mural washes, text-column clearing in fog and rays, opaque welcome title cover/bands and film shade. Continuous atmosphere belongs behind copy, with tight text-edge shadows. Local green shading must follow real PNG alpha silhouettes using soft contact shadows; never fill a layout-sized rectangle. Keep functional controls/tables, quiet private art, pinned motion/audio and compact layouts. See docs/OPEN_SCENERY_UPDATE.md for actual source/component evidence and open browser/build gates.
+
+### Résumé and skills presentation
+Extend the existing fields About page with compact editorial sections for education, contributions, language skills, credentials and service. Reuse shared TechMark/LanguageSkills on Home and About. Locally hosted Devicon SVG marks precede language names; SQL uses a neutral database mark because SQL is a language without one universal vendor logo. Decorative marks have empty alt text; visible names carry meaning. Skill notes preserve novice/beginner/academic exposure distinctions.

@@ -3,12 +3,12 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 import { contactConfigured } from '@/lib/backend/config';
 import { CinematicLink as Link } from '@/components/cinematic-link';
-import { profile, toolkit, safeHttps, emailHref } from '@/lib/content';
+import { profile, safeHttps, emailHref } from '@/lib/content';
 import { getSiteUrl } from '@/lib/site';
 import { RealmGlyph } from '@/components/realm-glyph';
 import { RealmScene } from '@/components/realm-scene';
 import { WorldDivider } from '@/components/world-divider';
-import { TechMark } from '@/components/tech-mark';
+import { LanguageSkills } from '@/components/language-skills';
 import { AncientSeal, RealmOrnament } from '@/components/realm-ornament';
 import { Icon } from '@/components/icons';
 import { HomeProjects } from '@/components/home-projects';
@@ -31,7 +31,7 @@ export default function Home() {
       <div className="hero-copy">
         <div className="zelda-wordmark" aria-label={`The Legend of ${profile.brand}`}><span>THE LEGEND OF</span><strong>{profile.brand.toUpperCase()}</strong></div>
         <h1 id="hero-title" tabIndex={-1}>Full-stack work.<br/><em>A little wonder.</em></h1>
-        <p><strong>I’m {profile.displayName}.</strong> I build full-stack web projects with curiosity and care.</p><p className="hero-opportunity">Open to internships and developer opportunities.</p>
+        <p><strong>I’m {profile.displayName}.</strong> I’m a Computer Science student specializing in Software Engineering, building full-stack web projects, Android apps, and browser games.</p><p className="hero-opportunity">Seeking a software development internship.</p>
         <div className="hero-actions"><a href="#projects" className="button" data-sfx="discover">Explore projects <Icon name="arrow"/></a><Link href="/about" className="quiet-link">Meet Lorenz <Icon name="diagonal"/></Link></div>
       </div>
       <figure className="hero-landscape"><ThreeScene kind="hero"/><AncientSeal className="hero-etching"/><Image className="hero-art" src="/images/backgrounds/sky-atlas.png" alt="Original fan artwork of floating sky islands, stone gateways, golden foliage and a waterfall." width={1536} height={1024} sizes="(max-width: 560px) 280px, (max-width: 1000px) 48vw, 510px" loading="eager" fetchPriority="high" draggable={false}/><RealmOrnament realm="sky" className="hero-relic" sizes="(max-width: 560px) 112px, 196px"/><figcaption className="landscape-caption"><RealmGlyph realm="sky"/>A new path is always worth exploring.</figcaption></figure>
@@ -44,8 +44,8 @@ export default function Home() {
     </section>
 
     <section id="about" className="about-section page-shell" aria-labelledby="about-heading">
-      <WorldDivider realm="fields"/><div className="about-vista-frame"><RealmScene realm="fields" className="about-vista"/><RealmOrnament realm="fields" className="about-relic" sizes="(max-width: 560px) 96px, 140px"/></div><div className="about-copy"><h2 id="about-heading">A little curiosity.<br/><em>A lot of heart.</em></h2><p>I’m {profile.name}. This journal is where I collect the things I make and the lessons that come with them.</p><Link className="quiet-link" href="/about">More about the adventurer <Icon name="diagonal"/></Link></div>
-      <div id="inventory" className="home-inventory"><h3>In my inventory</h3><dl className="inventory-list">{toolkit.map(tool => <div key={tool.name} className="inventory-item"><dt><TechMark name={tool.name}/>{tool.name}</dt><dd>{tool.detail}</dd></div>)}</dl></div>
+      <WorldDivider realm="fields"/><div className="about-vista-frame"><RealmScene realm="fields" className="about-vista"/><RealmOrnament realm="fields" className="about-relic" sizes="(max-width: 560px) 96px, 140px"/></div><div className="about-copy"><h2 id="about-heading">A little curiosity.<br/><em>A lot of heart.</em></h2><p>I’m {profile.name}. At FEU Institute of Technology, I’m putting software engineering into practice through web, Android, and game projects.</p><Link className="quiet-link" href="/about">More about the adventurer <Icon name="diagonal"/></Link></div>
+      <div id="inventory" className="home-inventory"><h3>Languages in my inventory</h3><LanguageSkills compact/><Link className="quiet-link" href="/about#languages-title">Full toolkit & experience <Icon name="diagonal"/></Link></div>
     </section>
 
     <section id="contact" className="contact-section page-shell" aria-labelledby="contact-heading"><div className="contact-frame"><RealmScene realm="fields" className="contact-vista"/><div className="contact-copy"><h2 id="contact-heading">Have a quest in mind?</h2><p>An idea, a collaboration, or just a hello.</p></div>{hasContact ? <div className="contact-actions">{canSendContact && <Link className="button" href="/contact">Send a letter <Icon name="mail"/></Link>}{email && <a className="quiet-link" href={email}>Email me <Icon name="diagonal"/></a>}{github && <a className="quiet-link" href={github} target="_blank" rel="noopener noreferrer" aria-label="GitHub, opens in a new tab">GitHub <Icon name="diagonal"/></a>}{linkedin && <a className="quiet-link" href={linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn, opens in a new tab">LinkedIn <Icon name="diagonal"/></a>}</div> : <p className="contact-pending"><Icon name="mail"/>Contact details are coming soon.</p>}</div></section>

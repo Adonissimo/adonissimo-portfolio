@@ -33,6 +33,7 @@ import './opening.css';
 import './fog.css';
 import './three.css';
 import './zeldabonk.css';
+import './resume.css';
 
 const fieldSerif = localFont({
   src: [

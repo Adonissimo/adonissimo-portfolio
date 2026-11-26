@@ -89,3 +89,6 @@ The owner asks for text shadows or golden light so PNG scenery and strong mist/r
 ### Open scenery without green reading panels — 3.14.2
 
 The owner rejects the remaining broad green rectangles in current screenshots and permits localized green areas near PNG scenery. Remove page/mural reading washes, layout-bound fog/ray masks, the title cover/bands and film shade. Use continuous atmosphere behind lettering, glyph shadows for reading and soft green shadows following actual PNG alpha contours. Quiet private pages retain low art/effect opacity and functional controls. Include Git commit/push instructions in every portfolio file handoff. See docs/OPEN_SCENERY_UPDATE.md.
+
+### Résumé-backed profile — November 2026
+Home and About now use the supplied ATS résumé: software engineering student identity, internship focus, education, specific SmartPath/ZeldaBonk/Gacha-Balls contributions, credentials and leadership. Language entries carry explicit experience notes and a logo before each name. Public contact uses the supplied personal email, GitHub and LinkedIn; phone, student identifier and the original PDF are not published. No portrait was supplied.

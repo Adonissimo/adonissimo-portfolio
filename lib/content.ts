@@ -20,14 +20,14 @@ export type Project = {
 // EDIT HERE: real contact links only. Empty values are hidden.
 export const profile = {
   brand: 'Adonissimo',
-  name: 'Lorenz Anthony Salvador',
+  name: 'Lorenz Anthony J. Salvador',
   displayName: 'Lorenz Salvador',
-  location: 'Philippines',
-  email: '',
-  github: '',
-  linkedin: '',
+  location: 'Obando, Bulacan, Philippines',
+  email: 'lorenzanthonysalvador@gmail.com',
+  github: 'https://github.com/Adonissimo',
+  linkedin: 'https://www.linkedin.com/in/lorenz-salvador-b947152a4/',
   headline: 'Every project is a new adventure.',
-  intro: 'I’m Lorenz. This is my corner of Hyrule: a place for the things I build, the ideas I try, and everything I learn along the way.'
+  intro: 'I’m Lorenz, a Computer Science student at FEU Institute of Technology specializing in Software Engineering. I build full-stack web projects, contribute to Android apps, and make browser games.'
 };
 
 // Add real projects here. Planned entries never get demo or repository links.
